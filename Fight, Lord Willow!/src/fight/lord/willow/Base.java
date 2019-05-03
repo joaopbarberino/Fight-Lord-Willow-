@@ -39,10 +39,14 @@ public class Base {
         return xp;
     }
 
-    public void setXp(int xp) {
-        this.xp = xp;
+    public void ganhaXp(int xp) {
+        this.xp += xp;
     }
-
+    
+    public void ganhaGold(int valor) {
+        this.gold += valor;        
+    }
+    
     public void recebeDano(int dano) {
         this.vida_atual = this.vida_atual - dano;
     }
