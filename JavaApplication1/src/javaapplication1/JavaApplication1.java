@@ -19,7 +19,8 @@ public class JavaApplication1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        config_Tela();
+        Tela jogo = new Tela();
+        jogo.Initialize();
         Armadilha_lava a = new Armadilha_lava();
         System.out.println(a.getAtaque());
         a.teste();
@@ -136,11 +137,5 @@ public class JavaApplication1 {
     
     // public static void gameState (listas, jogador)
 
-    private static void config_Tela() {
-        JFrame tela = new JFrame("Fight, Lord Willow!");
-        tela.setSize(1280, 900);
-        tela.setLocationRelativeTo(null);
-        tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        tela.setVisible(true);
-    }
+
 }
