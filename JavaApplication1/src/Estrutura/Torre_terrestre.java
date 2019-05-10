@@ -4,20 +4,16 @@
  * and open the template in the editor.
  */
 package Estrutura;
-//import Jogador.*;
 
 /**
  *
- * @author joao.pbsilva20
+ * @author emerson.mferreira1
  */
-public class Armadilha extends Estrutura {
-
-    public Armadilha() {
-        super(20,1,0);
-    }      
-      
-    public void evoluir(){
-        
-        
+public class Torre_terrestre extends Estrutura{
+   
+    public Torre_terrestre(int round){
+        super(1, 2, 3, round);        
     }
+    
+    
 }
