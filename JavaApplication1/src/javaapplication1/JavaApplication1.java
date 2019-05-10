@@ -8,7 +8,7 @@ package javaapplication1;
 import java.util.*;
 import Estrutura.*;
 import javax.swing.JFrame;
-
+import mapa.*;
 /**
  *
  * @author joao.pbsilva20
@@ -19,13 +19,15 @@ public class JavaApplication1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Tela jogo = new Tela();
+        ArrayList<Integer> caminho = new ArrayList();
+        Mapa_exec(caminho);
+        /*Tela jogo = new Tela();
         jogo.Initialize();
         Armadilha_lava a = new Armadilha_lava();
         System.out.println(a.getAtaque());
         a.teste();
 
-        Base jogador = new Base();
+        Base jogador = new Base();*/
 
         int round = 1;
 
@@ -63,7 +65,7 @@ public class JavaApplication1 {
                             Terrestre_leve inimigo = new Terrestre_leve();
                             // Adiciona na sua respectiva lista
                             lista_terrestres_leves.add(inimigo);
-                            System.out.println(lista_terrestres_leves.get(i).getVida());
+                            //System.out.println(lista_terrestres_leves.get(i).getVida());
                         }
                     }
                     /*
@@ -136,6 +138,28 @@ public class JavaApplication1 {
     }
     
     // public static void gameState (listas, jogador)
+
+    private static void Mapa_exec(List caminho) {
+        Mapa mapa = new Mapa(20,20);
+        for(int i = 0;i<400;i++){
+            mapa.getMapa().get(i).setBloqueado(true);
+        }
+        for (int i = 0; i < 400; i += 2) {
+            mapa.getMapa().get(i).setBloqueado(false);
+        }
+        /*for (int i = 361; i <= 400; i += 4) {
+            mapa.getMapa().get(i).setBloqueado(false);
+        }*/
+        /*for (int i = 23; i <= 39; i += 4) {
+            mapa.getMapa().get(i).setBloqueado(false);
+        }*/
+
+        AEstrela.aEstrela(mapa.getMapa().get(0), mapa.getMapa().get(20), mapa,caminho);
+        System.out.println(caminho);
+        //AEstrela.desenha(mapa);
+        //BuscaEmLargura.bucaEmLargura(mapa.getMapa().get(0), mapa.getMapa().get(302), mapa);
+
+    }
 
 
 }
