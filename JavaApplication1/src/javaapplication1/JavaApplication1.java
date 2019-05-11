@@ -20,7 +20,6 @@ public class JavaApplication1 {
      */
     public static void main(String[] args) {
         ArrayList<Integer> caminho = new ArrayList();
-        Mapa_exec(caminho);
         /*Tela jogo = new Tela();
         jogo.Initialize();
         Armadilha_lava a = new Armadilha_lava();
@@ -28,7 +27,6 @@ public class JavaApplication1 {
         a.teste();
 
         Base jogador = new Base();*/
-
         int round = 1;
 
         // Vetor com as quantidades de inimigos
@@ -39,14 +37,17 @@ public class JavaApplication1 {
         int qtds[] = new int[4];
         boolean gameLoop = true;
         // Instanciar o mapa da fase
+        Mapa mapa = new Mapa(20,20);
+        Mapa_exec(mapa, caminho);
+        
+        Estrutura teste = new Torre_terrestre(20);
 
         while (gameLoop) {
             // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
             ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
-
-            //ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
-            //ArrayList<Aereo_leve> lista_aereo_leves = new ArrayList();
-            //ArrayList<Aereo_pesado> lista_terrestres_leves = new ArrayList();
+            ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
+            ArrayList<Aereo_leve> lista_aereo_leves = new ArrayList();
+            ArrayList<Aereo_pesado> lista_terrestres_leves = new ArrayList();
             
 
             // Colocar timing para o jogador pensar (em segundos)
@@ -139,8 +140,8 @@ public class JavaApplication1 {
     
     // public static void gameState (listas, jogador)
 
-    private static void Mapa_exec(List caminho) {
-        Mapa mapa = new Mapa(20,20);
+    private static void Mapa_exec(Mapa mapa, List caminho) {
+       
         for(int i = 0;i<400;i++){
             mapa.getMapa().get(i).setBloqueado(true);
         }
