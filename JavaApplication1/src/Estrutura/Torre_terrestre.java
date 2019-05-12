@@ -11,8 +11,8 @@ package Estrutura;
  */
 public class Torre_terrestre extends Estrutura{
    
-    public Torre_terrestre(int round){
-        super(1, 2, 3, round);        
+    public Torre_terrestre(int pos){
+        super(1, 2, 3, pos);        
     }
     
     
