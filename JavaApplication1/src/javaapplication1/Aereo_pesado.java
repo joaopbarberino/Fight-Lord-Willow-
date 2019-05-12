@@ -12,14 +12,7 @@ package javaapplication1;
 public class Aereo_pesado extends Inimigo{
 
     public Aereo_pesado() {
-        super(10, 2, 5, 1, 10, 20, 0, "aereo");
+        super(10, 2, 5, 1, 10, 20, "aereo");
     }
 
-    public void reduzVida(int valor) {
-        super.reduzVida(valor);
-    }
-
-    public boolean morte() {
-        return super.getVida() == 0;
-    }
 }

@@ -46,8 +46,8 @@ public class JavaApplication1 {
             // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
             ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
             ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
-            ArrayList<Aereo_leve> lista_aereo_leves = new ArrayList();
-            ArrayList<Aereo_pesado> lista_terrestres_leves = new ArrayList();
+            ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
+            ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
             
 
             // Colocar timing para o jogador pensar (em segundos)
@@ -62,10 +62,9 @@ public class JavaApplication1 {
                     // Conta qts inimigos tem de cada tipo
                     for (int j = 0; j < qtds.length; j++) {
                         for (int i = 0; i < qtds[j]; i++) {
-                            // Instancia esses inimigos
-                            Terrestre_leve inimigo = new Terrestre_leve();
+                            // Instancia esses inimigos e
                             // Adiciona na sua respectiva lista
-                            lista_terrestres_leves.add(inimigo);
+                            lista_terrestres_leves.add(new Terrestre_leve());
                             //System.out.println(lista_terrestres_leves.get(i).getVida());
                         }
                     }
@@ -155,7 +154,7 @@ public class JavaApplication1 {
             mapa.getMapa().get(i).setBloqueado(false);
         }*/
 
-        AEstrela.aEstrela(mapa.getMapa().get(0), mapa.getMapa().get(20), mapa,caminho);
+        AEstrela.aEstrela(mapa.getMapa().get(0), mapa.getMapa().get(360), mapa,caminho);
         System.out.println(caminho);
         //AEstrela.desenha(mapa);
         //BuscaEmLargura.bucaEmLargura(mapa.getMapa().get(0), mapa.getMapa().get(302), mapa);
