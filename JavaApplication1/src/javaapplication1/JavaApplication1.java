@@ -78,13 +78,12 @@ public class JavaApplication1 {
                 inimigo.setCaminho(caminho);
                 lista_aereos_pesados.add(inimigo);
             }
-            
+                    
             // UPDATE: *Não precisava daquele switch case aqui pois a logica de cada
             // round é a mesma, só muda a quantidade de inimigos, coisa que
             // a funcao geraWave já controla.* //////
 
             /*
-             Acha caminho e da pro inimigo seguir
                      
              Para cada inimigo da lista diferente de null
                     
@@ -99,7 +98,6 @@ public class JavaApplication1 {
              -> Se vida atual do jogador <= 0, gameLoop = false, break;
 
              -> Se o inimigo morrer, jogador recebe o gold e o xp q ele vale
-             }
 
              -> Se não estiver
              -> Inimigo anda

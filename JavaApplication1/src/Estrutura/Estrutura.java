@@ -40,28 +40,28 @@ public class Estrutura {
     public int getAlcance() {
         return alcance;
     }
-    
+
     // Modifica o alcance da estrutura
     public void setAlcance(int alcance) {
         this.alcance = alcance;
         //this.setRange();
     }
-    
+
     // Retorna a velocidade de ataque da estrutura
     public int getVelo_atk() {
         return velo_atk;
     }
-    
+
     // Modifica a velocidade de ataque da estrutura
     public void setVelo_atk(int velo_atk) {
         this.velo_atk = velo_atk;
     }
-    
+
     // Retorna o valor de ataque da estrutura
     public int getAtaque() {
         return ataque;
     }
-    
+
     // Modifica o valor de ataque da estrutura
     public void setAtaque(int ataque) {
         this.ataque = ataque;
@@ -72,20 +72,29 @@ public class Estrutura {
         inimigo.reduzVida(this.ataque);
     }
 
+    // Verifica se um dado inimigo está no alcance de ataque, retorna true se sim
+    // e else se não
+    public boolean isNoRange(Inimigo inimigo) {
+        if (this.casas_no_alcance.contains(inimigo.getPos())) {
+            return true;
+        }
+        return false;
+    }
+
     // Da um mapa pra estrutura e calcula as casas que ela pode atacar
     public void setMapa(Mapa mapa) {
         this.mapa = mapa;
         //this.setRange();
     }
-    
+
     // Aumenta o nivel da torre
-    public void update(){
-        this.nivel ++;
-        this.ataque ++;
-        this.alcance ++;
+    public void update() {
+        this.nivel++;
+        this.ataque++;
+        this.alcance++;
         //this.setRange();    
     }
-    
+
 //    responsável por calcular quais posições do mapa estão no alcance da torre
 //    private void setRange() {
 //        int x;

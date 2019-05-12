@@ -103,7 +103,7 @@ public abstract class Inimigo {
     }
     
     // Retorna em qual posição do mapa o inimigo está
-    public int verificaPos(){
+    public int getPos(){
         return this.pos;   
     }
 
