@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaapplication1;
+package fight.lord.willow.Inimigo;
 
 /**
  *
@@ -16,13 +16,4 @@ public class Terrestre_leve extends Inimigo {
         // e tipo, respectivamente
         super(10, 2, 5, 1, 10, 20, "terrestre");
     }
-
-    public void reduzVida(int valor) {
-        super.reduzVida(valor);
-    }
-
-    public boolean morte() {
-        return super.getVida() == 0;
-    }
-
 }
