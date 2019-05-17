@@ -42,7 +42,7 @@ public class AEstrela {
             listaFechada.add(noAtual);
             achouCaminho = noAtual.equals(noDestino);
             for (No no : noAtual.getVizinhos()) {
-                if (no.isBloqueado() || listaFechada.contains(no)) {
+                if (no.isBloqueado() || listaFechada.contains(no) || no.isconstruido()) {
                     continue;
                 } else {
                     if (!listaAberta.contains(no)) {
