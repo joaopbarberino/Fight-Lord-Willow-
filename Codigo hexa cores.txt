@@ -1,0 +1,3 @@
+Vermelho(bloqueado) - 0xFFF00
+Verde(disponivel) - 0xFF31FF00
+Amarelo(construivel) - 0xFFFFF700
