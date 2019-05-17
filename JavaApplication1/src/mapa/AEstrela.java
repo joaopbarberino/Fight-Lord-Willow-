@@ -142,6 +142,8 @@ public class AEstrela {
                     System.out.print("[-]");
                 } else if (no.isBloqueado()) {
                     System.out.print("[X]");
+                } else if(no.isconstruido()){
+                    System.out.print("[/]");
                 } else {
                     System.out.print("[ ]");
                 }
