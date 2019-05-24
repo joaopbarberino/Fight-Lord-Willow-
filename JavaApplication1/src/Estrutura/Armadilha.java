@@ -13,7 +13,7 @@ package Estrutura;
 public class Armadilha extends Estrutura {
 
     public Armadilha() {
-        super(20,1,0);
+        super(20,1,0, 1);
     }      
       
     public void evoluir(){

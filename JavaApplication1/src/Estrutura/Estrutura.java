@@ -84,7 +84,7 @@ public class Estrutura {
     // Da um mapa pra estrutura e calcula as casas que ela pode atacar
     public void setMapa(Mapa mapa) {
         this.mapa = mapa;
-        //this.setRange();
+        this.setRange();
     }
 
     // Aumenta o nivel da torre
@@ -96,9 +96,58 @@ public class Estrutura {
     }
 
 //    responsável por calcular quais posições do mapa estão no alcance da torre
-//    private void setRange() {
-//        int x;
-//        this.casas_no_alcance.add(this.mapa.getMapa.get(x));
-//    }
-//   
+    private void setRange() {
+        int x1, x2;
+        int y1, y2;
+        int diagonal_sup_esq, diagonal_inf_esq;
+        int diagonal_sup_dir, diagonal_inf_dir;
+        int qtdColunas = 20; // tamanho da linha em caso de lista
+        int range = this.alcance;
+
+        // for, range --
+        for (int j = range; j < 0; j--) {
+            x1 = this.pos - this.alcance;
+            casas_no_alcance.add(x1);
+            x2 = this.pos + this.alcance;
+            casas_no_alcance.add(x2);
+            y1 = this.pos - (qtdColunas * range);
+            casas_no_alcance.add(y1);
+            y2 = this.pos + (qtdColunas * range);
+            casas_no_alcance.add(y2);
+            diagonal_sup_esq = y1 - range;
+            casas_no_alcance.add(diagonal_sup_esq);
+            diagonal_sup_dir = y1 + range;
+            casas_no_alcance.add(diagonal_sup_dir);
+            diagonal_inf_esq = y2 - range;
+            casas_no_alcance.add(diagonal_inf_esq);
+            diagonal_inf_dir = y2 + range;
+            casas_no_alcance.add(diagonal_inf_dir);
+            ArrayList<Integer> telhado = new ArrayList();
+            ArrayList<Integer> chao = new ArrayList();
+            ArrayList<Integer> parede_esq = new ArrayList();
+            ArrayList<Integer> parede_dir = new ArrayList();
+            // telhado = diagonal sup esq até diagonal sup dir (casa por casa)
+            for (int i = diagonal_sup_esq; i < diagonal_sup_dir; i++) {
+                telhado.add(i);
+            }
+
+            // chão = diagonal inf esq até diagonal inf dir (casa por casa)		
+            for (int i = diagonal_inf_esq; i < diagonal_inf_dir; i++) {
+                chao.add(i);
+            }
+
+            // parede esq = diagonal sup esq até diagonal inf esq (de 20 em 20 [linha])
+            for (int i = diagonal_sup_esq; i < diagonal_inf_esq; i += qtdColunas) {
+                parede_esq.add(i);
+            }
+
+            // parede dir = diagonal sup dir até diagonal inf dir (de 20 em 20 [linha])				
+            for (int i = diagonal_sup_dir; i < diagonal_inf_dir; i += qtdColunas) {
+                parede_dir.add(i);
+            }
+        }
+        // TODO adicionar telhado chao e paredes a lista principal
+
+    }
+
 }
