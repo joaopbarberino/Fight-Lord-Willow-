@@ -7,6 +7,8 @@ package javaapplication1;
 
 import java.util.*;
 import Estrutura.*;
+import java.awt.Dimension;
+import java.awt.Point;
 import javax.swing.JFrame;
 import mapa.*;
 /**
@@ -20,6 +22,7 @@ public class JavaApplication1 {
      */
     public static void main(String[] args) {
         ArrayList<Integer> caminho = new ArrayList();
+        tela_init();
         Mapa_exec(caminho);
         /*Tela jogo = new Tela();
         jogo.Initialize();
@@ -194,17 +197,31 @@ public class JavaApplication1 {
             mapa.getMapa().get(i).setBloqueado(false);
             mapa.getMapa().get(i).setConstruivel(true);
         }
+        for (int i = 66; i < 324; i+=20) {
+            mapa.getMapa().get(i).setBloqueado(false);
+            mapa.getMapa().get(i).setConstruivel(true);
+        }
         for (int i = 68; i < 324; i+=20) {
             mapa.getMapa().get(i).setBloqueado(false);
             mapa.getMapa().get(i).setConstruivel(true);
         }
         
 
-        AEstrela.aEstrela(mapa.getMapa().get(0), mapa.getMapa().get(20), mapa,caminho);
+        AEstrela.aEstrela(mapa.getMapa().get(0), mapa.getMapa().get(79), mapa,caminho);
         System.out.println(caminho);
         AEstrela.desenha(mapa);
         //BuscaEmLargura.bucaEmLargura(mapa.getMapa().get(0), mapa.getMapa().get(302), mapa);
 
+    }
+
+    private static void tela_init() {      
+        JFrame frame = new JFrame("Attack, Lord Willow!");
+        DrawPanel panel = new DrawPanel();
+        frame.setSize(new Dimension(1000, 1000));
+        frame.setLocation(new Point(200,200));
+        frame.setContentPane(panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 
 
