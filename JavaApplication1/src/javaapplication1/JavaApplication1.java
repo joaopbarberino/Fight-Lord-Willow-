@@ -24,6 +24,13 @@ public class JavaApplication1 {
         ArrayList<Integer> caminho = new ArrayList();
         tela_init();
         Mapa_exec(caminho);
+                 
+        // 
+        Estrutura x = new Torre_terrestre(265);
+        x.set_casas_no_alcance();
+        x.get_casas_no_alcance();
+        
+        
         /*Tela jogo = new Tela();
         jogo.Initialize();
         Armadilha_lava a = new Armadilha_lava();
@@ -46,11 +53,10 @@ public class JavaApplication1 {
         while (gameLoop) {
             // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
             ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
-
-            //ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
-            //ArrayList<Aereo_leve> lista_aereo_leves = new ArrayList();
-            //ArrayList<Aereo_pesado> lista_terrestres_leves = new ArrayList();
-            
+            ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
+            ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
+            ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
+   
 
             // Colocar timing para o jogador pensar (em segundos)
             // Checa se o jogador nao vai construir ou melhorar alguma torre

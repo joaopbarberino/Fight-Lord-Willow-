@@ -12,7 +12,7 @@ package Estrutura;
 public class Torre_terrestre extends Estrutura{
    
     public Torre_terrestre(int pos){
-        super(1, 2, 3, pos);        
+        super(1, 3, 3, pos);        
     }
     
     

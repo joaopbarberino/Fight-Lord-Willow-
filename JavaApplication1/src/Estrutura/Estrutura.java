@@ -44,7 +44,7 @@ public class Estrutura {
     // Modifica o alcance da estrutura
     public void setAlcance(int alcance) {
         this.alcance = alcance;
-        //this.setRange();
+        this.set_casas_no_alcance();
     }
 
     // Retorna a velocidade de ataque da estrutura
@@ -84,7 +84,6 @@ public class Estrutura {
     // Da um mapa pra estrutura e calcula as casas que ela pode atacar
     public void setMapa(Mapa mapa) {
         this.mapa = mapa;
-        this.setRange();
     }
 
     // Aumenta o nivel da torre
@@ -95,8 +94,13 @@ public class Estrutura {
         //this.setRange();    
     }
 
-//    responsável por calcular quais posições do mapa estão no alcance da torre
-    private void setRange() {
+    // mostra as casas no alcance da torre
+    public void get_casas_no_alcance() {
+        System.out.println(this.casas_no_alcance);
+    }
+
+    // responsável por calcular quais posições do mapa estão no alcance da torre
+    public void set_casas_no_alcance() {
         int x1, x2;
         int y1, y2;
         int diagonal_sup_esq, diagonal_inf_esq;
@@ -105,27 +109,31 @@ public class Estrutura {
         int range = this.alcance;
 
         // for, range --
-        for (int j = range; j < 0; j--) {
-            x1 = this.pos - this.alcance;
-            casas_no_alcance.add(x1);
-            x2 = this.pos + this.alcance;
-            casas_no_alcance.add(x2);
+        for (int j = range; j > 0; j--) {
+            System.out.println("!!!!!!");
+            x1 = this.pos - range;
+            this.casas_no_alcance.add(x1);
+            x2 = this.pos + range;
+            this.casas_no_alcance.add(x2);
             y1 = this.pos - (qtdColunas * range);
-            casas_no_alcance.add(y1);
+            this.casas_no_alcance.add(y1);
             y2 = this.pos + (qtdColunas * range);
-            casas_no_alcance.add(y2);
+            this.casas_no_alcance.add(y2);
             diagonal_sup_esq = y1 - range;
-            casas_no_alcance.add(diagonal_sup_esq);
+            this.casas_no_alcance.add(diagonal_sup_esq);
             diagonal_sup_dir = y1 + range;
-            casas_no_alcance.add(diagonal_sup_dir);
+            this.casas_no_alcance.add(diagonal_sup_dir);
             diagonal_inf_esq = y2 - range;
-            casas_no_alcance.add(diagonal_inf_esq);
+            this.casas_no_alcance.add(diagonal_inf_esq);
             diagonal_inf_dir = y2 + range;
-            casas_no_alcance.add(diagonal_inf_dir);
+            this.casas_no_alcance.add(diagonal_inf_dir);
+            System.out.println("!!!!!!");
+
             ArrayList<Integer> telhado = new ArrayList();
             ArrayList<Integer> chao = new ArrayList();
             ArrayList<Integer> parede_esq = new ArrayList();
             ArrayList<Integer> parede_dir = new ArrayList();
+
             // telhado = diagonal sup esq até diagonal sup dir (casa por casa)
             for (int i = diagonal_sup_esq; i < diagonal_sup_dir; i++) {
                 telhado.add(i);
@@ -145,8 +153,25 @@ public class Estrutura {
             for (int i = diagonal_sup_dir; i < diagonal_inf_dir; i += qtdColunas) {
                 parede_dir.add(i);
             }
+
+            // adicionar telhado chao e paredes a lista principal
+            telhado.forEach((casa) -> {
+                this.casas_no_alcance.add(casa);
+            });
+
+            chao.forEach((casa) -> {
+                this.casas_no_alcance.add(casa);
+            });
+
+            parede_dir.forEach((casa) -> {
+                this.casas_no_alcance.add(casa);
+            });
+
+            parede_esq.forEach((casa) -> {
+                this.casas_no_alcance.add(casa);
+            });
+            System.out.println("!!!!!!");
         }
-        // TODO adicionar telhado chao e paredes a lista principal
 
     }
 
