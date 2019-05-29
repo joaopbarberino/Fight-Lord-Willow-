@@ -106,28 +106,17 @@ public class Estrutura {
         int diagonal_sup_esq, diagonal_inf_esq;
         int diagonal_sup_dir, diagonal_inf_dir;
         int qtdColunas = 20; // tamanho da linha em caso de lista
-        int range = this.alcance;
-
-        // for, range --
-        for (int j = range; j > 0; j--) {
-            System.out.println("!!!!!!");
-            x1 = this.pos - range;
-            this.casas_no_alcance.add(x1);
-            x2 = this.pos + range;
-            this.casas_no_alcance.add(x2);
-            y1 = this.pos - (qtdColunas * range);
-            this.casas_no_alcance.add(y1);
-            y2 = this.pos + (qtdColunas * range);
-            this.casas_no_alcance.add(y2);
-            diagonal_sup_esq = y1 - range;
-            this.casas_no_alcance.add(diagonal_sup_esq);
-            diagonal_sup_dir = y1 + range;
-            this.casas_no_alcance.add(diagonal_sup_dir);
-            diagonal_inf_esq = y2 - range;
-            this.casas_no_alcance.add(diagonal_inf_esq);
-            diagonal_inf_dir = y2 + range;
-            this.casas_no_alcance.add(diagonal_inf_dir);
-            System.out.println("!!!!!!");
+        
+        // for, alcance --
+        for (int j = this.alcance; j > 0; j--) {
+            x1 = this.pos - j;
+            x2 = this.pos + j;
+            y1 = this.pos - (qtdColunas * j);
+            y2 = this.pos + (qtdColunas * j);
+            diagonal_sup_esq = y1 - j;
+            diagonal_sup_dir = y1 + j;
+            diagonal_inf_esq = y2 - j;
+            diagonal_inf_dir = y2 + j;
 
             ArrayList<Integer> telhado = new ArrayList();
             ArrayList<Integer> chao = new ArrayList();
@@ -135,22 +124,22 @@ public class Estrutura {
             ArrayList<Integer> parede_dir = new ArrayList();
 
             // telhado = diagonal sup esq até diagonal sup dir (casa por casa)
-            for (int i = diagonal_sup_esq; i < diagonal_sup_dir; i++) {
+            for (int i = diagonal_sup_esq; i <= diagonal_sup_dir; i++) {
                 telhado.add(i);
             }
 
             // chão = diagonal inf esq até diagonal inf dir (casa por casa)		
-            for (int i = diagonal_inf_esq; i < diagonal_inf_dir; i++) {
+            for (int i = diagonal_inf_esq; i <= diagonal_inf_dir; i++) {
                 chao.add(i);
             }
 
             // parede esq = diagonal sup esq até diagonal inf esq (de 20 em 20 [linha])
-            for (int i = diagonal_sup_esq; i < diagonal_inf_esq; i += qtdColunas) {
+            for (int i = diagonal_sup_esq; i <= diagonal_inf_esq; i += qtdColunas) {
                 parede_esq.add(i);
             }
 
             // parede dir = diagonal sup dir até diagonal inf dir (de 20 em 20 [linha])				
-            for (int i = diagonal_sup_dir; i < diagonal_inf_dir; i += qtdColunas) {
+            for (int i = diagonal_sup_dir; i <= diagonal_inf_dir; i += qtdColunas) {
                 parede_dir.add(i);
             }
 
@@ -158,19 +147,20 @@ public class Estrutura {
             telhado.forEach((casa) -> {
                 this.casas_no_alcance.add(casa);
             });
-
+            telhado.clear();
             chao.forEach((casa) -> {
                 this.casas_no_alcance.add(casa);
             });
-
+            chao.clear();
             parede_dir.forEach((casa) -> {
                 this.casas_no_alcance.add(casa);
             });
-
+            parede_dir.clear();
             parede_esq.forEach((casa) -> {
                 this.casas_no_alcance.add(casa);
             });
-            System.out.println("!!!!!!");
+            parede_esq.clear();
+            
         }
 
     }

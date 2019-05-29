@@ -18,13 +18,12 @@ public class AEstrela {
     public static int colunasDoMapa = 0;
     public static int linhasDoMapa = 0;
     public static int tamanhoDoMapa = 0;
-    public static List<Integer> caminhos = new ArrayList();
+    public static ArrayList<Integer> caminhos = new ArrayList();
 
-    public static List<No> aEstrela(No noInicial, No noDestino, Mapa mapa, List caminhosss) {
+    public static List<No> aEstrela(No noInicial, No noDestino, Mapa mapa) {
         colunasDoMapa = Mapa.getColunas();
         linhasDoMapa = Mapa.getLinhas();
         tamanhoDoMapa = Mapa.getMapa().size();
-        caminhos = caminhosss;
 
         listaFechada.clear();
         listaAberta.clear();
@@ -34,7 +33,6 @@ public class AEstrela {
 
         No noAtual = noInicial;
         listaAberta.add(noInicial);
-        
 
         while (!achouCaminho) {
             noAtual = procurarMenorF();
@@ -42,7 +40,7 @@ public class AEstrela {
             listaFechada.add(noAtual);
             achouCaminho = noAtual.equals(noDestino);
             for (No no : noAtual.getVizinhos()) {
-                if (no.isBloqueado() || listaFechada.contains(no) || no.isconstruido()) {
+                if (no.isBloqueado() || listaFechada.contains(no) || no.isConstruivel()) {
                     continue;
                 } else {
                     if (!listaAberta.contains(no)) {
@@ -60,10 +58,10 @@ public class AEstrela {
                     }
                 }
             }
-            if (listaAberta.isEmpty()) {
-                System.out.println("Nao achou caminho");
-                return null;
-            }
+//            if (listaAberta.isEmpty()) {
+//                System.out.println("Nao achou caminho");
+//                return null;
+//            }
         }
         return montaCaminho(noInicial, noDestino, mapa);
     }
@@ -108,6 +106,7 @@ public class AEstrela {
 
             contador++;
         }
+        
         Collections.reverse(listaAuxiliar);
 
         //imprimir caminho
@@ -142,7 +141,7 @@ public class AEstrela {
                     System.out.print("[-]");
                 } else if (no.isBloqueado()) {
                     System.out.print("[X]");
-                } else if(no.isconstruido()){
+                } else if (no.isConstruivel()) {
                     System.out.print("[/]");
                 } else {
                     System.out.print("[ ]");

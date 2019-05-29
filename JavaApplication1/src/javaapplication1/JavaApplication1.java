@@ -23,10 +23,12 @@ public class JavaApplication1 {
     public static void main(String[] args) {
         ArrayList<Integer> caminho = new ArrayList();
         tela_init();
-        Mapa_exec(caminho);
+        // Instanciar o mapa da fase
+        caminho = Mapa_exec(caminho);
+        System.out.println("Caminho: " + caminho);
                  
         // 
-        Estrutura x = new Torre_terrestre(265);
+        Estrutura x = new Torre_terrestre(83);
         x.set_casas_no_alcance();
         x.get_casas_no_alcance();
         
@@ -48,7 +50,6 @@ public class JavaApplication1 {
         // posição 3 = inimigos aereos pesados
         int qtds[] = new int[4];
         boolean gameLoop = true;
-        // Instanciar o mapa da fase
 
         while (gameLoop) {
             // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
@@ -148,7 +149,7 @@ public class JavaApplication1 {
     
     // public static void gameState (listas, jogador)
 
-    private static void Mapa_exec(List caminho) {
+    private static ArrayList Mapa_exec(ArrayList caminho) {
         Mapa mapa = new Mapa(20,20);
         for(int i = 0;i<400;i++){
             mapa.getMapa().get(i).setBloqueado(true);
@@ -212,12 +213,10 @@ public class JavaApplication1 {
             mapa.getMapa().get(i).setConstruivel(true);
         }
         
-
-        AEstrela.aEstrela(mapa.getMapa().get(0), mapa.getMapa().get(79), mapa,caminho);
-        System.out.println(caminho);
-        AEstrela.desenha(mapa);
-        //BuscaEmLargura.bucaEmLargura(mapa.getMapa().get(0), mapa.getMapa().get(302), mapa);
-
+        AEstrela.aEstrela(mapa.getMapa().get(3), mapa.getMapa().get(79), mapa);
+        caminho = AEstrela.caminhos; 
+        
+        return caminho;
     }
 
     private static void tela_init() {      

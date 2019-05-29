@@ -7,6 +7,13 @@ public class No {
 
     private int id;
     float h, g, f;
+    private boolean visitado, bloqueado, construivel;
+    public List<No> vizinhos = new ArrayList();
+    private No pai;
+    
+    public No(int id) {
+        this.id = id;
+    }
 
     public float getH() {
         return h;
@@ -31,9 +38,6 @@ public class No {
     public void setF(float f) {
         this.f = f;
     }
-    private boolean visitado, bloqueado,construivel;
-    public List<No> vizinhos = new ArrayList();
-    private No pai;
 
     public No getPai() {
         return pai;
@@ -41,10 +45,6 @@ public class No {
 
     public void setPai(No pai) {
         this.pai = pai;
-    }
-
-    public No(int id) {
-        this.id = id;
     }
 
     public List<No> getVizinhos() {
@@ -78,10 +78,11 @@ public class No {
     public void setBloqueado(boolean bloqueado) {
         this.bloqueado = bloqueado;
     }
+    
     public void setConstruivel(boolean construivel){
         this.construivel = construivel;
     }
-    public boolean isconstruido() {
+    public boolean isConstruivel() {
         return construivel;
     }
 
