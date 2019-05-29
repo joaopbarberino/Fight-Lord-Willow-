@@ -10,6 +10,6 @@ package javaapplication1;
  * @author PEDROKREIDABALA
  */
 public class Engine {
-    public static final int TILE_WIDTH = 50;
-    public static final int TILE_HEIGTH = 50;
+    public static final int TILE_WIDTH = 40;
+    public static final int TILE_HEIGTH = 40;
 }

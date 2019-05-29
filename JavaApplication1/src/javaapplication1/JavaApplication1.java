@@ -203,7 +203,7 @@ public class JavaApplication1 {
             mapa.getMapa().get(i).setBloqueado(false);
             mapa.getMapa().get(i).setConstruivel(true);
         }
-        for (int i = 66; i < 324; i+=20) {
+        for (int i = 86; i < 344; i+=20) {
             mapa.getMapa().get(i).setBloqueado(false);
             mapa.getMapa().get(i).setConstruivel(true);
         }
@@ -223,8 +223,8 @@ public class JavaApplication1 {
     private static void tela_init() {      
         JFrame frame = new JFrame("Attack, Lord Willow!");
         DrawPanel panel = new DrawPanel();
-        frame.setSize(new Dimension(1000, 1000));
-        frame.setLocation(new Point(200,200));
+        frame.setSize(new Dimension(816, 838));
+        frame.setLocation(new Point(500,100));
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
