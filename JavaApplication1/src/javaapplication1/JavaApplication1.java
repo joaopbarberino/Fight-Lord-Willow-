@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.JFrame;
 import mapa.*;
+
 /**
  *
  * @author joao.pbsilva20
@@ -26,21 +27,19 @@ public class JavaApplication1 {
         // Instanciar o mapa da fase
         caminho = Mapa_exec(caminho);
         System.out.println("Caminho: " + caminho);
-                 
+
         // 
         Estrutura x = new Torre_terrestre(83);
         x.set_casas_no_alcance();
         x.get_casas_no_alcance();
-        
-        
+
         /*Tela jogo = new Tela();
-        jogo.Initialize();
-        Armadilha_lava a = new Armadilha_lava();
-        System.out.println(a.getAtaque());
-        a.teste();
+         jogo.Initialize();
+         Armadilha_lava a = new Armadilha_lava();
+         System.out.println(a.getAtaque());
+         a.teste();
 
-        Base jogador = new Base();*/
-
+         Base jogador = new Base();*/
         int round = 1;
 
         // Vetor com as quantidades de inimigos
@@ -57,12 +56,10 @@ public class JavaApplication1 {
             ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
             ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
             ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
-   
 
             // Colocar timing para o jogador pensar (em segundos)
             // Checa se o jogador nao vai construir ou melhorar alguma torre
-                // Caso construa, adiciona a estrutura numa lista de estruturas
-
+            // Caso construa, adiciona a estrutura numa lista de estruturas
             // Gera wave baseado em valores pré determinados com base no round
             geraWave(round, qtds);
 
@@ -84,22 +81,22 @@ public class JavaApplication1 {
                      Para cada inimigo da lista diferente de null
                     
                      Chama função abaixo:
-                        Checa se ele não está no range de todas as torres
-                           -> Se tiver, a torre ataca enquanto o inimigo estiver no range {
-                               -> Inimigo recebe o ataque
-                                   -> Se vida do inimigo => 0, ele morre e é removido da lista
-                                   -> Se não, inimigo anda
+                     Checa se ele não está no range de todas as torres
+                     -> Se tiver, a torre ataca enquanto o inimigo estiver no range {
+                     -> Inimigo recebe o ataque
+                     -> Se vida do inimigo => 0, ele morre e é removido da lista
+                     -> Se não, inimigo anda
 
-                                   -> Se chegou no destino, se mata e da dano no jogador
-                                       -> Se vida atual do jogador <= 0, gameLoop = false, break;
+                     -> Se chegou no destino, se mata e da dano no jogador
+                     -> Se vida atual do jogador <= 0, gameLoop = false, break;
 
-                               -> Se o inimigo morrer, jogador recebe o gold e o xp q ele vale
-                           }
+                     -> Se o inimigo morrer, jogador recebe o gold e o xp q ele vale
+                     }
 
-                           -> Se não estiver
-                               -> Inimigo anda
-                                   -> Se chegou no destino, se mata e da dano no jogador
-                                       -> Se vida atual do jogador <= 0, gameLoop = false, break;
+                     -> Se não estiver
+                     -> Inimigo anda
+                     -> Se chegou no destino, se mata e da dano no jogador
+                     -> Se vida atual do jogador <= 0, gameLoop = false, break;
                                     
                     
                      FAZER TRATAMENTO DE FPS
@@ -146,14 +143,14 @@ public class JavaApplication1 {
         return qtds;
 
     }
-    
-    // public static void gameState (listas, jogador)
 
+    // public static void gameState (listas, jogador)
     private static ArrayList Mapa_exec(ArrayList caminho) {
-        Mapa mapa = new Mapa(20,20);
-        for(int i = 0;i<400;i++){
+        Mapa mapa = new Mapa(20, 20);
+        for (int i = 0; i < 400; i++) {
             mapa.getMapa().get(i).setBloqueado(true);
         }
+        //comeca a liberar o caminho q os inimigos vao percorrer
         for (int i = 3; i < 343; i += 20) {
             mapa.getMapa().get(i).setBloqueado(false);
         }
@@ -178,7 +175,7 @@ public class JavaApplication1 {
         for (int i = 77; i <= 345; i += 20) {
             mapa.getMapa().get(i).setBloqueado(false);
         }
-        for (int i = 78; i <= 79; i ++) {
+        for (int i = 78; i <= 79; i++) {
             mapa.getMapa().get(i).setBloqueado(false);
         }
         for (int i = 324; i < 340; i += 4) {
@@ -186,48 +183,72 @@ public class JavaApplication1 {
         }
         for (int i = 66; i < 76; i += 4) {
             mapa.getMapa().get(i).setBloqueado(false);
-            
+
         }
-        for (int i = 42; i < 360; i += 20) {
+        //Comeca a setar os construiveis
+        for (int i = 2; i < 360; i += 20) {
             mapa.getMapa().get(i).setBloqueado(false);
             mapa.getMapa().get(i).setConstruivel(true);
         }
-        for (int i = 343; i < 358; i ++) {
+        for (int i = 343; i < 358; i++) {
             mapa.getMapa().get(i).setBloqueado(false);
             mapa.getMapa().get(i).setConstruivel(true);
         }
-        for (int i = 44; i < 58; i ++) {
+        for (int i = 44; i <= 58; i++) {
             mapa.getMapa().get(i).setBloqueado(false);
             mapa.getMapa().get(i).setConstruivel(true);
         }
-        for (int i = 64; i < 324; i+=20) {
+        for (int i = 4; i < 324; i += 20) {
             mapa.getMapa().get(i).setBloqueado(false);
             mapa.getMapa().get(i).setConstruivel(true);
         }
-        for (int i = 86; i < 344; i+=20) {
+        for (int i = 86; i < 344; i += 20) {
             mapa.getMapa().get(i).setBloqueado(false);
             mapa.getMapa().get(i).setConstruivel(true);
         }
-        for (int i = 68; i < 324; i+=20) {
+        for (int i = 68; i < 324; i += 20) {
             mapa.getMapa().get(i).setBloqueado(false);
             mapa.getMapa().get(i).setConstruivel(true);
         }
-        
+        for (int i = 59; i <= 99; i += 40) {
+            mapa.getMapa().get(i).setBloqueado(false);
+            mapa.getMapa().get(i).setConstruivel(true);
+        }
+        for (int i = 90; i < 350; i += 20) {
+            mapa.getMapa().get(i).setBloqueado(false);
+            mapa.getMapa().get(i).setConstruivel(true);
+        }
+        for (int i = 52; i < 332; i += 20) {
+            mapa.getMapa().get(i).setBloqueado(false);
+            mapa.getMapa().get(i).setConstruivel(true);
+        }
+        for (int i = 94; i < 354; i += 20) {
+            mapa.getMapa().get(i).setBloqueado(false);
+            mapa.getMapa().get(i).setConstruivel(true);
+        }
+        for (int i = 76; i < 336; i += 20) {
+            mapa.getMapa().get(i).setBloqueado(false);
+            mapa.getMapa().get(i).setConstruivel(true);
+        }
+        for (int i = 98; i < 378; i += 20) {
+            mapa.getMapa().get(i).setBloqueado(false);
+            mapa.getMapa().get(i).setConstruivel(true);
+        }
+
         AEstrela.aEstrela(mapa.getMapa().get(3), mapa.getMapa().get(79), mapa);
-        caminho = AEstrela.caminhos; 
-        
+        caminho = AEstrela.caminhos;
+
         return caminho;
     }
 
-    private static void tela_init() {      
+    private static void tela_init() {
         JFrame frame = new JFrame("Attack, Lord Willow!");
         DrawPanel panel = new DrawPanel();
         frame.setSize(new Dimension(816, 838));
-        frame.setLocation(new Point(500,100));
+        frame.setLocation(new Point(500, 100));
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-
 
 }

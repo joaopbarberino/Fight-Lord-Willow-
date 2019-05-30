@@ -58,10 +58,10 @@ public class AEstrela {
                     }
                 }
             }
-//            if (listaAberta.isEmpty()) {
-//                System.out.println("Nao achou caminho");
-//                return null;
-//            }
+            if (listaFechada.isEmpty()) {
+                System.out.println("Nao achou caminho");
+                return null;
+            }
         }
         return montaCaminho(noInicial, noDestino, mapa);
     }
