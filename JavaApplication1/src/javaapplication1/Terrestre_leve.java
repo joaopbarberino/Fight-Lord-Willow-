@@ -14,6 +14,6 @@ public class Terrestre_leve extends Inimigo {
     public Terrestre_leve() {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
-        super(10, 2, 5, 1, 10, 20, "terrestre");
+        super(10, 2, 5, 1, 10, 20, "terrestre", null);
     }
 }

@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package javaapplication1;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.*;
 /**
  *
@@ -21,8 +23,9 @@ public abstract class Inimigo {
     private List caminho = null;
     private int qtdPassos = 1; // Quantos passos ele já deu
     private String tipo;
+    private BufferedImage sprite;
 
-    public Inimigo(int vida, int ataque, int defesa, int vel_mov, int gold, int xp, String tipo) {
+    public Inimigo(int vida, int ataque, int defesa, int vel_mov, int gold, int xp, String tipo, BufferedImage sprite) {
         this.vida = vida;
         this.ataque = ataque;
         this.defesa = defesa;
@@ -31,6 +34,7 @@ public abstract class Inimigo {
         this.xp = xp;
         this.pos = 0;
         this.tipo = tipo;
+        this.sprite = sprite;
     }
 
     // Retorna a vida atual do inimigo
@@ -105,6 +109,16 @@ public abstract class Inimigo {
     // Retorna em qual posição do mapa o inimigo está
     public int getPos(){
         return this.pos;   
+    }
+    
+        public void render(Graphics g) {
+//        if (!isDamaged) {
+//            g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+//        } else {
+//            g.drawImage(Entity.ENEMY_FEEDBACK, this.getX() - Camera.x, this.getY() - Camera.y, null);
+//        }
+        //g.setColor(Color.blue);
+        //g.fillRect(this.getX() + maskX - Camera.x,this.getY() + maskY - Camera.y, maskW,maskH);
     }
 
 }

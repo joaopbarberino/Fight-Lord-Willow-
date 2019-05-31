@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
  */
 public class Tile_layer {
     private int [][] mapa;
-    private BufferedImage tileSheet;
+    private BufferedImage tileSheet, minitaur;
     public Tile_layer(int[][] existingMap){
         mapa = new int[existingMap.length][existingMap[0].length];
         for (int y = 0; y < mapa.length; y++) {
@@ -28,13 +28,14 @@ public class Tile_layer {
                 mapa[y][x] = existingMap[y][x];
             }
         }
-        tileSheet = LoadTileSheet("blocks.png");
+        tileSheet = LoadTileSheet("/pics/blocks.png");
+        minitaur =  LoadTileSheet("/pics/minitaur.png");
     }
-    
+    //Pega o tamanho do mapa
     public Tile_layer(int width, int height){
         mapa = new int[height][width];
     }
-    
+    //Le o mapa atraves de um txt
     public static Tile_layer From_file(String fileName){
         Tile_layer layer = null;
         ArrayList<ArrayList<Integer>> tempLayout = new ArrayList<>();
@@ -68,6 +69,7 @@ public class Tile_layer {
             }
         }
         layer.tileSheet = layer.LoadTileSheet("blocks.png");
+        layer.minitaur = layer.LoadTileSheet("minitaur.png");
         
         return layer;
     }
@@ -99,5 +101,7 @@ public class Tile_layer {
                         (yOffset * Engine.TILE_HEIGTH) + Engine.TILE_HEIGTH, null);
             }
         }
+        g.drawImage(minitaur, 800, Engine.TILE_HEIGTH, null);
     }
+    
 }

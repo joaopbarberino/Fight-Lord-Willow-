@@ -9,6 +9,7 @@ import java.util.*;
 import Estrutura.*;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import mapa.*;
 
@@ -18,10 +19,9 @@ import mapa.*;
  */
 public class JavaApplication1 {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
+        Sprite_sheet sprite_terrestre;
+        sprite_terrestre = new Sprite_sheet("/pics/minitaur.png");
         ArrayList<Integer> caminho = new ArrayList();
         tela_init();
         // Instanciar o mapa da fase
