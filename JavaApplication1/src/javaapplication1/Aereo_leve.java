@@ -14,7 +14,7 @@ public class Aereo_leve extends Inimigo{
     public Aereo_leve() {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
-        super(10, 1, 10, 2, 10, 10, "aereo");
+        super(10, 1, 10, 2, 10, 10, "aereo",null);
     }
 
 }

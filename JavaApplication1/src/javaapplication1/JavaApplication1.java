@@ -19,11 +19,15 @@ import mapa.*;
  */
 public class JavaApplication1 {
 
+    //public static ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
+
     public static void main(String[] args) {
+        
         Sprite_sheet sprite_terrestre;
         sprite_terrestre = new Sprite_sheet("/pics/minitaur.png");
         ArrayList<Integer> caminho = new ArrayList();
         tela_init();
+        //List<Terrestre_pesado> lista_terrestre_pesado;
         // Instanciar o mapa da fase
         caminho = Mapa_exec(caminho);
         System.out.println("Caminho: " + caminho);
@@ -33,13 +37,7 @@ public class JavaApplication1 {
         x.set_casas_no_alcance();
         x.get_casas_no_alcance();
 
-        /*Tela jogo = new Tela();
-         jogo.Initialize();
-         Armadilha_lava a = new Armadilha_lava();
-         System.out.println(a.getAtaque());
-         a.teste();
-
-         Base jogador = new Base();*/
+        Base jogador = new Base();
         int round = 1;
 
         // Vetor com as quantidades de inimigos
@@ -53,6 +51,7 @@ public class JavaApplication1 {
         while (gameLoop) {
             // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
             ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
+            //lista_terrestre_pesado = new ArrayList<Terrestre_pesado>();
             ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
             ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
             ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
@@ -69,9 +68,9 @@ public class JavaApplication1 {
                     for (int j = 0; j < qtds.length; j++) {
                         for (int i = 0; i < qtds[j]; i++) {
                             // Instancia esses inimigos
-                            Terrestre_leve inimigo = new Terrestre_leve();
+                            Terrestre_pesado inimigo = new Terrestre_pesado();
                             // Adiciona na sua respectiva lista
-                            lista_terrestres_leves.add(inimigo);
+                            lista_terrestres_pesado.add(inimigo);
                             //System.out.println(lista_terrestres_leves.get(i).getVida());
                         }
                     }
@@ -103,7 +102,7 @@ public class JavaApplication1 {
                      */
 
                     // Caso todos os inimigos estejam mortos, round acaba
-                    if (lista_terrestres_leves.isEmpty()) {
+                    if (lista_terrestres_pesado.isEmpty()) {
                         round++;
                     }
 
@@ -123,6 +122,7 @@ public class JavaApplication1 {
 
                 // Checa se o jogador tem xp o suficente para subir de nivel
             }
+            renderMaster(lista_terrestres_pesado);
         }
     }
 
@@ -134,8 +134,8 @@ public class JavaApplication1 {
 
         switch (round) {
             case 1:
-                qtd_inimigos_terrestres_leves = 10;
-                qtds[0] = qtd_inimigos_terrestres_leves;
+                qtd_inimigos_terrestres_pesados = 10;
+                qtds[0] = qtd_inimigos_terrestres_pesados;
 
                 break;
         }
@@ -249,6 +249,16 @@ public class JavaApplication1 {
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+    }
+
+    public static void renderMaster(List lista_terrestres_pesado) {
+//        for (Inimigo T :lista_terrestres_pesado) {
+//            
+//        }
+        for (int i = 0; i < lista_terrestres_pesado.size(); i++) {
+            inimigo e = lista_terrestres_pesado.get(i);
+            e.render(g);
+        }
     }
 
 }

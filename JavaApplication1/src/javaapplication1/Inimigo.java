@@ -24,6 +24,7 @@ public abstract class Inimigo {
     private int qtdPassos = 1; // Quantos passos ele já deu
     private String tipo;
     private BufferedImage sprite;
+    public static BufferedImage terrestre_pesado;
 
     public Inimigo(int vida, int ataque, int defesa, int vel_mov, int gold, int xp, String tipo, BufferedImage sprite) {
         this.vida = vida;
@@ -99,11 +100,13 @@ public abstract class Inimigo {
     // string de caminhos baseado em quantos passos ele já deu, começa em 1 pois
     // 0, o primeiro char da string de caminho, sempre vai ser 0, o ponto inicial,
     // o qual o inimigo já está.
-    public void andar() {
+    public boolean andar() {
         if (this.caminho != null) {
             this.pos = (int) this.caminho.get(this.qtdPassos);
             this.qtdPassos ++;
-        }
+            return true;
+        } else
+            return false;
     }
     
     // Retorna em qual posição do mapa o inimigo está
@@ -112,13 +115,7 @@ public abstract class Inimigo {
     }
     
         public void render(Graphics g) {
-//        if (!isDamaged) {
-//            g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-//        } else {
-//            g.drawImage(Entity.ENEMY_FEEDBACK, this.getX() - Camera.x, this.getY() - Camera.y, null);
-//        }
-        //g.setColor(Color.blue);
-        //g.fillRect(this.getX() + maskX - Camera.x,this.getY() + maskY - Camera.y, maskW,maskH);
+            g.drawImage(sprite, 150, 150, null);
     }
 
 }

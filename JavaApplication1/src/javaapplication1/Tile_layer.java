@@ -29,7 +29,6 @@ public class Tile_layer {
             }
         }
         tileSheet = LoadTileSheet("/pics/blocks.png");
-        minitaur =  LoadTileSheet("/pics/minitaur.png");
     }
     //Pega o tamanho do mapa
     public Tile_layer(int width, int height){

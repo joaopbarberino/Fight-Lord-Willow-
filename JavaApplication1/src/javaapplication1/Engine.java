@@ -12,4 +12,5 @@ package javaapplication1;
 public class Engine {
     public static final int TILE_WIDTH = 40;
     public static final int TILE_HEIGTH = 40;
+    public static final int TILE_SIZE = 40;
 }
