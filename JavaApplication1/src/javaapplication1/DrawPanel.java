@@ -16,7 +16,6 @@ public class DrawPanel extends JPanel {
         layer = Tile_layer.From_file("mapa.txt");
         //minotaur = Tile_layer.From_file("minitaur.txt");
     }
-    
     @Override public void paintComponent(Graphics g){
         super.paintComponent(g);
         //minotaur.Draw_layer(g);

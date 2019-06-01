@@ -9,6 +9,7 @@ import java.util.*;
 import Estrutura.*;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import mapa.*;
@@ -24,7 +25,7 @@ public class JavaApplication1 {
     public static void main(String[] args) {
         
         Sprite_sheet sprite_terrestre;
-        sprite_terrestre = new Sprite_sheet("/pics/minitaur.png");
+        //sprite_terrestre = new Sprite_sheet("/pics/minitaur.png");
         ArrayList<Integer> caminho = new ArrayList();
         tela_init();
         //List<Terrestre_pesado> lista_terrestre_pesado;
@@ -50,11 +51,11 @@ public class JavaApplication1 {
 
         while (gameLoop) {
             // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
-            ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
+            //ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
             //lista_terrestre_pesado = new ArrayList<Terrestre_pesado>();
             ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
-            ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
-            ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
+            //ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
+            //ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
 
             // Colocar timing para o jogador pensar (em segundos)
             // Checa se o jogador nao vai construir ou melhorar alguma torre
@@ -122,6 +123,7 @@ public class JavaApplication1 {
 
                 // Checa se o jogador tem xp o suficente para subir de nivel
             }
+            
             renderMaster(lista_terrestres_pesado);
         }
     }
@@ -250,15 +252,18 @@ public class JavaApplication1 {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-
     public static void renderMaster(List lista_terrestres_pesado) {
 //        for (Inimigo T :lista_terrestres_pesado) {
 //            
 //        }
-        for (int i = 0; i < lista_terrestres_pesado.size(); i++) {
-            inimigo e = lista_terrestres_pesado.get(i);
-            e.render(g);
-        }
+
+        Terrestre_pesado batata = new Terrestre_pesado();
+        batata.render();
+       
+//        for (int i = 0; i < lista_terrestres_pesado.size(); i++) {
+//            Terrestre_pesado e = lista_terrestres_pesado.get(i);
+//            //e.render(g);
+//        }
     }
 
 }

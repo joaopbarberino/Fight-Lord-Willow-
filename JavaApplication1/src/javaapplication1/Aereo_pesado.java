@@ -27,22 +27,22 @@ public class Aereo_pesado extends Inimigo {
             minotaurs_anda[i] = minotaur_anda.getSprite(i*Engine.TILE_SIZE, 0, Engine.TILE_WIDTH, Engine.TILE_HEIGTH);
         }
     }
-    @Override
-    public void render(Graphics g) {
-        //caso minotauro ande, carrega sprite dele andando, caso contrario, dele parado
-        if (andar()) {
-            for (int i = 0; i < minotaurs_anda.length; i++) {
-                g.drawImage(minotaurs_anda[i], 150, 150, null);
-            }
-            //g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-        } else {
-            for (int i = 0; i < minotaurs_anda.length; i++) {
-                g.drawImage(minotaurs_anda[i], 150, 150, null);
-            }
-            //g.drawImage(Entity.ENEMY_FEEDBACK, this.getX() - Camera.x, this.getY() - Camera.y, null);
-        }
-        //g.setColor(Color.blue);
-        //g.fillRect(this.getX() + maskX - Camera.x,this.getY() + maskY - Camera.y, maskW,maskH);
-    }
+//    @Override
+//    public void render(Graphics g) {
+//        //caso minotauro ande, carrega sprite dele andando, caso contrario, dele parado
+//        if (andar()) {
+//            for (int i = 0; i < minotaurs_anda.length; i++) {
+//                g.drawImage(minotaurs_anda[i], 150, 150, null);
+//            }
+//            //g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+//        } else {
+//            for (int i = 0; i < minotaurs_anda.length; i++) {
+//                g.drawImage(minotaurs_anda[i], 150, 150, null);
+//            }
+//            //g.drawImage(Entity.ENEMY_FEEDBACK, this.getX() - Camera.x, this.getY() - Camera.y, null);
+//        }
+//        //g.setColor(Color.blue);
+//        //g.fillRect(this.getX() + maskX - Camera.x,this.getY() + maskY - Camera.y, maskW,maskH);
+//    }
 
 }

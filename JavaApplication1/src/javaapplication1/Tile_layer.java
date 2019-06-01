@@ -19,9 +19,12 @@ import javax.imageio.ImageIO;
  * @author PEDROKREIDABALA
  */
 public class Tile_layer {
-    private int [][] mapa;
+
+    private int[][] mapa;
     private BufferedImage tileSheet, minitaur;
-    public Tile_layer(int[][] existingMap){
+    //Tile_layer minotaur = null;
+
+    public Tile_layer(int[][] existingMap) {
         mapa = new int[existingMap.length][existingMap[0].length];
         for (int y = 0; y < mapa.length; y++) {
             for (int x = 0; x < mapa[y].length; x++) {
@@ -30,77 +33,84 @@ public class Tile_layer {
         }
         tileSheet = LoadTileSheet("/pics/blocks.png");
     }
+
     //Pega o tamanho do mapa
-    public Tile_layer(int width, int height){
+    public Tile_layer(int width, int height) {
         mapa = new int[height][width];
     }
+
     //Le o mapa atraves de um txt
-    public static Tile_layer From_file(String fileName){
+    public static Tile_layer From_file(String fileName) {
         Tile_layer layer = null;
         ArrayList<ArrayList<Integer>> tempLayout = new ArrayList<>();
-        
-        try(BufferedReader br = new BufferedReader(new FileReader(fileName))){
+
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String currentLine;
-            while((currentLine = br.readLine()) != null){
-                if(currentLine.isEmpty())
+            while ((currentLine = br.readLine()) != null) {
+                if (currentLine.isEmpty()) {
                     continue;
+                }
                 ArrayList<Integer> row = new ArrayList<>();
                 String[] values = currentLine.trim().split(" ");
-                
+
                 for (String string : values) {
-                    if(!string.isEmpty()){
+                    if (!string.isEmpty()) {
                         int id = Integer.parseInt(string);
-                        row.add(id);                    }
+                        row.add(id);
+                    }
                 }
                 tempLayout.add(row);
             }
-        }catch(IOException e){
-            
+        } catch (IOException e) {
+
         }
         int width = tempLayout.get(0).size();
         int height = tempLayout.size();
-        
-        layer = new Tile_layer(width,height);
-        
+
+        layer = new Tile_layer(width, height);
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 layer.mapa[y][x] = tempLayout.get(y).get(x);
             }
         }
         layer.tileSheet = layer.LoadTileSheet("blocks.png");
-        layer.minitaur = layer.LoadTileSheet("minitaur.png");
-        
+        //layer.minitaur = layer.LoadTileSheet("minitaur.png");
+
         return layer;
     }
-    public BufferedImage LoadTileSheet(String fileName){
+
+    public BufferedImage LoadTileSheet(String fileName) {
         BufferedImage img = null;
-        try{
+        try {
             img = ImageIO.read(new File(fileName));
-        }catch(IOException e){
+        } catch (IOException e) {
             System.out.print("Nao consegui ler a imagem!");
         }
         return img;
     }
-    public void Draw_layer(Graphics g){
+
+    public void Draw_layer(Graphics g) {
         for (int y = 0; y < mapa.length; y++) {
             for (int x = 0; x < mapa[y].length; x++) {
                 int index = mapa[y][x];
                 int yOffset = 0;
-                if(index > (tileSheet.getWidth() / Engine.TILE_WIDTH)-1){
+                if (index > (tileSheet.getWidth() / Engine.TILE_WIDTH) - 1) {
                     yOffset++;
-                    index = index -(tileSheet.getWidth() / Engine.TILE_WIDTH);
+                    index = index - (tileSheet.getWidth() / Engine.TILE_WIDTH);
                 }
                 g.drawImage(tileSheet, x * Engine.TILE_WIDTH,
                         y * Engine.TILE_HEIGTH,
                         (x * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
-                        (y* Engine.TILE_HEIGTH) + Engine.TILE_HEIGTH,
+                        (y * Engine.TILE_HEIGTH) + Engine.TILE_HEIGTH,
                         index * Engine.TILE_WIDTH,
                         yOffset * Engine.TILE_HEIGTH,
                         (index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
                         (yOffset * Engine.TILE_HEIGTH) + Engine.TILE_HEIGTH, null);
             }
+            //g.drawImage
         }
-        g.drawImage(minitaur, 800, Engine.TILE_HEIGTH, null);
+        
     }
-    
+
 }

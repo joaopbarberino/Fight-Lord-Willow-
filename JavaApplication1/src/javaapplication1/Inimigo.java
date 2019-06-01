@@ -4,14 +4,17 @@
  * and open the template in the editor.
  */
 package javaapplication1;
+import java.awt.*;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.*;
+import javax.swing.JPanel;
+
 /**
  *
  * @author joao.pbsilva20
  */
-public abstract class Inimigo {
+public abstract class Inimigo extends DrawPanel{
 
     private int vida;
     private int ataque;
@@ -20,8 +23,9 @@ public abstract class Inimigo {
     private int gold;
     private int xp;
     private int pos; // Posição do mapa em que o inimigo está
-    private List caminho = null;
+    private ArrayList caminho = null;
     private int qtdPassos = 1; // Quantos passos ele já deu
+    private boolean andando = false;
     private String tipo;
     private BufferedImage sprite;
     public static BufferedImage terrestre_pesado;
@@ -87,35 +91,48 @@ public abstract class Inimigo {
     public boolean isMorto() {
         return this.vida == 0;
     }
-    
+
     // Mata o inimigo, reduzindo sua vida a 0
     public void matar() {
         this.vida = 0;
     }
-    
-    public void setCaminho (List caminho){
+
+    public void setCaminho(ArrayList caminho) {
         this.caminho = caminho;
     }
+
     // Faz o inimigo andar caso haja um caminho, ele irá para a posição dada na
     // string de caminhos baseado em quantos passos ele já deu, começa em 1 pois
     // 0, o primeiro char da string de caminho, sempre vai ser 0, o ponto inicial,
     // o qual o inimigo já está.
-    public boolean andar() {
+    public void andar() {
         if (this.caminho != null) {
             this.pos = (int) this.caminho.get(this.qtdPassos);
-            this.qtdPassos ++;
-            return true;
-        } else
-            return false;
+            this.qtdPassos++;
+            this.andando = true;
+        }
+        if (this.qtdPassos == this.caminho.size()){
+            this.andando = false;
+        }
     }
     
+    public boolean isAndando(){
+        return this.andando;
+    }
+
     // Retorna em qual posição do mapa o inimigo está
-    public int getPos(){
-        return this.pos;   
+    public int getPos() {
+        return this.pos;
     }
-    
-        public void render(Graphics g) {
-            g.drawImage(sprite, 150, 150, null);
+
+    public void render(BufferedImage[] sprites) {  
+        
+        for (int i = 0; i < sprites.length; i++) {
+                Graphics g = sprites[i].getGraphics();
+                System.out.println(g);
+                g.drawImage(sprites[i], 100, 100, null);
+            }
+        
     }
 
 }
