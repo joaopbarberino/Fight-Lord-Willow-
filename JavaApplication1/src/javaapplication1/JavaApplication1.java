@@ -21,9 +21,8 @@ import mapa.*;
 public class JavaApplication1 {
 
     //public static ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
-
     public static void main(String[] args) {
-        
+
         Sprite_sheet sprite_terrestre;
         //sprite_terrestre = new Sprite_sheet("/pics/minitaur.png");
         ArrayList<Integer> caminho = new ArrayList();
@@ -123,8 +122,7 @@ public class JavaApplication1 {
 
                 // Checa se o jogador tem xp o suficente para subir de nivel
             }
-            
-            renderMaster(lista_terrestres_pesado);
+
         }
     }
 
@@ -247,23 +245,12 @@ public class JavaApplication1 {
         JFrame frame = new JFrame("Attack, Lord Willow!");
         DrawPanel panel = new DrawPanel();
         frame.setSize(new Dimension(816, 838));
-        frame.setLocation(new Point(500, 100));
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-    }
-    public static void renderMaster(List lista_terrestres_pesado) {
-//        for (Inimigo T :lista_terrestres_pesado) {
-//            
-//        }
-
         Terrestre_pesado batata = new Terrestre_pesado();
-        batata.render();
-       
-//        for (int i = 0; i < lista_terrestres_pesado.size(); i++) {
-//            Terrestre_pesado e = lista_terrestres_pesado.get(i);
-//            //e.render(g);
-//        }
     }
 
 }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package javaapplication1;
+
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -14,7 +15,7 @@ import javax.swing.JPanel;
  *
  * @author joao.pbsilva20
  */
-public abstract class Inimigo extends DrawPanel{
+public abstract class Inimigo extends JPanel{
 
     private int vida;
     private int ataque;
@@ -30,7 +31,7 @@ public abstract class Inimigo extends DrawPanel{
     private BufferedImage sprite;
     public static BufferedImage terrestre_pesado;
 
-    public Inimigo(int vida, int ataque, int defesa, int vel_mov, int gold, int xp, String tipo, BufferedImage sprite) {
+    public Inimigo(int vida, int ataque, int defesa, int vel_mov, int gold, int xp, String tipo) {
         this.vida = vida;
         this.ataque = ataque;
         this.defesa = defesa;
@@ -39,7 +40,6 @@ public abstract class Inimigo extends DrawPanel{
         this.xp = xp;
         this.pos = 0;
         this.tipo = tipo;
-        this.sprite = sprite;
     }
 
     // Retorna a vida atual do inimigo
@@ -111,12 +111,12 @@ public abstract class Inimigo extends DrawPanel{
             this.qtdPassos++;
             this.andando = true;
         }
-        if (this.qtdPassos == this.caminho.size()){
+        if (this.qtdPassos == this.caminho.size()) {
             this.andando = false;
         }
     }
-    
-    public boolean isAndando(){
+
+    public boolean isAndando() {
         return this.andando;
     }
 
@@ -124,15 +124,12 @@ public abstract class Inimigo extends DrawPanel{
     public int getPos() {
         return this.pos;
     }
-
-    public void render(BufferedImage[] sprites) {  
+    
+    public void render(BufferedImage sprite){
         
-        for (int i = 0; i < sprites.length; i++) {
-                Graphics g = sprites[i].getGraphics();
-                System.out.println(g);
-                g.drawImage(sprites[i], 100, 100, null);
-            }
-        
+        this.sprite = sprite;
     }
-
+    
+  
+   
 }

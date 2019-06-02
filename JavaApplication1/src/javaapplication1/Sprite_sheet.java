@@ -6,6 +6,7 @@
 package javaapplication1;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -19,7 +20,7 @@ public class Sprite_sheet {
 
     public Sprite_sheet(String path) {
         try {
-            spritesheet = ImageIO.read(getClass().getResource(path));
+            spritesheet = ImageIO.read(new File(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
