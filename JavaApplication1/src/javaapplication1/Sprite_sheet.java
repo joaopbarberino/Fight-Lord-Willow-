@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author Guilherme Delmondes
+ * @author pedro.hlaredes
  */
 public class Sprite_sheet {
 

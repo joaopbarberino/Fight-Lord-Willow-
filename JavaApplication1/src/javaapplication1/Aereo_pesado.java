@@ -7,6 +7,9 @@ package javaapplication1;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -14,35 +17,41 @@ import java.awt.image.BufferedImage;
  */
 public class Aereo_pesado extends Inimigo {
 
-    private BufferedImage[] minotaurs_anda, minotaurs_parado;
+    private BufferedImage img;
 
     public Aereo_pesado() {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
-        super(10, 2, 5, 1, 10, 20, "aereo", null);
-        minotaurs_anda = new BufferedImage[4];
-        minotaurs_parado = new BufferedImage[4];
-        Sprite_sheet minotaur_anda = new Sprite_sheet("/pics/minitaur.png");
-        for (int i = 0; i < minotaurs_anda.length; i++) {
-            minotaurs_anda[i] = minotaur_anda.getSprite(i*Engine.TILE_SIZE, 0, Engine.TILE_WIDTH, Engine.TILE_HEIGTH);
+        //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
+        super(10, 2, 5, 1, 10, 20, "aereo");
+
+        try {
+            img = ImageIO.read(new File("/pics/minitaur.png"));
+
+        } catch (IOException e) {
+            System.out.println("EXCEPTION IN LOAD IMAGE:" + e.toString());
         }
-    }
-//    @Override
+    }   
+   
+}
+
+
+    
 //    public void render(Graphics g) {
 //        //caso minotauro ande, carrega sprite dele andando, caso contrario, dele parado
 //        if (andar()) {
-//            for (int i = 0; i < minotaurs_anda.length; i++) {
-//                g.drawImage(minotaurs_anda[i], 150, 150, null);
+//            for (BufferedImage minotaurs_anda1 : minotaurs_anda) {
+//                g.drawImage(minotaurs_anda1, 150, 150, null);
 //            }
 //            //g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 //        } else {
-//            for (int i = 0; i < minotaurs_anda.length; i++) {
-//                g.drawImage(minotaurs_anda[i], 150, 150, null);
+//            for (BufferedImage minotaurs_anda1 : minotaurs_anda) {
+//                g.drawImage(minotaurs_anda1, 150, 150, null);
 //            }
 //            //g.drawImage(Entity.ENEMY_FEEDBACK, this.getX() - Camera.x, this.getY() - Camera.y, null);
 //        }
 //        //g.setColor(Color.blue);
 //        //g.fillRect(this.getX() + maskX - Camera.x,this.getY() + maskY - Camera.y, maskW,maskH);
 //    }
-
-}
+//
+//}

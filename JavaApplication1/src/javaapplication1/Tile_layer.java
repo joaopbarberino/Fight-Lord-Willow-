@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 /**
- *
- * @author PEDROKREIDABALA
+ * @author pedro.hlaredes
+ * 
  */
 public class Tile_layer {
 

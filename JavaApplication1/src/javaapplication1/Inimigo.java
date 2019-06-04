@@ -28,9 +28,10 @@ public abstract class Inimigo extends JPanel{
     private int qtdPassos = 1; // Quantos passos ele já deu
     private boolean andando = false;
     private String tipo;
-    private BufferedImage sprite;
+    
     public static BufferedImage terrestre_pesado;
-
+    
+    //aqui n deveria ter um parametro no construtor pra ser a img?
     public Inimigo(int vida, int ataque, int defesa, int vel_mov, int gold, int xp, String tipo) {
         this.vida = vida;
         this.ataque = ataque;
@@ -39,7 +40,7 @@ public abstract class Inimigo extends JPanel{
         this.gold = gold;
         this.xp = xp;
         this.pos = 0;
-        this.tipo = tipo;
+        this.tipo = tipo;        ;
     }
 
     // Retorna a vida atual do inimigo
@@ -123,13 +124,6 @@ public abstract class Inimigo extends JPanel{
     // Retorna em qual posição do mapa o inimigo está
     public int getPos() {
         return this.pos;
-    }
-    
-    public void render(BufferedImage sprite){
-        
-        this.sprite = sprite;
-    }
-    
-  
-   
+    }    
+       
 }

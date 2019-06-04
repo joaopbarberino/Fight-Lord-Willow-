@@ -22,6 +22,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel{
     public Terrestre_pesado() {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
+        //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
         super(20, 2, 2, 1, 10, 20, "terrestre");
         this.SPRITE = setSprite();
     }

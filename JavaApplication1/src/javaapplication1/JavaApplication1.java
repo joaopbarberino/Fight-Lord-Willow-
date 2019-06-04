@@ -244,8 +244,8 @@ public class JavaApplication1 {
     private static void tela_init() {
         JFrame frame = new JFrame("Attack, Lord Willow!");
         DrawPanel panel = new DrawPanel();
-        frame.setSize(new Dimension(816, 838));
-        frame.setResizable(false);
+        frame.setBounds(500,200,816,838);
+        //frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
