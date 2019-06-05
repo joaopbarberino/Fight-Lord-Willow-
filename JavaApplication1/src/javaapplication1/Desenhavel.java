@@ -12,8 +12,5 @@ import java.awt.Graphics;
  * @author PC-HOME
  */
 public interface Desenhavel {
-
     public void paintComponent(Graphics g);
-    
-    public void paint(Graphics g);
 }

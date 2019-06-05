@@ -13,12 +13,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 /**
  * @author pedro.hlaredes
- * 
+ *
  */
-public class Tile_layer {
+public class Tile_layer extends JPanel implements Desenhavel {
 
     private int[][] mapa;
     private BufferedImage tileSheet, minitaur;
@@ -90,7 +91,8 @@ public class Tile_layer {
         return img;
     }
 
-    public void Draw_layer(Graphics g) {
+    @Override
+    public void paintComponent(Graphics g) {
         for (int y = 0; y < mapa.length; y++) {
             for (int x = 0; x < mapa[y].length; x++) {
                 int index = mapa[y][x];
@@ -108,9 +110,6 @@ public class Tile_layer {
                         (index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
                         (yOffset * Engine.TILE_HEIGTH) + Engine.TILE_HEIGTH, null);
             }
-            //g.drawImage
         }
-        
     }
-
 }

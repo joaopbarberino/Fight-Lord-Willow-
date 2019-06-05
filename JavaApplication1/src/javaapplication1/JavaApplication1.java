@@ -4,126 +4,25 @@
  * and open the template in the editor.
  */
 package javaapplication1;
-
-import java.util.*;
-import Estrutura.*;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import javax.swing.JFrame;
-import mapa.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
 
 /**
  *
  * @author joao.pbsilva20
  */
-public class JavaApplication1 {
-
+public class JavaApplication1  {    
     //public static ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
-    public static void main(String[] args) {
-
-        Sprite_sheet sprite_terrestre;
-        //sprite_terrestre = new Sprite_sheet("/pics/minitaur.png");
-        ArrayList<Integer> caminho = new ArrayList();
-        tela_init();
-        //List<Terrestre_pesado> lista_terrestre_pesado;
-        // Instanciar o mapa da fase
-        caminho = Mapa_exec(caminho);
-        System.out.println("Caminho: " + caminho);
-
-        // 
-        Estrutura x = new Torre_terrestre(83);
-        x.set_casas_no_alcance();
-        x.get_casas_no_alcance();
-
-        Base jogador = new Base();
-        int round = 1;
-
-        // Vetor com as quantidades de inimigos
-        // posição 0 = inimigos terrestres leves
-        // posição 1 = inimigos terrestres pesados
-        // posição 2 = inimigos aereos leves
-        // posição 3 = inimigos aereos pesados
-        int qtds[] = new int[4];
-        boolean gameLoop = true;
-
-        while (gameLoop) {
-            // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
-            //ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
-            //lista_terrestre_pesado = new ArrayList<Terrestre_pesado>();
-            ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
-            //ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
-            //ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
-
-            // Colocar timing para o jogador pensar (em segundos)
-            // Checa se o jogador nao vai construir ou melhorar alguma torre
-            // Caso construa, adiciona a estrutura numa lista de estruturas
-            // Gera wave baseado em valores pré determinados com base no round
-            geraWave(round, qtds);
-
-            switch (round) {
-                case 1:
-                    // Conta qts inimigos tem de cada tipo
-                    for (int j = 0; j < qtds.length; j++) {
-                        for (int i = 0; i < qtds[j]; i++) {
-                            // Instancia esses inimigos
-                            Terrestre_pesado inimigo = new Terrestre_pesado();
-                            // Adiciona na sua respectiva lista
-                            lista_terrestres_pesado.add(inimigo);
-                            //System.out.println(lista_terrestres_leves.get(i).getVida());
-                        }
-                    }
-                    /*
-                     Acha caminho e da pro inimigo seguir
-                     
-                     Para cada inimigo da lista diferente de null
-                    
-                     Chama função abaixo:
-                     Checa se ele não está no range de todas as torres
-                     -> Se tiver, a torre ataca enquanto o inimigo estiver no range {
-                     -> Inimigo recebe o ataque
-                     -> Se vida do inimigo => 0, ele morre e é removido da lista
-                     -> Se não, inimigo anda
-
-                     -> Se chegou no destino, se mata e da dano no jogador
-                     -> Se vida atual do jogador <= 0, gameLoop = false, break;
-
-                     -> Se o inimigo morrer, jogador recebe o gold e o xp q ele vale
-                     }
-
-                     -> Se não estiver
-                     -> Inimigo anda
-                     -> Se chegou no destino, se mata e da dano no jogador
-                     -> Se vida atual do jogador <= 0, gameLoop = false, break;
-                                    
-                    
-                     FAZER TRATAMENTO DE FPS
-                     */
-
-                    // Caso todos os inimigos estejam mortos, round acaba
-                    if (lista_terrestres_pesado.isEmpty()) {
-                        round++;
-                    }
-
-                    gameLoop = false;
-
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                default:
-                    break;
-
-                // Checa se o jogador tem xp o suficente para subir de nivel
-            }
-
-        }
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Tile_layer layer = Tile_layer.From_file("mapa.txt");
+        ArrayList<BufferedImage> sprites = new ArrayList();
+        sprites.add(ImageIO.read(new File("minitaur.png")));
+        
+        Window screen = new Window(sprites, layer);
+        screen.run();
     }
 
     public static int[] geraWave(int round, int qtds[]) {
@@ -143,114 +42,4 @@ public class JavaApplication1 {
         return qtds;
 
     }
-
-    // public static void gameState (listas, jogador)
-    private static ArrayList Mapa_exec(ArrayList caminho) {
-        Mapa mapa = new Mapa(20, 20);
-        for (int i = 0; i < 400; i++) {
-            mapa.getMapa().get(i).setBloqueado(true);
-        }
-        //comeca a liberar o caminho q os inimigos vao percorrer
-        for (int i = 3; i < 343; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-        }
-        for (int i = 65; i <= 325; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-        }
-        for (int i = 67; i <= 327; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-        }
-        for (int i = 69; i <= 345; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-        }
-        for (int i = 71; i <= 345; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-        }
-        for (int i = 73; i <= 345; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-        }
-        for (int i = 75; i <= 345; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-        }
-        for (int i = 77; i <= 345; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-        }
-        for (int i = 78; i <= 79; i++) {
-            mapa.getMapa().get(i).setBloqueado(false);
-        }
-        for (int i = 324; i < 340; i += 4) {
-            mapa.getMapa().get(i).setBloqueado(false);
-        }
-        for (int i = 66; i < 76; i += 4) {
-            mapa.getMapa().get(i).setBloqueado(false);
-
-        }
-        //Comeca a setar os construiveis
-        for (int i = 2; i < 360; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 343; i < 358; i++) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 44; i <= 58; i++) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 4; i < 324; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 86; i < 344; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 68; i < 324; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 59; i <= 99; i += 40) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 90; i < 350; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 52; i < 332; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 94; i < 354; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 76; i < 336; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-        for (int i = 98; i < 378; i += 20) {
-            mapa.getMapa().get(i).setBloqueado(false);
-            mapa.getMapa().get(i).setConstruivel(true);
-        }
-
-        AEstrela.aEstrela(mapa.getMapa().get(3), mapa.getMapa().get(79), mapa);
-        caminho = AEstrela.caminhos;
-
-        return caminho;
-    }
-
-    private static void tela_init() {
-        JFrame frame = new JFrame("Attack, Lord Willow!");
-        DrawPanel panel = new DrawPanel();
-        frame.setBounds(500,200,816,838);
-        //frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setContentPane(panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        Terrestre_pesado batata = new Terrestre_pesado();
-    }
-
 }
