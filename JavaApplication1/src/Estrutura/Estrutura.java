@@ -7,13 +7,14 @@ package Estrutura;
 
 import javaapplication1.Inimigo;
 import java.util.*;
+import javax.swing.JPanel;
 import mapa.*;
 
 /**
  *
  * @author joao.pbsilva20
  */
-public class Estrutura {
+public class Estrutura extends JPanel{
 
     private int ataque;
     private int alcance;

@@ -9,38 +9,37 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 /**
  *
  * @author joao.pbsilva20
  */
-public class Terrestre_pesado extends Inimigo implements Desenhavel{
+public class Terrestre_pesado extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
+    private final int qtdColunas = 20;
 
-    public Terrestre_pesado() {
+    public Terrestre_pesado(BufferedImage sprite, ArrayList<Integer> caminho) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(20, 2, 2, 1, 10, 20, "terrestre");
-        this.SPRITE = setSprite();
+        super(20, 2, 2, 1, 10, 20, "terrestre", caminho);
+        this.SPRITE = sprite;
+
     }
 
-    private BufferedImage setSprite() {
-        try {
-            System.out.println("achou img");
-            return ImageIO.read(new File("minitaur.png"));
-
-        } catch (IOException e) {
-            System.out.println("Não foi possível ler a imagem");
-        }
-
-        return null;
+    public BufferedImage getSprite() {
+        return this.SPRITE;
     }
 
-    @Override public void paintComponent(Graphics g){ 
-       System.out.println("asdsadas");
-       g.drawImage(this.SPRITE, 200, 200, null);
+    @Override
+    public void paintComponent(Graphics g) {
+        System.out.println(super.getPos());
+        int x = (23 * 40) - (23/qtdColunas);
+        //int x = (3 * 40);
+        int y = (23/ qtdColunas) * 40 < 1 ? 40 : (this.getPos() / qtdColunas) * 40;
+        g.drawImage(this.SPRITE.getSubimage(0, 0, 40, 40), x, y, null);
     }
 }

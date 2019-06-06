@@ -23,10 +23,13 @@ import mapa.Mapa;
  * @author mathe
  */
 public class Window extends JFrame {
+
     //private BufferedImage minotaur = null;    
     private Tile_layer MAP;
     private ArrayList<BufferedImage> sprites;
-    
+    private ArrayList<Desenhavel> desenhaveis = new ArrayList();
+    private ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
+
     public Window(ArrayList<BufferedImage> sprites, Tile_layer layer) {
         //frame.setResizable(false);
         super("Attack, Lord Willow!");
@@ -36,7 +39,7 @@ public class Window extends JFrame {
         this.setVisible(true);
         this.MAP = layer;
         this.sprites = sprites;
-        Terrestre_pesado batata = new Terrestre_pesado();
+        //Terrestre_pesado batata = new Terrestre_pesado();
     }
 
     public void run() {
@@ -68,7 +71,7 @@ public class Window extends JFrame {
             // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
             //ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
             //lista_terrestre_pesado = new ArrayList<Terrestre_pesado>();
-            ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
+            lista_terrestres_pesado = new ArrayList();
             //ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
             //ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
 
@@ -84,12 +87,14 @@ public class Window extends JFrame {
                     for (int j = 0; j < qtds.length; j++) {
                         for (int i = 0; i < qtds[j]; i++) {
                             // Instancia esses inimigos
-                            Terrestre_pesado inimigo = new Terrestre_pesado();
+                            Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
                             // Adiciona na sua respectiva lista
                             lista_terrestres_pesado.add(inimigo);
+                            desenhaveis.add(inimigo);
                             //System.out.println(lista_terrestres_leves.get(i).getVida());
                         }
                     }
+                   
                     /*
                      Acha caminho e da pro inimigo seguir
                      
@@ -122,7 +127,7 @@ public class Window extends JFrame {
                         round++;
                     }
 
-                    gameLoop = false;
+                    //gameLoop = false;
 
                     break;
                 case 2:
@@ -138,6 +143,7 @@ public class Window extends JFrame {
 
                 // Checa se o jogador tem xp o suficente para subir de nivel
                 }
+            
             repaint();
         }
     }
@@ -237,22 +243,15 @@ public class Window extends JFrame {
 
         return caminho;
     }
-    
+
     @Override
     public void paint(Graphics g) {
-        //try {
+     
         this.MAP.paintComponent(g);
-        
-        for (BufferedImage sprite : sprites) {
-            g.drawImage(sprite.getSubimage(0, 0, 40, 40), 125, 100, null);
-        }    
-            
-        //} catch (IOException e) {
-          //  System.out.print("Nao consegui ler a imagem!");
-        //}
-        
-       // g.drawImage(minotaur.getSubimage(160/* aqui a gente mexe no sprite, só mexe nesse
-            //   pq é um vetor(só uma linha) e não uma matriz(spritesheet), 0, 40, 40), 125, 140, null);
-        //g.drawImage(minotaur, 100, 100, this);
+        for (Desenhavel objeto : desenhaveis) {
+            objeto.paintComponent(g);
+        }      
+    
+       
     }
 }

@@ -24,15 +24,15 @@ public abstract class Inimigo extends JPanel{
     private int gold;
     private int xp;
     private int pos; // Posição do mapa em que o inimigo está
-    private ArrayList caminho = null;
-    private int qtdPassos = 1; // Quantos passos ele já deu
+    private ArrayList<Integer> caminho = null;
+    private int qtdPassos = 0; // Quantos passos ele já deu
     private boolean andando = false;
     private String tipo;
     
     public static BufferedImage terrestre_pesado;
     
     //aqui n deveria ter um parametro no construtor pra ser a img?
-    public Inimigo(int vida, int ataque, int defesa, int vel_mov, int gold, int xp, String tipo) {
+    public Inimigo(int vida, int ataque, int defesa, int vel_mov, int gold, int xp, String tipo, ArrayList caminho) {
         this.vida = vida;
         this.ataque = ataque;
         this.defesa = defesa;
@@ -40,7 +40,8 @@ public abstract class Inimigo extends JPanel{
         this.gold = gold;
         this.xp = xp;
         this.pos = 0;
-        this.tipo = tipo;        ;
+        this.tipo = tipo;
+        this.setCaminho(caminho);
     }
 
     // Retorna a vida atual do inimigo
@@ -100,6 +101,11 @@ public abstract class Inimigo extends JPanel{
 
     public void setCaminho(ArrayList caminho) {
         this.caminho = caminho;
+        this.pos = this.caminho.get(this.qtdPassos);
+    }
+    
+    public ArrayList getCaminho(){
+        return this.caminho;
     }
 
     // Faz o inimigo andar caso haja um caminho, ele irá para a posição dada na
