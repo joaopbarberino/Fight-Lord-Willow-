@@ -33,10 +33,10 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     public BufferedImage getSprite() {
         return this.SPRITE;
     }
-
+       //ESSA TA PRONTA,SÓ FALTA FAZER OS CALCULOS AQUI EMBAIXO E NOS VALORES DENTRO DO CONSTRUTOR
     @Override
     public void paintComponent(Graphics g) {
-        System.out.println(super.getPos());
+        //System.out.println(super.getPos());
         int x = (23 * 40) - (23/qtdColunas);
         //int x = (3 * 40);
         int y = (23/ qtdColunas) * 40 < 1 ? 40 : (this.getPos() / qtdColunas) * 40;

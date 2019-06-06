@@ -29,6 +29,9 @@ public class Window extends JFrame {
     private ArrayList<BufferedImage> sprites;
     private ArrayList<Desenhavel> desenhaveis = new ArrayList();
     private ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
+    private ArrayList<Terrestre_leve> lista_Terrestre_leves = new ArrayList();
+    private ArrayList<Aereo_pesado> lista_aereo_pesado = new ArrayList();
+    private ArrayList<Aereo_leve> lista_aereo_leve = new ArrayList();
 
     public Window(ArrayList<BufferedImage> sprites, Tile_layer layer) {
         //frame.setResizable(false);
@@ -69,11 +72,11 @@ public class Window extends JFrame {
 
         while (gameLoop) {
             // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
-            //ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
-            //lista_terrestre_pesado = new ArrayList<Terrestre_pesado>();
+            
             lista_terrestres_pesado = new ArrayList();
-            //ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
-            //ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
+            lista_Terrestre_leves = new ArrayList();           
+            lista_aereo_pesado = new ArrayList();
+            lista_aereo_leve = new ArrayList();
 
             // Colocar timing para o jogador pensar (em segundos)
             // Checa se o jogador nao vai construir ou melhorar alguma torre
@@ -87,9 +90,15 @@ public class Window extends JFrame {
                     for (int j = 0; j < qtds.length; j++) {
                         for (int i = 0; i < qtds[j]; i++) {
                             // Instancia esses inimigos
-                            Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
+                            //Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
+                            //Terrestre_leve inimigo = new Terrestre_leve(sprites.get(0),caminho);
+                            //Aereo_pesado inimigo = new Aereo_pesado(sprites.get(0), caminho);
+                            Aereo_leve inimigo = new Aereo_leve(sprites.get(0), caminho);
                             // Adiciona na sua respectiva lista
-                            lista_terrestres_pesado.add(inimigo);
+                            //lista_terrestres_pesado.add(inimigo);
+                            //lista_Terrestre_leves.add(inimigo);
+                            //lista_aereo_pesado.add(inimigo);
+                            lista_aereo_leve.add(inimigo);
                             desenhaveis.add(inimigo);
                             //System.out.println(lista_terrestres_leves.get(i).getVida());
                         }

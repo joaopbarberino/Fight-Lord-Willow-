@@ -5,17 +5,41 @@
  */
 package javaapplication1;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
+
 /**
  *
  * @author joao.pbsilva20
  */
-public class Aereo_leve extends Inimigo {
+public class Aereo_leve extends Inimigo implements Desenhavel {
 
-    public Aereo_leve() {
-        // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
-        // e tipo, respectivamente
-        //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(10, 1, 10, 2, 10, 10, "aereo");
+    private final BufferedImage SPRITE;
+    private final int qtdColunas = 20;
 
+    public Aereo_leve(BufferedImage sprite, ArrayList<Integer> caminho) {
+        //// Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
+        //// e tipo, respectivamente
+        ////coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
+        super(20, 2, 2, 1, 10, 20, "aereo", caminho);
+        this.SPRITE = sprite;
+
+    }
+
+    public BufferedImage getSprite() {
+        return this.SPRITE;
+    }
+     //ESSA TA PRONTA,SÓ FALTA FAZER OS CALCULOS AQUI EMBAIXO E NOS VALORES DENTRO DO CONSTRUTOR
+
+    @Override
+    public void paintComponent(Graphics g) {
+        int x = (23 * 40) - (23 / qtdColunas);
+        //int x = (3 * 40);
+        int y = (23 / qtdColunas) * 40 < 1 ? 40 : (this.getPos() / qtdColunas) * 40;
+        g.drawImage(this.SPRITE.getSubimage(0, 0, 40, 40), x, y, null);
     }
 }

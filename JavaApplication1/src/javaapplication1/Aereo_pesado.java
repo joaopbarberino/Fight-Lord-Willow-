@@ -9,49 +9,38 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 /**
  *
  * @author joao.pbsilva20
  */
-public class Aereo_pesado extends Inimigo {
+public class Aereo_pesado extends Inimigo implements Desenhavel {
 
-    private BufferedImage img;
+    private final BufferedImage SPRITE;
+    private final int qtdColunas = 20;
 
-    public Aereo_pesado() {
+    public Aereo_pesado(BufferedImage sprite, ArrayList<Integer> caminho) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(10, 2, 5, 1, 10, 20, "aereo");
+        super(20, 2, 2, 1, 10, 20, "aereo", caminho);
+        this.SPRITE = sprite;
 
-        try {
-            img = ImageIO.read(new File("/pics/minitaur.png"));
-
-        } catch (IOException e) {
-            System.out.println("EXCEPTION IN LOAD IMAGE:" + e.toString());
-        }
-    }   
-   
+    }
+    public BufferedImage getSprite(){
+        return this.SPRITE;
+    }
+                   //ESSA TA PRONTA,SÓ FALTA FAZER OS CALCULOS AQUI EMBAIXO E NOS VALORES DENTRO DO CONSTRUTOR
+    @Override
+    public void paintComponent(Graphics g){
+        //System.out.println(super.getPos());
+        int x = (23 * 40) - (23/qtdColunas);
+        //int x = (3 * 40);
+        int y = (23/ qtdColunas) * 40 < 1 ? 40 : (this.getPos() / qtdColunas) * 40;
+        g.drawImage(this.SPRITE.getSubimage(0, 0, 40, 40), x, y, null);
+    }
 }
-
-
     
-//    public void render(Graphics g) {
-//        //caso minotauro ande, carrega sprite dele andando, caso contrario, dele parado
-//        if (andar()) {
-//            for (BufferedImage minotaurs_anda1 : minotaurs_anda) {
-//                g.drawImage(minotaurs_anda1, 150, 150, null);
-//            }
-//            //g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-//        } else {
-//            for (BufferedImage minotaurs_anda1 : minotaurs_anda) {
-//                g.drawImage(minotaurs_anda1, 150, 150, null);
-//            }
-//            //g.drawImage(Entity.ENEMY_FEEDBACK, this.getX() - Camera.x, this.getY() - Camera.y, null);
-//        }
-//        //g.setColor(Color.blue);
-//        //g.fillRect(this.getX() + maskX - Camera.x,this.getY() + maskY - Camera.y, maskW,maskH);
-//    }
-//
-//}
+
