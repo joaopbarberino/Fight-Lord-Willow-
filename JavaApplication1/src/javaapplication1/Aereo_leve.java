@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javaapplication1.Engine;
 
 /**
  *
@@ -19,7 +20,7 @@ import javax.imageio.ImageIO;
 public class Aereo_leve extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
-    private final int qtdColunas = 20;
+    private final float qtdColunas = 20;
 
     public Aereo_leve(BufferedImage sprite, ArrayList<Integer> caminho) {
         //// Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
@@ -33,13 +34,17 @@ public class Aereo_leve extends Inimigo implements Desenhavel {
     public BufferedImage getSprite() {
         return this.SPRITE;
     }
-     //ESSA TA PRONTA,SÓ FALTA FAZER OS CALCULOS AQUI EMBAIXO E NOS VALORES DENTRO DO CONSTRUTOR
+    //ESSA TA PRONTA,SÓ FALTA FAZER OS CALCULOS AQUI EMBAIXO E NOS VALORES DENTRO DO CONSTRUTOR
 
     @Override
     public void paintComponent(Graphics g) {
-        int x = (23 * 40) - (23 / qtdColunas);
-        //int x = (3 * 40);
-        int y = (23 / qtdColunas) * 40 < 1 ? 40 : (this.getPos() / qtdColunas) * 40;
+        int x = (int) ((this.getPos() % qtdColunas)*Engine.TILE_SIZE);  
+        int y = (int) ((this.getPos() / qtdColunas) * Engine.TILE_SIZE);
+      
         g.drawImage(this.SPRITE.getSubimage(0, 0, 40, 40), x, y, null);
+    }
+    
+    public void update(){
+        
     }
 }

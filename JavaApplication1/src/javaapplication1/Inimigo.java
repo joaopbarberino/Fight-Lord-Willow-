@@ -10,12 +10,13 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import javax.swing.JPanel;
+import java.lang.Math;
 
 /**
  *
  * @author joao.pbsilva20
  */
-public abstract class Inimigo extends JPanel{
+public abstract class Inimigo extends JPanel {
 
     private int vida;
     private int ataque;
@@ -23,14 +24,14 @@ public abstract class Inimigo extends JPanel{
     private int vel_mov;
     private int gold;
     private int xp;
-    private int pos; // Posição do mapa em que o inimigo está
+    private float pos; // Posição do mapa em que o inimigo está
     private ArrayList<Integer> caminho = null;
     private int qtdPassos = 0; // Quantos passos ele já deu
-    private boolean andando = false;
+    private boolean andando = true;
     private String tipo;
-    
+
     public static BufferedImage terrestre_pesado;
-    
+
     //aqui n deveria ter um parametro no construtor pra ser a img?
     public Inimigo(int vida, int ataque, int defesa, int vel_mov, int gold, int xp, String tipo, ArrayList caminho) {
         this.vida = vida;
@@ -39,7 +40,6 @@ public abstract class Inimigo extends JPanel{
         this.vel_mov = vel_mov;
         this.gold = gold;
         this.xp = xp;
-        this.pos = 0;
         this.tipo = tipo;
         this.setCaminho(caminho);
     }
@@ -103,8 +103,8 @@ public abstract class Inimigo extends JPanel{
         this.caminho = caminho;
         this.pos = this.caminho.get(this.qtdPassos);
     }
-    
-    public ArrayList getCaminho(){
+
+    public ArrayList getCaminho() {
         return this.caminho;
     }
 
@@ -113,6 +113,23 @@ public abstract class Inimigo extends JPanel{
     // 0, o primeiro char da string de caminho, sempre vai ser 0, o ponto inicial,
     // o qual o inimigo já está.
     public void andar() {
+//        float atual, prox, dif, por;       
+//        atual = this.caminho.get(this.qtdPassos);
+//        prox = this.caminho.get(this.qtdPassos + 1);
+//    
+//        dif = Math.abs(prox - atual);
+//    
+//        
+//        por = 0.01f;
+//        
+//        System.out.println("por "+por);
+//
+//        System.out.println(this.pos);
+//        while (this.pos < prox) {
+//            System.out.println(this.pos);
+//            this.pos += por;
+//        }
+
         if (this.caminho != null) {
             this.pos = (int) this.caminho.get(this.qtdPassos);
             this.qtdPassos++;
@@ -128,8 +145,8 @@ public abstract class Inimigo extends JPanel{
     }
 
     // Retorna em qual posição do mapa o inimigo está
-    public int getPos() {
+    public float getPos() {
         return this.pos;
-    }    
-       
+    }
+
 }

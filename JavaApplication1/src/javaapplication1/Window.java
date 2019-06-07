@@ -34,9 +34,9 @@ public class Window extends JFrame {
     private ArrayList<Aereo_leve> lista_aereo_leve = new ArrayList();
 
     public Window(ArrayList<BufferedImage> sprites, Tile_layer layer) {
-        //frame.setResizable(false);
         super("Attack, Lord Willow!");
-        this.setBounds(500, 200, 816, 838);
+        this.setResizable(false);
+        this.setSize(800, 800);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -45,8 +45,16 @@ public class Window extends JFrame {
         //Terrestre_pesado batata = new Terrestre_pesado();
     }
 
-    public void run() {
+    public void run() throws InterruptedException {
         Sprite_sheet sprite_terrestre;
+        boolean gameLoop = true;
+
+        long excess = 0;
+        long noDelays = 0;
+        long a=0;
+
+        final long DESIRED_UPDATE_TIME = 60;
+        final long NO_DELAYS_PER_YIELD = 4;
         //sprite_terrestre = new Sprite_sheet("/pics/minitaur.png");
         ArrayList<Integer> caminho = new ArrayList();
         //List<Terrestre_pesado> lista_terrestre_pesado;
@@ -68,13 +76,13 @@ public class Window extends JFrame {
         // posição 2 = inimigos aereos leves
         // posição 3 = inimigos aereos pesados
         int qtds[] = new int[4];
-        boolean gameLoop = true;
 
         while (gameLoop) {
+            long beforeTime = System.currentTimeMillis();
             // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
-            
+
             lista_terrestres_pesado = new ArrayList();
-            lista_Terrestre_leves = new ArrayList();           
+            lista_Terrestre_leves = new ArrayList();
             lista_aereo_pesado = new ArrayList();
             lista_aereo_leve = new ArrayList();
 
@@ -85,25 +93,31 @@ public class Window extends JFrame {
             geraWave(round, qtds);
 
             switch (round) {
+
                 case 1:
                     // Conta qts inimigos tem de cada tipo
-                    for (int j = 0; j < qtds.length; j++) {
-                        for (int i = 0; i < qtds[j]; i++) {
-                            // Instancia esses inimigos
-                            //Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
-                            //Terrestre_leve inimigo = new Terrestre_leve(sprites.get(0),caminho);
-                            //Aereo_pesado inimigo = new Aereo_pesado(sprites.get(0), caminho);
-                            Aereo_leve inimigo = new Aereo_leve(sprites.get(0), caminho);
-                            // Adiciona na sua respectiva lista
-                            //lista_terrestres_pesado.add(inimigo);
-                            //lista_Terrestre_leves.add(inimigo);
-                            //lista_aereo_pesado.add(inimigo);
-                            lista_aereo_leve.add(inimigo);
-                            desenhaveis.add(inimigo);
-                            //System.out.println(lista_terrestres_leves.get(i).getVida());
-                        }
+                    //for (int j = 0; j < qtds.length; j++) {
+                    //for (int i = 0; i < qtds[j]; i++) {
+                    // Instancia esses inimigos
+                    //Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
+                    //Terrestre_leve inimigo = new Terrestre_leve(sprites.get(0),caminho);
+                    //Aereo_pesado inimigo = new Aereo_pesado(sprites.get(0), caminho);
+                    Aereo_leve inimigo = new Aereo_leve(sprites.get(0), caminho);
+                    // Adiciona na sua respectiva lista
+                    //lista_terrestres_pesado.add(inimigo);
+                    //lista_Terrestre_leves.add(inimigo);
+                    //lista_aereo_pesado.add(inimigo);
+                    lista_aereo_leve.add(inimigo);
+                    desenhaveis.add(inimigo);
+                    while (inimigo.isAndando()) {
+                        System.out.println("!!!!!!!!!!!!!!!!!!");
+                        inimigo.andar();
+                        repaint();
                     }
-                   
+                    //System.out.println(lista_terrestres_leves.get(i).getVida());
+                    //}
+                    //}
+
                     /*
                      Acha caminho e da pro inimigo seguir
                      
@@ -130,14 +144,12 @@ public class Window extends JFrame {
                     
                      FAZER TRATAMENTO DE FPS
                      */
-
                     // Caso todos os inimigos estejam mortos, round acaba
                     if (lista_terrestres_pesado.isEmpty()) {
                         round++;
                     }
 
                     //gameLoop = false;
-
                     break;
                 case 2:
                     break;
@@ -152,8 +164,15 @@ public class Window extends JFrame {
 
                 // Checa se o jogador tem xp o suficente para subir de nivel
                 }
-            
+            while (excess > DESIRED_UPDATE_TIME) {
+                //inimigo.update()
+                //inimigo.colisores()
+            }
+            excess -= DESIRED_UPDATE_TIME;
+
             repaint();
+            long afterTime = System.currentTimeMillis();
+            long sleepTime = afterTime - beforeTime;
         }
     }
 
@@ -255,12 +274,11 @@ public class Window extends JFrame {
 
     @Override
     public void paint(Graphics g) {
-     
+
         this.MAP.paintComponent(g);
         for (Desenhavel objeto : desenhaveis) {
             objeto.paintComponent(g);
-        }      
-    
-       
+        }
+
     }
 }
