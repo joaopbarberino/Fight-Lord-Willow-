@@ -9,22 +9,22 @@ import javax.swing.*;
  *
  * @author pedro.hlaredes
  */
-public class Tela extends JFrame {
-    JPanel panel = new JPanel();
-
-    public Tela() {
-        super("Attack, Lord Willow!");
-        this.setSize(1280, 900);
-        this.setLocationRelativeTo(null);
-        //this.setResizable(false);
-        this.setContentPane(panel);        
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    }
-
-    public void Initialize() {
-        this.setVisible(true);
-    }
+//public class Tela extends JFrame {
+//    JPanel panel = new JPanel();
+//
+//    public Tela() {
+//        super("Attack, Lord Willow!");
+//        this.setSize(1280, 900);
+//        this.setLocationRelativeTo(null);
+//        //this.setResizable(false);
+//        this.setContentPane(panel);        
+//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//    }
+//
+//    public void Initialize() {
+//        this.setVisible(true);
+//    }
 
 //    @Override
 //    public void paint(Graphics g) {
@@ -42,4 +42,4 @@ public class Tela extends JFrame {
 //        g.setColor(Color.red);
 //        
 //    }
-}
+//}

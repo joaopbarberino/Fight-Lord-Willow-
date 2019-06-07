@@ -8,6 +8,7 @@ package javaapplication1;
 import Estrutura.Estrutura;
 import Estrutura.Torre_terrestre;
 import java.awt.Graphics;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,12 +18,14 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import mapa.AEstrela;
 import mapa.Mapa;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  *
  * @author mathe
  */
-public class Window extends JFrame {
+public class Window extends JFrame implements KeyListener {
 
     //private BufferedImage minotaur = null;    
     private Tile_layer MAP;
@@ -40,6 +43,7 @@ public class Window extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        this.addKeyListener(this);
         this.MAP = layer;
         this.sprites = sprites;
         //Terrestre_pesado batata = new Terrestre_pesado();
@@ -51,7 +55,7 @@ public class Window extends JFrame {
 
         long excess = 0;
         long noDelays = 0;
-        long a=0;
+        long a = 0;
 
         final long DESIRED_UPDATE_TIME = 60;
         final long NO_DELAYS_PER_YIELD = 4;
@@ -99,20 +103,20 @@ public class Window extends JFrame {
                     //for (int j = 0; j < qtds.length; j++) {
                     //for (int i = 0; i < qtds[j]; i++) {
                     // Instancia esses inimigos
-                    //Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
-                    //Terrestre_leve inimigo = new Terrestre_leve(sprites.get(0),caminho);
-                    //Aereo_pesado inimigo = new Aereo_pesado(sprites.get(0), caminho);
-                    Aereo_leve inimigo = new Aereo_leve(sprites.get(0), caminho);
+                    Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
+                    //Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4),caminho);
+                    //Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho);
+                    //Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho);
                     // Adiciona na sua respectiva lista
-                    //lista_terrestres_pesado.add(inimigo);
+                    lista_terrestres_pesado.add(inimigo);
                     //lista_Terrestre_leves.add(inimigo);
                     //lista_aereo_pesado.add(inimigo);
-                    lista_aereo_leve.add(inimigo);
+                    //lista_aereo_leve.add(inimigo);
                     desenhaveis.add(inimigo);
                     while (inimigo.isAndando()) {
-                        System.out.println("!!!!!!!!!!!!!!!!!!");
+                       // System.out.println("!!!!!!!!!!!!!!!!!!");
                         inimigo.andar();
-                        repaint();
+                        //repaint();
                     }
                     //System.out.println(lista_terrestres_leves.get(i).getVida());
                     //}
@@ -280,5 +284,50 @@ public class Window extends JFrame {
             objeto.paintComponent(g);
         }
 
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyChar() == '1') {
+            // mostra tipo da torre e onde pode consturir 
+            System.out.println("APERTEI A 1");
+        }
+        if (e.getKeyChar() == '2') {
+           // mostra tipo da torre e onde pode consturir 
+           System.out.println("APERTEI A 2");
+        }
+        if (e.getKeyChar() == '3') {
+            // mostra tipo da torre e onde pode consturir 
+             System.out.println("APERTEI A 3");
+        }
+        if (e.getKeyChar() == '4') {
+            // mostra tipo da torre e onde pode consturir 
+             System.out.println("APERTEI A 4");
+        }
+    }
+    
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyChar() == '1') {
+            // constroe torre terreste
+             System.out.println("SOLTEI A 1");
+        }
+        if (e.getKeyChar() == '2') {
+           // constroe torre aerea
+           System.out.println("SOLTEI A 2");
+        }
+        if (e.getKeyChar() == '3') {
+            //  constroe torre hibrida
+            System.out.println("SOLTEI A 3");
+        }
+        if (e.getKeyChar() == '4') {
+            //  constroe armadilha
+            System.out.println("SOLTEI A 4");
+        }
+       
+    }
+     @Override
+    public void keyTyped(KeyEvent e){
+        
     }
 }
