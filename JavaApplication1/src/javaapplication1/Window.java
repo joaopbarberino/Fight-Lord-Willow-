@@ -20,6 +20,7 @@ import mapa.AEstrela;
 import mapa.Mapa;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferStrategy;
 
 /**
  *
@@ -59,7 +60,6 @@ public class Window extends JFrame implements KeyListener {
 
         final long DESIRED_UPDATE_TIME = 60;
         final long NO_DELAYS_PER_YIELD = 4;
-        //sprite_terrestre = new Sprite_sheet("/pics/minitaur.png");
         ArrayList<Integer> caminho = new ArrayList();
         //List<Terrestre_pesado> lista_terrestre_pesado;
         // Instanciar o mapa da fase
@@ -81,14 +81,20 @@ public class Window extends JFrame implements KeyListener {
         // posição 3 = inimigos aereos pesados
         int qtds[] = new int[4];
 
+        // Cria double-buffering strategy genérico
+        this.createBufferStrategy(2);
+
+        // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
+        lista_terrestres_pesado = new ArrayList();
+        lista_Terrestre_leves = new ArrayList();
+        lista_aereo_pesado = new ArrayList();
+        lista_aereo_leve = new ArrayList();
+
+        Terrestre_pesado minotauro = new Terrestre_pesado(sprites.get(0), caminho);
+        lista_terrestres_pesado.add(minotauro);
+        desenhaveis.add(minotauro);
         while (gameLoop) {
             long beforeTime = System.currentTimeMillis();
-            // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
-
-            lista_terrestres_pesado = new ArrayList();
-            lista_Terrestre_leves = new ArrayList();
-            lista_aereo_pesado = new ArrayList();
-            lista_aereo_leve = new ArrayList();
 
             // Colocar timing para o jogador pensar (em segundos)
             // Checa se o jogador nao vai construir ou melhorar alguma torre
@@ -99,28 +105,29 @@ public class Window extends JFrame implements KeyListener {
             switch (round) {
 
                 case 1:
+                    while (excess > DESIRED_UPDATE_TIME) {
+                        for (Terrestre_pesado inimigo : lista_terrestres_pesado) {
+                            System.out.println(inimigo.getPos());
+                            inimigo.andar();
+                        }
+                        excess -= DESIRED_UPDATE_TIME;
+                    }
                     // Conta qts inimigos tem de cada tipo
                     //for (int j = 0; j < qtds.length; j++) {
                     //for (int i = 0; i < qtds[j]; i++) {
                     // Instancia esses inimigos
-                    Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
                     //Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4),caminho);
                     //Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho);
                     //Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho);
                     // Adiciona na sua respectiva lista
-                    lista_terrestres_pesado.add(inimigo);
+
                     //lista_Terrestre_leves.add(inimigo);
                     //lista_aereo_pesado.add(inimigo);
                     //lista_aereo_leve.add(inimigo);
-                    desenhaveis.add(inimigo);
-                    while (inimigo.isAndando()) {
-                       // System.out.println("!!!!!!!!!!!!!!!!!!");
+                    for (Terrestre_pesado inimigo : lista_terrestres_pesado) {
+                        System.out.print(inimigo.getPos() + " ");
                         inimigo.andar();
-                        //repaint();
                     }
-                    //System.out.println(lista_terrestres_leves.get(i).getVida());
-                    //}
-                    //}
 
                     /*
                      Acha caminho e da pro inimigo seguir
@@ -146,7 +153,6 @@ public class Window extends JFrame implements KeyListener {
                      -> Se vida atual do jogador <= 0, gameLoop = false, break;
                                     
                     
-                     FAZER TRATAMENTO DE FPS
                      */
                     // Caso todos os inimigos estejam mortos, round acaba
                     if (lista_terrestres_pesado.isEmpty()) {
@@ -168,15 +174,24 @@ public class Window extends JFrame implements KeyListener {
 
                 // Checa se o jogador tem xp o suficente para subir de nivel
                 }
-            while (excess > DESIRED_UPDATE_TIME) {
-                //inimigo.update()
-                //inimigo.colisores()
-            }
-            excess -= DESIRED_UPDATE_TIME;
 
             repaint();
+
+            excess -= DESIRED_UPDATE_TIME;
+
             long afterTime = System.currentTimeMillis();
             long sleepTime = afterTime - beforeTime;
+
+            if (sleepTime < DESIRED_UPDATE_TIME) {
+                Thread.sleep(DESIRED_UPDATE_TIME - sleepTime);
+                noDelays = 0;
+            } else {
+                excess += sleepTime - DESIRED_UPDATE_TIME;
+
+                if (++noDelays == NO_DELAYS_PER_YIELD) {
+                    Thread.yield();
+                }
+            }
         }
     }
 
@@ -279,11 +294,24 @@ public class Window extends JFrame implements KeyListener {
     @Override
     public void paint(Graphics g) {
 
-        this.MAP.paintComponent(g);
-        for (Desenhavel objeto : desenhaveis) {
-            objeto.paintComponent(g);
+        BufferStrategy strategy = this.getBufferStrategy();
+        if (strategy == null) {
+            return;
         }
-
+        do {
+            do {
+                Graphics graphics = strategy.getDrawGraphics();
+                // Clear the previous frame
+                graphics.clearRect(0, 0, 800, 800);
+                // For each drawable object in list, paint
+                this.MAP.paintComponent(graphics);
+                for (Desenhavel objeto : desenhaveis) {
+                    objeto.paintComponent(graphics);
+                }
+                graphics.dispose();
+            } while (strategy.contentsRestored());
+            strategy.show();
+        } while (strategy.contentsLost());
     }
 
     @Override
@@ -293,28 +321,28 @@ public class Window extends JFrame implements KeyListener {
             System.out.println("APERTEI A 1");
         }
         if (e.getKeyChar() == '2') {
-           // mostra tipo da torre e onde pode consturir 
-           System.out.println("APERTEI A 2");
+            // mostra tipo da torre e onde pode consturir 
+            System.out.println("APERTEI A 2");
         }
         if (e.getKeyChar() == '3') {
             // mostra tipo da torre e onde pode consturir 
-             System.out.println("APERTEI A 3");
+            System.out.println("APERTEI A 3");
         }
         if (e.getKeyChar() == '4') {
             // mostra tipo da torre e onde pode consturir 
-             System.out.println("APERTEI A 4");
+            System.out.println("APERTEI A 4");
         }
     }
-    
+
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyChar() == '1') {
             // constroe torre terreste
-             System.out.println("SOLTEI A 1");
+            System.out.println("SOLTEI A 1");
         }
         if (e.getKeyChar() == '2') {
-           // constroe torre aerea
-           System.out.println("SOLTEI A 2");
+            // constroe torre aerea
+            System.out.println("SOLTEI A 2");
         }
         if (e.getKeyChar() == '3') {
             //  constroe torre hibrida
@@ -324,10 +352,11 @@ public class Window extends JFrame implements KeyListener {
             //  constroe armadilha
             System.out.println("SOLTEI A 4");
         }
-       
+
     }
-     @Override
-    public void keyTyped(KeyEvent e){
-        
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
     }
 }

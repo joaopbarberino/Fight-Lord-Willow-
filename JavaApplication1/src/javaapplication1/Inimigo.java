@@ -24,7 +24,7 @@ public abstract class Inimigo extends JPanel {
     private int vel_mov;
     private int gold;
     private int xp;
-    private float pos; // Posição do mapa em que o inimigo está
+    private int pos; // Posição do mapa em que o inimigo está
     private ArrayList<Integer> caminho = null;
     private int qtdPassos = 0; // Quantos passos ele já deu
     private boolean andando = true;
@@ -113,26 +113,10 @@ public abstract class Inimigo extends JPanel {
     // 0, o primeiro char da string de caminho, sempre vai ser 0, o ponto inicial,
     // o qual o inimigo já está.
     public void andar() {
-//        float atual, prox, dif, por;       
-//        atual = this.caminho.get(this.qtdPassos);
-//        prox = this.caminho.get(this.qtdPassos + 1);
-//    
-//        dif = Math.abs(prox - atual);
-//    
-//        
-//        por = 0.01f;
-//        
-//        System.out.println("por "+por);
-//
-//        System.out.println(this.pos);
-//        while (this.pos < prox) {
-//            System.out.println(this.pos);
-//            this.pos += por;
-//        }
-
         if (this.caminho != null) {
             this.pos = (int) this.caminho.get(this.qtdPassos);
             this.qtdPassos++;
+            
             this.andando = true;
         }
         if (this.qtdPassos == this.caminho.size()) {
