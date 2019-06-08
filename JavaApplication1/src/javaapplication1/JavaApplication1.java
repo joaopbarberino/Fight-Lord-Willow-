@@ -42,21 +42,5 @@ public class JavaApplication1  {
         screen.run();
     }
 
-    public static int[] geraWave(int round, int qtds[]) {
-        int qtd_inimigos_terrestres_leves = 0;
-        int qtd_inimigos_terrestres_pesados = 0;
-        int qtd_inimigos_aereos_leves = 0;
-        int qtd_inimigos_aereos_pesados = 0;
 
-        switch (round) {
-            case 1:
-                qtd_inimigos_terrestres_pesados = 10;
-                qtds[0] = qtd_inimigos_terrestres_pesados;
-
-                break;
-        }
-
-        return qtds;
-
-    }
 }

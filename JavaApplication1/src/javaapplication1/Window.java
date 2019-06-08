@@ -13,7 +13,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import static javaapplication1.JavaApplication1.geraWave;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import mapa.AEstrela;
@@ -32,12 +31,13 @@ public class Window extends JFrame implements KeyListener {
     //private BufferedImage minotaur = null;    
     private Tile_layer MAP;
     private ArrayList<BufferedImage> sprites;
+    private ArrayList<Integer> caminho = new ArrayList();
     private ArrayList<Desenhavel> desenhaveis = new ArrayList();
-    private ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
-    private ArrayList<Terrestre_pesado> lista_terrestres_pesado_clone = new ArrayList();
-    private ArrayList<Terrestre_leve> lista_Terrestre_leves = new ArrayList();
-    private ArrayList<Aereo_pesado> lista_aereo_pesado = new ArrayList();
-    private ArrayList<Aereo_leve> lista_aereo_leve = new ArrayList();
+    private ArrayList<Terrestre_pesado> lista_terrestres_pesados = new ArrayList();
+    private ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
+    private ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
+    private ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
+    private boolean trocou_round = true;
 
     public Window(ArrayList<BufferedImage> sprites, Tile_layer layer) {
         super("Attack, Lord Willow!");
@@ -57,17 +57,14 @@ public class Window extends JFrame implements KeyListener {
 
         long excess = 0;
         long noDelays = 0;
-        long a = 0;
 
         final long DESIRED_UPDATE_TIME = 30;
         final long NO_DELAYS_PER_YIELD = 4;
-        ArrayList<Integer> caminho = new ArrayList();
-        //List<Terrestre_pesado> lista_terrestre_pesado;
+
         // Instanciar o mapa da fase
         caminho = Mapa_exec(caminho);
         System.out.println("Caminho: " + caminho);
 
-        // 
         Estrutura x = new Torre_terrestre(83);
         x.set_casas_no_alcance();
         x.get_casas_no_alcance();
@@ -75,106 +72,32 @@ public class Window extends JFrame implements KeyListener {
         Base jogador = new Base();
         int round = 1;
 
-        // Vetor com as quantidades de inimigos
-        // posição 0 = inimigos terrestres leves
-        // posição 1 = inimigos terrestres pesados
-        // posição 2 = inimigos aereos leves
-        // posição 3 = inimigos aereos pesados
-        int qtds[] = new int[4];
-
         // Cria double-buffering strategy genérico
         this.createBufferStrategy(2);
 
-        // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
-        lista_terrestres_pesado = new ArrayList();
-        lista_terrestres_pesado_clone = (ArrayList<Terrestre_pesado>) lista_terrestres_pesado.clone();
-        lista_Terrestre_leves = new ArrayList();
-        lista_aereo_pesado = new ArrayList();
-        lista_aereo_leve = new ArrayList();
-
-        Terrestre_pesado minotauro = new Terrestre_pesado(sprites.get(0), caminho);
-        Aereo_leve morcego = new Aereo_leve(sprites.get(2), caminho);
-        Aereo_pesado dragao = new Aereo_pesado(sprites.get(6), caminho);
-        lista_terrestres_pesado.add(minotauro);
-        lista_aereo_leve.add(morcego);
-        lista_aereo_pesado.add(dragao);
-        desenhaveis.add(minotauro);
-        desenhaveis.add(morcego);
-        desenhaveis.add(dragao);
         while (gameLoop) {
+
+            if (trocou_round) {
+                geraWave(round);
+            }
+
             long beforeTime = System.currentTimeMillis();
 
             // Colocar timing para o jogador pensar (em segundos)
             // Checa se o jogador nao vai construir ou melhorar alguma torre
             // Caso construa, adiciona a estrutura numa lista de estruturas
             // Gera wave baseado em valores pré determinados com base no round
-            geraWave(round, qtds);
-
             switch (round) {
 
                 case 1:
+                    this.trocou_round = false;
                     while (excess > DESIRED_UPDATE_TIME) {
-                        for (Terrestre_pesado inimigo : lista_terrestres_pesado) {
-                            inimigo.andar();
-                            if (inimigo.isMorto()) {
-                                desenhaveis.remove(inimigo);
-                            }
-
-                        }
-                        for (Aereo_leve inimigo : lista_aereo_leve) {
-                            inimigo.andar();
-                            if (inimigo.isMorto()) {
-                                desenhaveis.remove(inimigo);
-                            }
-
-                        }
-                        for (Aereo_pesado inimigo : lista_aereo_pesado) {
-                            inimigo.andar();
-                            if (inimigo.isMorto()) {
-                                desenhaveis.remove(inimigo);
-                            }
-
-                        }
-
+                        moverInimigos();
                         excess -= DESIRED_UPDATE_TIME;
                     }
-                    for (int i = 0; i < desenhaveis.size(); i++) {
-
-                    }
+                    moverInimigos();
+                    limparListas();
                     // Conta qts inimigos tem de cada tipo
-                    //for (int j = 0; j < qtds.length; j++) {
-                    //for (int i = 0; i < qtds[j]; i++) {
-                    // Instancia esses inimigos
-                    //Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4),caminho);
-                    //Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho);
-                    //Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho);
-                    // Adiciona na sua respectiva lista
-
-                    //lista_Terrestre_leves.add(inimigo);
-                    //lista_aereo_pesado.add(inimigo);
-                    //lista_aereo_leve.add(inimigo);
-                    for (Terrestre_pesado inimigo : lista_terrestres_pesado) {
-
-                        inimigo.andar();
-                        if (inimigo.isMorto()) {
-                            desenhaveis.remove(inimigo);
-                        }
-                    }
-
-                    for (Aereo_leve inimigo : lista_aereo_leve) {
-                        inimigo.andar();
-                        if (inimigo.isMorto()) {
-                            desenhaveis.remove(inimigo);
-                        }
-
-                    }
-                    for (Aereo_pesado inimigo : lista_aereo_pesado) {
-                        inimigo.andar();
-                        if (inimigo.isMorto()) {
-                            desenhaveis.remove(inimigo);
-                        }
-
-                    }
                     /*
                      Acha caminho e da pro inimigo seguir
                      
@@ -201,8 +124,9 @@ public class Window extends JFrame implements KeyListener {
                     
                      */
                     // Caso todos os inimigos estejam mortos, round acaba
-                    if (lista_terrestres_pesado.isEmpty()) {
+                    if (lista_terrestres_pesados.isEmpty()) {
                         round++;
+                        this.trocou_round = true;
                     }
 
                     //gameLoop = false;
@@ -238,6 +162,103 @@ public class Window extends JFrame implements KeyListener {
                     Thread.yield();
                 }
             }
+        }
+    }
+
+    public void moverInimigos() {
+        for (Terrestre_leve inimigo : lista_terrestres_leves) {
+            inimigo.andar();
+            if (inimigo.isMorto()) {
+                desenhaveis.remove(inimigo);
+            }
+        }
+
+        for (Terrestre_pesado inimigo : lista_terrestres_pesados) {
+            inimigo.andar();
+            if (inimigo.isMorto()) {
+                desenhaveis.remove(inimigo);
+            }
+        }
+
+        for (Aereo_leve inimigo : lista_aereos_leves) {
+            inimigo.andar();
+            if (inimigo.isMorto()) {
+                desenhaveis.remove(inimigo);
+            }
+        }
+
+        for (Aereo_pesado inimigo : lista_aereos_pesados) {
+            inimigo.andar();
+            if (inimigo.isMorto()) {
+                desenhaveis.remove(inimigo);
+            }
+        }
+    }
+
+    public void limparListas() {
+        ArrayList<Terrestre_pesado> lista_terrestres_pesados_clone = (ArrayList<Terrestre_pesado>) lista_terrestres_pesados.clone();
+        ArrayList<Terrestre_leve> lista_terrestres_leves_clone = (ArrayList<Terrestre_leve>) lista_terrestres_leves.clone();
+        ArrayList<Aereo_pesado> lista_aereos_pesados_clone = (ArrayList<Aereo_pesado>) lista_aereos_pesados.clone();
+        ArrayList<Aereo_leve> lista_aereos_leves_clone = (ArrayList<Aereo_leve>) lista_aereos_leves.clone();
+
+        for (Terrestre_leve inimigo : lista_terrestres_leves_clone) {
+            if (inimigo.isMorto()) {
+                this.lista_terrestres_leves.remove(inimigo);
+            }
+        }
+
+        for (Terrestre_pesado inimigo : lista_terrestres_pesados_clone) {
+            if (inimigo.isMorto()) {
+                this.lista_terrestres_pesados.remove(inimigo);
+            }
+        }
+
+        for (Aereo_leve inimigo : lista_aereos_leves_clone) {
+            if (inimigo.isMorto()) {
+                this.lista_aereos_leves.remove(inimigo);
+            }
+        }
+
+        for (Aereo_pesado inimigo : lista_aereos_pesados_clone) {
+            if (inimigo.isMorto()) {
+                this.lista_aereos_pesados.remove(inimigo);
+            }
+        }
+    }
+
+    public void geraWave(int round) {
+        switch (round) {
+            case 1:
+                for (int j = 0; j < 4; j++) {
+                    for (int i = 0; i < 10; i++) {
+                        // Instancia esses inimigos
+                        // Adiciona na sua respectiva lista
+                        if (j == 0) {
+                            System.out.println("sdfgjmisda");
+                            Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4), caminho);
+                            this.lista_terrestres_leves.add(inimigo);
+                            this.desenhaveis.add(inimigo);
+                        } else if (j == 1) {
+                            System.out.println("345345345");
+                            Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
+                            this.lista_terrestres_pesados.add(inimigo);
+                            this.desenhaveis.add(inimigo);
+                        } else if (j == 2) {
+                            System.out.println("#@$#@$@#$");
+                            Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho);
+                            this.lista_aereos_leves.add(inimigo);
+                            this.desenhaveis.add(inimigo);
+                        } else if (j == 3) {
+                            System.out.println("><><><><><><><");
+                            Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho);
+                            this.lista_aereos_pesados.add(inimigo);
+                            this.desenhaveis.add(inimigo);
+                        }
+
+                    }
+                }
+
+                break;
         }
     }
 
