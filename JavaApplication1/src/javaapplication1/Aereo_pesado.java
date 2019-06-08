@@ -20,26 +20,120 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
     private final int qtdColunas = 20;
+    private final int VEL_MOVIMENTO = 100;
+    
+    private int posAtual, proxPos, difPos;
+    private int x, y, prox_x, prox_y;
+    private int x_aux, y_aux, por_x, por_y;
+    private boolean pode_andar = false, andou = true;
+    private String movimento = "";
 
     public Aereo_pesado(BufferedImage sprite, ArrayList<Integer> caminho) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(20, 2, 2, 1, 10, 20, "aereo", caminho);
+        super(20, 2, 2, 10, 20, "aereo", caminho);
         this.SPRITE = sprite;
 
     }
-    public BufferedImage getSprite(){
+
+    public BufferedImage getSprite() {
         return this.SPRITE;
     }
-                   //ESSA TA PRONTA,SÓ FALTA FAZER OS CALCULOS AQUI EMBAIXO E NOS VALORES DENTRO DO CONSTRUTOR
-    @Override
-    public void paintComponent(Graphics g){
-        int x = (int) ((this.getPos() % qtdColunas)*Engine.TILE_SIZE);  
-        int y = (int) ((this.getPos() / qtdColunas) * Engine.TILE_SIZE);
-      
-        g.drawImage(this.SPRITE.getSubimage(0, 0, 40, 40), x, y, null);
+
+    public void andar() {
+        super.andar(pode_andar);
+    }
+    public void update() {
+
+        if (this.andou == true) {
+
+            this.posAtual = this.getPos();
+            this.proxPos = super.getProxPos();
+            this.difPos = proxPos - posAtual;
+
+            if (difPos == 20 || difPos == 0) {
+                this.movimento = "baixo";
+            } else if (difPos == -20) {
+                this.movimento = "cima";
+            } else if (difPos == 1) {
+                this.movimento = "direita";
+            }
+
+            this.x = ((posAtual % qtdColunas) * Engine.TILE_SIZE);
+            this.prox_x = ((proxPos % qtdColunas) * Engine.TILE_SIZE);
+            this.y = ((posAtual / qtdColunas) * Engine.TILE_SIZE);
+            this.prox_y = ((proxPos / qtdColunas) * Engine.TILE_SIZE);
+
+            this.y_aux = y;
+            this.x_aux = x;
+
+            switch (movimento) {
+                case "baixo":
+                    this.y_aux = y;
+                    this.por_y = difPos / VEL_MOVIMENTO;
+                    break;
+
+                case "direita":
+                    this.x_aux = x;
+                    this.por_x = difPos / VEL_MOVIMENTO;
+                    break;
+
+                case "cima":
+                    this.y_aux = y;
+                    this.por_y = Math.abs(difPos) / VEL_MOVIMENTO;
+                    break;
+            }
+
+            if (por_x == 0 && movimento.equals("direita")) {
+                this.por_x = 1;
+                this.por_y = 0;
+            }
+
+            if (por_y == 0 && (movimento.equals("cima") || movimento.equals("baixo"))) {
+                this.por_y = 1;
+                this.por_x = 0;
+            }
+
+            this.andou = false;
+            this.pode_andar = false;
+        }
+    }
+
+@Override
+    public void paintComponent(Graphics g) {
+        update();
+
+        switch (movimento) {
+            case "baixo":
+                this.y_aux = this.y_aux + por_y;
+                if (y_aux >= prox_y) {
+                    this.andou = true;
+                    this.pode_andar = true;
+                }
+                break;
+
+            case "cima":
+                this.y_aux -= por_y;
+                if (y_aux <= prox_y) {
+                    this.andou = true;
+                    this.pode_andar = true;
+                }
+                break;
+
+            case "direita":
+                this.x_aux += por_x;
+                if (x_aux >= prox_x) {
+                    this.andou = true;
+                    this.pode_andar = true;
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        g.drawImage(this.SPRITE.getSubimage(0, 0, 40, 40), x_aux, y_aux, null);
+
     }
 }
-    
-

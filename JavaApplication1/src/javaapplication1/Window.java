@@ -49,7 +49,6 @@ public class Window extends JFrame implements KeyListener {
         this.addKeyListener(this);
         this.MAP = layer;
         this.sprites = sprites;
-        //Terrestre_pesado batata = new Terrestre_pesado();
     }
 
     public void run() throws InterruptedException {
@@ -60,7 +59,7 @@ public class Window extends JFrame implements KeyListener {
         long noDelays = 0;
         long a = 0;
 
-        final long DESIRED_UPDATE_TIME = 300;
+        final long DESIRED_UPDATE_TIME = 20;
         final long NO_DELAYS_PER_YIELD = 4;
         ArrayList<Integer> caminho = new ArrayList();
         //List<Terrestre_pesado> lista_terrestre_pesado;
@@ -94,8 +93,11 @@ public class Window extends JFrame implements KeyListener {
         lista_aereo_leve = new ArrayList();
 
         Terrestre_pesado minotauro = new Terrestre_pesado(sprites.get(0), caminho);
+        Aereo_leve morcego = new Aereo_leve(sprites.get(2), caminho);
         lista_terrestres_pesado.add(minotauro);
+        lista_aereo_leve.add(morcego);
         desenhaveis.add(minotauro);
+        desenhaveis.add(morcego);
         while (gameLoop) {
             long beforeTime = System.currentTimeMillis();
 
@@ -110,7 +112,13 @@ public class Window extends JFrame implements KeyListener {
                 case 1:
                     while (excess > DESIRED_UPDATE_TIME) {
                         for (Terrestre_pesado inimigo : lista_terrestres_pesado) {
-                            System.out.println(inimigo.getPos());
+                            inimigo.andar();
+                            if (inimigo.isMorto()) {
+                                desenhaveis.remove(inimigo);
+                            }
+
+                        }
+                        for (Aereo_leve inimigo : lista_aereo_leve) {
                             inimigo.andar();
                             if (inimigo.isMorto()) {
                                 desenhaveis.remove(inimigo);
@@ -143,6 +151,13 @@ public class Window extends JFrame implements KeyListener {
                         }
                     }
 
+                    for (Aereo_leve inimigo : lista_aereo_leve) {
+                        inimigo.andar();
+                        if (inimigo.isMorto()) {
+                            desenhaveis.remove(inimigo);
+                        }
+
+                    }
                     /*
                      Acha caminho e da pro inimigo seguir
                      

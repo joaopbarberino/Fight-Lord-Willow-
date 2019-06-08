@@ -17,11 +17,10 @@ import java.lang.Math;
  * @author joao.pbsilva20
  */
 public abstract class Inimigo extends JPanel {
-    
+
     private int vida;
     private int ataque;
     private int defesa;
-    private int vel_mov;
     private int gold;
     private int xp;
     private int pos; // Posição do mapa em que o inimigo está
@@ -29,15 +28,14 @@ public abstract class Inimigo extends JPanel {
     private int qtdPassos = 0; // Quantos passos ele já deu
     private boolean andando = true;
     private String tipo;
-    
+
     public static BufferedImage terrestre_pesado;
 
     //aqui n deveria ter um parametro no construtor pra ser a img?
-    public Inimigo(int vida, int ataque, int defesa, int vel_mov, int gold, int xp, String tipo, ArrayList caminho) {
+    public Inimigo(int vida, int ataque, int defesa, int gold, int xp, String tipo, ArrayList caminho) {
         this.vida = vida;
         this.ataque = ataque;
         this.defesa = defesa;
-        this.vel_mov = vel_mov;
         this.gold = gold;
         this.xp = xp;
         this.tipo = tipo;
@@ -64,16 +62,6 @@ public abstract class Inimigo extends JPanel {
         return this.defesa;
     }
 
-    // Retorna o valor da velocidade de movimento do inimigo
-    public int getVel_mov() {
-        return this.vel_mov;
-    }
-
-    // Reduz a velocidade de movimento do inimigo
-    public void reduzVel_mov(int valor) {
-        this.vel_mov -= valor;
-    }
-
     // Retorna quanto de ouro o inimigo vale
     public int getGold() {
         return this.gold;
@@ -98,12 +86,12 @@ public abstract class Inimigo extends JPanel {
     private void matar() {
         this.vida = 0;
     }
-    
+
     public void setCaminho(ArrayList caminho) {
         this.caminho = caminho;
         this.pos = this.caminho.get(this.qtdPassos);
     }
-    
+
     public ArrayList getCaminho() {
         return this.caminho;
     }
@@ -114,19 +102,19 @@ public abstract class Inimigo extends JPanel {
     // o qual o inimigo já está.
     public void andar(boolean pode_andar) {
         if (pode_andar) {
-            
-            if (this.qtdPassos != this.caminho.size()) {
+
+            if (this.qtdPassos != this.caminho.size() - 1) {
                 this.pos = (int) this.caminho.get(this.qtdPassos);
                 this.qtdPassos++;
                 this.andando = true;
-                
-            } else if (this.qtdPassos == this.caminho.size()) {
+
+            } else if (this.qtdPassos == this.caminho.size() - 1) {
                 this.matar();
                 this.andando = false;
             }
         }
     }
-    
+
     public boolean isAndando() {
         return this.andando;
     }
@@ -135,9 +123,9 @@ public abstract class Inimigo extends JPanel {
     public int getPos() {
         return this.pos;
     }
-    
+
     public int getProxPos() {
         return this.caminho.get(this.qtdPassos);
     }
-    
+
 }
