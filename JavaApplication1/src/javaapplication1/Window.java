@@ -21,6 +21,7 @@ import mapa.Mapa;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.util.Iterator;
 
 /**
  *
@@ -33,6 +34,7 @@ public class Window extends JFrame implements KeyListener {
     private ArrayList<BufferedImage> sprites;
     private ArrayList<Desenhavel> desenhaveis = new ArrayList();
     private ArrayList<Terrestre_pesado> lista_terrestres_pesado = new ArrayList();
+    private ArrayList<Terrestre_pesado> lista_terrestres_pesado_clone = new ArrayList();
     private ArrayList<Terrestre_leve> lista_Terrestre_leves = new ArrayList();
     private ArrayList<Aereo_pesado> lista_aereo_pesado = new ArrayList();
     private ArrayList<Aereo_leve> lista_aereo_leve = new ArrayList();
@@ -58,7 +60,7 @@ public class Window extends JFrame implements KeyListener {
         long noDelays = 0;
         long a = 0;
 
-        final long DESIRED_UPDATE_TIME = 60;
+        final long DESIRED_UPDATE_TIME = 300;
         final long NO_DELAYS_PER_YIELD = 4;
         ArrayList<Integer> caminho = new ArrayList();
         //List<Terrestre_pesado> lista_terrestre_pesado;
@@ -86,6 +88,7 @@ public class Window extends JFrame implements KeyListener {
 
         // Cria uma lista de objetos Inimigo - Terrestre Leve  e assim por diante
         lista_terrestres_pesado = new ArrayList();
+        lista_terrestres_pesado_clone = (ArrayList<Terrestre_pesado>) lista_terrestres_pesado.clone();
         lista_Terrestre_leves = new ArrayList();
         lista_aereo_pesado = new ArrayList();
         lista_aereo_leve = new ArrayList();
@@ -109,8 +112,16 @@ public class Window extends JFrame implements KeyListener {
                         for (Terrestre_pesado inimigo : lista_terrestres_pesado) {
                             System.out.println(inimigo.getPos());
                             inimigo.andar();
+                            if (inimigo.isMorto()) {
+                                desenhaveis.remove(inimigo);
+                            }
+
                         }
+
                         excess -= DESIRED_UPDATE_TIME;
+                    }
+                    for (int i = 0; i < desenhaveis.size(); i++) {
+
                     }
                     // Conta qts inimigos tem de cada tipo
                     //for (int j = 0; j < qtds.length; j++) {
@@ -125,8 +136,11 @@ public class Window extends JFrame implements KeyListener {
                     //lista_aereo_pesado.add(inimigo);
                     //lista_aereo_leve.add(inimigo);
                     for (Terrestre_pesado inimigo : lista_terrestres_pesado) {
-                        System.out.print(inimigo.getPos() + " ");
+
                         inimigo.andar();
+                        if (inimigo.isMorto()) {
+                            desenhaveis.remove(inimigo);
+                        }
                     }
 
                     /*

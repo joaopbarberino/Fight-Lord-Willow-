@@ -34,6 +34,8 @@ public class JavaApplication1  {
         sprites.add(ImageIO.read(new File("Morcego-morrendo.png")));
         sprites.add(ImageIO.read(new File("IMP-correndo.png")));
         sprites.add(ImageIO.read(new File("IMP-morrendo.png")));        
+        sprites.add(ImageIO.read(new File("Dragao-voando.png")));        
+        sprites.add(ImageIO.read(new File("Dragao-morrendo.png")));        
         
         
         Window screen = new Window(sprites, layer);

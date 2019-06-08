@@ -17,7 +17,7 @@ import java.lang.Math;
  * @author joao.pbsilva20
  */
 public abstract class Inimigo extends JPanel {
-
+    
     private int vida;
     private int ataque;
     private int defesa;
@@ -29,7 +29,7 @@ public abstract class Inimigo extends JPanel {
     private int qtdPassos = 0; // Quantos passos ele já deu
     private boolean andando = true;
     private String tipo;
-
+    
     public static BufferedImage terrestre_pesado;
 
     //aqui n deveria ter um parametro no construtor pra ser a img?
@@ -95,15 +95,15 @@ public abstract class Inimigo extends JPanel {
     }
 
     // Mata o inimigo, reduzindo sua vida a 0
-    public void matar() {
+    private void matar() {
         this.vida = 0;
     }
-
+    
     public void setCaminho(ArrayList caminho) {
         this.caminho = caminho;
         this.pos = this.caminho.get(this.qtdPassos);
     }
-
+    
     public ArrayList getCaminho() {
         return this.caminho;
     }
@@ -112,25 +112,32 @@ public abstract class Inimigo extends JPanel {
     // string de caminhos baseado em quantos passos ele já deu, começa em 1 pois
     // 0, o primeiro char da string de caminho, sempre vai ser 0, o ponto inicial,
     // o qual o inimigo já está.
-    public void andar() {
-        if (this.caminho != null) {
-            this.pos = (int) this.caminho.get(this.qtdPassos);
-            this.qtdPassos++;
+    public void andar(boolean pode_andar) {
+        if (pode_andar) {
             
-            this.andando = true;
-        }
-        if (this.qtdPassos == this.caminho.size()) {
-            this.andando = false;
+            if (this.qtdPassos != this.caminho.size()) {
+                this.pos = (int) this.caminho.get(this.qtdPassos);
+                this.qtdPassos++;
+                this.andando = true;
+                
+            } else if (this.qtdPassos == this.caminho.size()) {
+                this.matar();
+                this.andando = false;
+            }
         }
     }
-
+    
     public boolean isAndando() {
         return this.andando;
     }
 
     // Retorna em qual posição do mapa o inimigo está
-    public float getPos() {
+    public int getPos() {
         return this.pos;
     }
-
+    
+    public int getProxPos() {
+        return this.caminho.get(this.qtdPassos);
+    }
+    
 }
