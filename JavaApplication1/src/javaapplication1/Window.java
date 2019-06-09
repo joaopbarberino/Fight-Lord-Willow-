@@ -38,6 +38,8 @@ public class Window extends JFrame implements KeyListener {
     private ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
     private ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
     private ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
+    private ArrayList<Inimigo> inimigos = new ArrayList();
+    private ArrayList<Torre_terrestre> lista_torres_terrestres = new ArrayList();
 
     private int qtds[] = new int[4], pula_geracao = 0;
     private boolean setou = true;
@@ -68,9 +70,12 @@ public class Window extends JFrame implements KeyListener {
         caminho = Mapa_exec(caminho);
         System.out.println("Caminho: " + caminho);
 
-        Torre_terrestre torre = new Torre_terrestre(83, sprites.get(0));
+        Torre_terrestre torre = new Torre_terrestre(124, sprites.get(0));
         torre.set_casas_no_alcance();
         torre.get_casas_no_alcance();
+
+        lista_torres_terrestres.add(torre);
+        desenhaveis.add(torre);
 
         Base jogador = new Base(710, 25, 50, 0, 5000, 0, sprites.get(8));
         desenhaveis.add(jogador);
@@ -91,11 +96,37 @@ public class Window extends JFrame implements KeyListener {
             while (excess > DESIRED_UPDATE_TIME) {
                 moverInimigos();
                 limparListas();
+                for (Torre_terrestre x : lista_torres_terrestres) {
+                    for (Inimigo inimigo : inimigos) {
+                        if (x.isNoRange(inimigo)) {
+                            x.setAlvo(inimigo);
+                        }
+                    }
+                    x.atacar();
+                    x.limpaAlvos();
+                }
                 excess -= DESIRED_UPDATE_TIME;
             }
             moverInimigos();
             limparListas();
 
+            for (Torre_terrestre x : lista_torres_terrestres) {
+                for (Inimigo inimigo : inimigos) {
+                    if (x.isNoRange(inimigo)) {
+                        x.setAlvo(inimigo);
+                    }
+                }
+                x.atacar();
+                x.limpaAlvos();
+            }
+
+//            for (Torre_terrestre x : lista_torres_terrestres) {
+//                for (Inimigo inimigo : inimigos) {
+//                    if (!x.isNoRange(inimigo) && x.isAlvo(inimigo)) {
+//                        x.removeAlvo(inimigo);
+//                    } 
+//                }
+//            }
             /*
                          
              Para cada inimigo da lista diferente de null
@@ -194,26 +225,35 @@ public class Window extends JFrame implements KeyListener {
         for (Terrestre_leve inimigo : lista_terrestres_leves_clone) {
             if (inimigo.isMorto()) {
                 this.lista_terrestres_leves.remove(inimigo);
+                this.inimigos.remove(inimigo);
             }
         }
 
         for (Terrestre_pesado inimigo : lista_terrestres_pesados_clone) {
             if (inimigo.isMorto()) {
                 this.lista_terrestres_pesados.remove(inimigo);
+                this.inimigos.remove(inimigo);
             }
         }
 
         for (Aereo_leve inimigo : lista_aereos_leves_clone) {
             if (inimigo.isMorto()) {
                 this.lista_aereos_leves.remove(inimigo);
+                this.inimigos.remove(inimigo);
             }
         }
 
         for (Aereo_pesado inimigo : lista_aereos_pesados_clone) {
             if (inimigo.isMorto()) {
                 this.lista_aereos_pesados.remove(inimigo);
+                this.inimigos.remove(inimigo);
             }
         }
+
+        // Limpa alvos das torres
+//        for (Torre_terrestre torre : lista_torres_terrestres) {
+//            torre.removeAlvo();
+//        }
     }
 
     public void geraWave(int round) {
@@ -300,6 +340,7 @@ public class Window extends JFrame implements KeyListener {
             if (qtds[0] > 0) {
                 Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4), caminho);
                 this.lista_terrestres_leves.add(inimigo);
+                this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
                 this.qtds[0]--;
 
@@ -307,6 +348,7 @@ public class Window extends JFrame implements KeyListener {
             if (qtds[1] > 0) {
                 Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
                 this.lista_terrestres_pesados.add(inimigo);
+                this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
                 this.qtds[1]--;
 
@@ -314,6 +356,7 @@ public class Window extends JFrame implements KeyListener {
             if (qtds[2] > 0) {
                 Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho);
                 this.lista_aereos_leves.add(inimigo);
+                this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
                 this.qtds[2]--;
 
@@ -321,6 +364,7 @@ public class Window extends JFrame implements KeyListener {
             if (qtds[3] > 0) {
                 Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho);
                 this.lista_aereos_pesados.add(inimigo);
+                this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
                 this.qtds[3]--;
             }

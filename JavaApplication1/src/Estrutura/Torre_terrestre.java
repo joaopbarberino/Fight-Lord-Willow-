@@ -20,14 +20,15 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     private int x, y;
 
     public Torre_terrestre(int pos, BufferedImage sprite) {
-        super(1, 3, 3, pos);
+        super(1, 1, 3, pos);
         this.SPRITE = sprite;
-        this.x = ((posAtual / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
+        this.x = ((pos % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
+        this.y = ((pos / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
     }
 
     @Override
     public void paintComponent(Graphics g) {
-        g.drawImage(SPRITE.getSubimage(0, 0, 40, 40),,, this)
+        g.drawImage(SPRITE.getSubimage(0, 0, 40, 40), x, y, null);
     }
 
 }

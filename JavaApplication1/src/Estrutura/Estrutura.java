@@ -14,16 +14,18 @@ import mapa.*;
  *
  * @author joao.pbsilva20
  */
-public class Estrutura extends JPanel{
-
+public class Estrutura extends JPanel {
+    
     private int ataque;
+    private int maximo_de_alvos = 1;
+    private ArrayList<Inimigo> alvos = new ArrayList();
     private int alcance;
     private int velo_atk;
     private int pos;
     private int nivel = 1;
     private ArrayList<Integer> casas_no_alcance = new ArrayList();
     private Mapa mapa;
-
+    
     public Estrutura(int ataque, int alcance, int velo_atk, int pos) {
         this.ataque = ataque;
         this.alcance = alcance;
@@ -67,19 +69,46 @@ public class Estrutura extends JPanel{
     public void setAtaque(int ataque) {
         this.ataque = ataque;
     }
+    
+    public void setMaximoDeAlvos(int maximo_de_alvos) {
+        this.maximo_de_alvos = maximo_de_alvos;
+    }
+    
+    public void setAlvo(Inimigo inimigo) {
+        if (alvos.size() < maximo_de_alvos) {
+            this.alvos.add(inimigo);
+        }
+    }
+    
+    public boolean isAlvo(Inimigo inimigo) {
+        return alvos.contains(inimigo);
+    }
+    
+    public void limpaAlvos() {
+        ArrayList<Inimigo> alvos_clone = (ArrayList<Inimigo>) alvos.clone();
+        for (Inimigo inimigo : alvos_clone) {
+            if (inimigo.isMorto() || !this.isNoRange(inimigo)) {
+                alvos.remove(inimigo);
+            }
+        }
+        
+    }
+    
+    public ArrayList getAlvos_sendo_atacados() {
+        return alvos;
+    }
 
     // Ataca um dado inimigo, reduzindo sua vida
-    public void atacar(Inimigo inimigo) {
-        inimigo.reduzVida(this.ataque);
+    public void atacar() {
+        for (Inimigo inimigo : alvos) {
+            inimigo.reduzVida(this.ataque);
+        }
     }
 
     // Verifica se um dado inimigo está no alcance de ataque, retorna true se sim
     // e else se não
     public boolean isNoRange(Inimigo inimigo) {
-        if (this.casas_no_alcance.contains(inimigo.getPos())) {
-            return true;
-        }
-        return false;
+        return casas_no_alcance.contains(inimigo.getPos());
     }
 
     // Da um mapa pra estrutura e calcula as casas que ela pode atacar
@@ -107,7 +136,7 @@ public class Estrutura extends JPanel{
         int diagonal_sup_esq, diagonal_inf_esq;
         int diagonal_sup_dir, diagonal_inf_dir;
         int qtdColunas = 20; // tamanho da linha em caso de lista
-        
+
         // for, alcance --
         for (int j = this.alcance; j > 0; j--) {
             x1 = this.pos - j;
@@ -118,7 +147,7 @@ public class Estrutura extends JPanel{
             diagonal_sup_dir = y1 + j;
             diagonal_inf_esq = y2 - j;
             diagonal_inf_dir = y2 + j;
-
+            
             ArrayList<Integer> telhado = new ArrayList();
             ArrayList<Integer> chao = new ArrayList();
             ArrayList<Integer> parede_esq = new ArrayList();
@@ -163,7 +192,7 @@ public class Estrutura extends JPanel{
             parede_esq.clear();
             
         }
-
+        
     }
-
+    
 }
