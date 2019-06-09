@@ -2,17 +2,40 @@ package mapa;
 
 import java.util.ArrayList;
 import java.util.List;
+import javaapplication1.Engine;
+import static mapa.Mapa.colunas;
 
 public class No {
 
-    private int id;
+    private int id, pos[],qtdColunas,x,y;
     float h, g, f;
     private boolean visitado, bloqueado, construivel;
     public List<No> vizinhos = new ArrayList();
     private No pai;
-    
+
     public No(int id) {
         this.id = id;
+        this.pos = new int[2];
+        this.qtdColunas = 20;
+        this.x = ((this.getId() % qtdColunas) * Engine.TILE_SIZE);
+        this.y = ((this.getId() / qtdColunas) * Engine.TILE_SIZE);
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public void setPos() {
+        this.pos[0] = this.x;
+        this.pos[1] = this.y;
+    }
+
+    public int[] getPos() {
+        return this.pos;
     }
 
     public float getH() {
@@ -78,12 +101,19 @@ public class No {
     public void setBloqueado(boolean bloqueado) {
         this.bloqueado = bloqueado;
     }
-    
-    public void setConstruivel(boolean construivel){
+
+    public void setConstruivel(boolean construivel) {
         this.construivel = construivel;
     }
+
     public boolean isConstruivel() {
         return construivel;
+    }
+
+    @Override
+    public String toString() {
+        //return "{" + this.elemento + ", \n" + this.prox + '}';
+        return "{" +this.id +'}';
     }
 
 }

@@ -60,7 +60,6 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
             } else if (difPos == 1) {
                 this.movimento = "direita";
             }
-
             this.x = ((posAtual % qtdColunas) * Engine.TILE_SIZE);
             this.prox_x = ((proxPos % qtdColunas) * Engine.TILE_SIZE);
             this.y = ((posAtual / qtdColunas) * Engine.TILE_SIZE);
