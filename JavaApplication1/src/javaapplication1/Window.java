@@ -6,7 +6,7 @@
 package javaapplication1;
 
 import Estrutura.Estrutura;
-import Estrutura.Torre_terrestre;
+//import Estrutura.Torre_terrestre;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -346,7 +346,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[1] > 0) {
-                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
+                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho,sprites.get(0));
                 this.lista_terrestres_pesados.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
