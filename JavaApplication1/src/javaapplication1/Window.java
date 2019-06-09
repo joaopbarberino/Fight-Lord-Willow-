@@ -6,7 +6,7 @@
 package javaapplication1;
 
 import Estrutura.Estrutura;
-import Estrutura.Torre_terrestre;
+//import Estrutura.Torre_terrestre;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -68,9 +68,9 @@ public class Window extends JFrame implements KeyListener {
         caminho = Mapa_exec(caminho);
         System.out.println("Caminho: " + caminho);
 
-        Torre_terrestre torre = new Torre_terrestre(83, sprites.get(0));
-        torre.set_casas_no_alcance();
-        torre.get_casas_no_alcance();
+//        Torre_terrestre torre = new Torre_terrestre(83, sprites.get(0));
+//        torre.set_casas_no_alcance();
+//        torre.get_casas_no_alcance();
 
         Base jogador = new Base(710, 25, 50, 0, 5000, 0, sprites.get(8));
         desenhaveis.add(jogador);
@@ -305,7 +305,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[1] > 0) {
-                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
+                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho,sprites.get(0));
                 this.lista_terrestres_pesados.add(inimigo);
                 this.desenhaveis.add(inimigo);
                 this.qtds[1]--;
