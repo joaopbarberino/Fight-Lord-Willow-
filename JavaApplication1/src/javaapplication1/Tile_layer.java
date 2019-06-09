@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 public class Tile_layer extends JPanel implements Desenhavel {
 
     private int[][] mapa;
+    private BufferedImage tileSheet;
     //Tile_layer minotaur = null;
 
     public Tile_layer(int[][] existingMap) {

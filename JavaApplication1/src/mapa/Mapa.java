@@ -2,6 +2,7 @@ package mapa;
 
 import java.util.ArrayList;
 import java.util.List;
+import javaapplication1.Engine;
 
 /**
  *
@@ -12,6 +13,9 @@ public class Mapa {
     public static List<No> mapa = new ArrayList();
     public static int linhas;
     public static int colunas;
+    public static int x, y;
+    public static ArrayList<int[]> posicoes = new ArrayList<int[]>();
+    public static ArrayList<No> construiveis = new ArrayList<No>();
 
     public Mapa(int linhas, int colunas) {
         this.linhas = linhas;
@@ -32,6 +36,27 @@ public class Mapa {
                 contador++;
             }
         }
+    }
+
+    public ArrayList<No> Get_construiveis() {
+        for (No no : mapa) {
+            if (no.isConstruivel()) {
+                this.construiveis.add(no);
+            }
+        }
+        return this.construiveis;
+    }
+
+    public ArrayList<int[]> pega_Pos() {
+        for (No no : mapa) {
+            no.setPos();
+            this.posicoes.add(no.getPos());
+        }
+//            this.x = ((posAtual % qtdColunas) * Engine.TILE_SIZE);
+//            this.prox_x = ((proxPos % qtdColunas) * Engine.TILE_SIZE);
+//            this.y = ((posAtual / qtdColunas) * Engine.TILE_SIZE);
+//            this.prox_y = ((proxPos / qtdColunas) * Engine.TILE_SIZE);
+        return this.posicoes;
     }
 
     public static List<No> getMapa() {
@@ -103,7 +128,7 @@ public class Mapa {
         }
         //pegar vizinho cima
         if (linhaDoNo > 1) {
-            list.add(mapa.get((id - linhas) ));
+            list.add(mapa.get((id - linhas)));
         }
         //pegar vizinho baixo
         if (linhaDoNo < mapa.size() / linhas) {
