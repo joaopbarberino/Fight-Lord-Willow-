@@ -5,7 +5,7 @@
  */
 package javaapplication1;
 
-import Estrutura.Estrutura;
+import Estrutura.*;
 //import Estrutura.Torre_terrestre;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
@@ -230,7 +230,7 @@ public class Window extends JFrame implements KeyListener {
         }
 
         for (Terrestre_pesado inimigo : lista_terrestres_pesados_clone) {
-            if (inimigo.isMorto()) {
+            if (inimigo.isMorto() && inimigo.acabou_animacao_morte) {
                 this.lista_terrestres_pesados.remove(inimigo);
                 this.inimigos.remove(inimigo);
             }
@@ -265,7 +265,7 @@ public class Window extends JFrame implements KeyListener {
             case 1:
                 if (setou) {
                     this.qtds[0] = 10;
-                    this.qtds[1] = 0;
+                    this.qtds[1] = 1;
                     this.qtds[2] = 0;
                     this.qtds[3] = 0;
                     this.setou = false;
@@ -346,7 +346,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[1] > 0) {
-                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho,sprites.get(0));
+                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho, sprites.get(1));
                 this.lista_terrestres_pesados.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);

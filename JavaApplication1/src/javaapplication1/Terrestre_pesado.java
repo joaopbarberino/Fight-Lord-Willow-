@@ -22,7 +22,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     private final BufferedImage SPRITEMORTE;
     private final int qtdColunas = 20;
     private final int VEL_MOVIMENTO = 100;
-    
+
     private int posAtual, proxPos, difPos;
     private int x, y, prox_x, prox_y;
     private int x_aux, y_aux, por_x, por_y;
@@ -32,10 +32,11 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     private int maxSpriteMorte = 6;
     private boolean trocaAnimacao = false;
     private boolean trocaAnimacaoMorte = false;
+    public boolean acabou_animacao_morte = false;
     private boolean pode_andar = false, andou = true;
     private String movimento = "";
 
-    public Terrestre_pesado(BufferedImage sprite, ArrayList<Integer> caminho,BufferedImage spriteMorte) {
+    public Terrestre_pesado(BufferedImage sprite, ArrayList<Integer> caminho, BufferedImage spriteMorte) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
@@ -48,7 +49,8 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     public BufferedImage getSprite() {
         return this.SPRITE;
     }
-      public BufferedImage getSpriteMorte() {
+
+    public BufferedImage getSpriteMorte() {
         return this.SPRITEMORTE;
     }
 
@@ -150,21 +152,24 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
             default:
                 break;
         }
+        
+
         if (contaSprite == maxSprite) {
             contaSprite = 0;
         }
-        if (contaSprite != maxSpriteMorte) {
-            trocaAnimacaoMorte = !trocaAnimacaoMorte;
-            this.acabouAnimacaoDeMorte();
-        }
-        
 
-        if(this.isMorto()){            
-            g.drawImage(this.SPRITEMORTE.getSubimage(contaSpriteMorte * 40, 0, 40, 40), x_aux, y_aux, null);
-            
+        if (contaSpriteMorte == maxSpriteMorte) {
+            this.acabou_animacao_morte = true;
         }
-        g.drawImage(this.SPRITE.getSubimage(contaSprite * 40, 0, 40, 40), x_aux, y_aux, null);
-        trocaAnimacao = !trocaAnimacao;        
+
+        if (this.isMorto()) {
+            g.drawImage(this.SPRITEMORTE.getSubimage(contaSpriteMorte * 40, 0, 40, 40), x, y, null);
+            trocaAnimacaoMorte = !trocaAnimacaoMorte;
+            
+        } else if (!this.isMorto()) {
+            g.drawImage(this.SPRITE.getSubimage(contaSprite * 40, 0, 40, 40), x_aux, y_aux, null);
+            trocaAnimacao = !trocaAnimacao;
+        }
 
     }
 }
