@@ -87,64 +87,49 @@ public class Window extends JFrame implements KeyListener {
             // Checa se o jogador nao vai construir ou melhorar alguma torre
             // Caso construa, adiciona a estrutura numa lista de estruturas
             // Gera wave baseado em valores pré determinados com base no round
-            switch (round) {
-
-                case 1:
-                    this.trocou_round = false;
-                    while (excess > DESIRED_UPDATE_TIME) {
-                        moverInimigos();
-                        excess -= DESIRED_UPDATE_TIME;
-                    }
-                    moverInimigos();
-                    limparListas();
-                    // Conta qts inimigos tem de cada tipo
+            this.trocou_round = false;
+            while (excess > DESIRED_UPDATE_TIME) {
+                moverInimigos();
+                limparListas();
+                excess -= DESIRED_UPDATE_TIME;
+            }
+            moverInimigos();
+            limparListas();
+                    //System.out.println(lista_aereos_leves);
+            // Conta qts inimigos tem de cada tipo
                     /*
-                     Acha caminho e da pro inimigo seguir
+             Acha caminho e da pro inimigo seguir
                      
-                     Para cada inimigo da lista diferente de null
+             Para cada inimigo da lista diferente de null
                     
-                     Chama função abaixo:
-                     Checa se ele não está no range de todas as torres
-                     -> Se tiver, a torre ataca enquanto o inimigo estiver no range {
-                     -> Inimigo recebe o ataque
-                     -> Se vida do inimigo => 0, ele morre e é removido da lista
-                     -> Se não, inimigo anda
+             Chama função abaixo:
+             Checa se ele não está no range de todas as torres
+             -> Se tiver, a torre ataca enquanto o inimigo estiver no range {
+             -> Inimigo recebe o ataque
+             -> Se vida do inimigo => 0, ele morre e é removido da lista
+             -> Se não, inimigo anda
 
-                     -> Se chegou no destino, se mata e da dano no jogador
-                     -> Se vida atual do jogador <= 0, gameLoop = false, break;
+             -> Se chegou no destino, se mata e da dano no jogador
+             -> Se vida atual do jogador <= 0, gameLoop = false, break;
 
-                     -> Se o inimigo morrer, jogador recebe o gold e o xp q ele vale
-                     }
+             -> Se o inimigo morrer, jogador recebe o gold e o xp q ele vale
+             }
 
-                     -> Se não estiver
-                     -> Inimigo anda
-                     -> Se chegou no destino, se mata e da dano no jogador
-                     -> Se vida atual do jogador <= 0, gameLoop = false, break;
+             -> Se não estiver
+             -> Inimigo anda
+             -> Se chegou no destino, se mata e da dano no jogador
+             -> Se vida atual do jogador <= 0, gameLoop = false, break;
                                     
                     
-                     */
-                    // Caso todos os inimigos estejam mortos, round acaba
-                    if (lista_terrestres_pesados.isEmpty()) {
-                        round++;
-                        this.trocou_round = true;
-                    }
-
-                    //gameLoop = false;
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                default:
-                    break;
+             */
+            // Caso todos os inimigos estejam mortos, round acaba
+            if (lista_aereos_leves.isEmpty() && lista_aereos_pesados.isEmpty() && lista_terrestres_leves.isEmpty() && lista_terrestres_pesados.isEmpty()) {
+                System.out.println("!!!!!!");
+                round++;
+                this.trocou_round = true;
+            }
 
                 // Checa se o jogador tem xp o suficente para subir de nivel
-                }
-
             repaint();
 
             excess -= DESIRED_UPDATE_TIME;
@@ -257,7 +242,37 @@ public class Window extends JFrame implements KeyListener {
 
                     }
                 }
+                break;
 
+            case 2:
+                for (int j = 0; j < 4; j++) {
+                    for (int i = 0; i < 10; i++) {
+                        // Instancia esses inimigos
+                        // Adiciona na sua respectiva lista
+                        if (j == 0) {
+                            System.out.println("sdfgjmisda");
+                            Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4), caminho);
+                            this.lista_terrestres_leves.add(inimigo);
+                            this.desenhaveis.add(inimigo);
+                        } else if (j == 1) {
+                            System.out.println("345345345");
+                            Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho);
+                            this.lista_terrestres_pesados.add(inimigo);
+                            this.desenhaveis.add(inimigo);
+                        } else if (j == 2) {
+                            System.out.println("#@$#@$@#$");
+                            Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho);
+                            this.lista_aereos_leves.add(inimigo);
+                            this.desenhaveis.add(inimigo);
+                        } else if (j == 3) {
+                            System.out.println("><><><><><><><");
+                            Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho);
+                            this.lista_aereos_pesados.add(inimigo);
+                            this.desenhaveis.add(inimigo);
+                        }
+
+                    }
+                }
                 break;
         }
     }
