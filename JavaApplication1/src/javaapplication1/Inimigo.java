@@ -31,7 +31,6 @@ public abstract class Inimigo extends JPanel {
 
     public static BufferedImage terrestre_pesado;
 
-    //aqui n deveria ter um parametro no construtor pra ser a img?
     public Inimigo(int vida, int ataque, int defesa, int gold, int xp, String tipo, ArrayList caminho) {
         this.vida = vida;
         this.ataque = ataque;

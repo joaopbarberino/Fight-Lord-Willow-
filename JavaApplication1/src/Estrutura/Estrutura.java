@@ -5,9 +5,11 @@
  */
 package Estrutura;
 
+import java.io.IOException;
 import javaapplication1.Inimigo;
 import java.util.*;
 import javax.swing.JPanel;
+import javaapplication1.Window;
 import mapa.*;
 
 /**
@@ -17,10 +19,12 @@ import mapa.*;
 public class Estrutura extends JPanel {
 
     private int ataque;
-    private int maximo_de_alvos = 2;
+    public int maximo_de_alvos = 1;
+    private int alvos_atuais = 0;
     private ArrayList<Inimigo> alvos = new ArrayList();
     private int alcance;
     private int velo_atk;
+    private int tentativa_de_ataque;
     private int pos;
     private int nivel = 1;
     private ArrayList<Integer> casas_no_alcance = new ArrayList();
@@ -30,6 +34,7 @@ public class Estrutura extends JPanel {
         this.ataque = ataque;
         this.alcance = alcance;
         this.velo_atk = velo_atk;
+        this.tentativa_de_ataque = velo_atk;
         this.pos = pos;
     }
 
@@ -44,6 +49,10 @@ public class Estrutura extends JPanel {
         return alcance;
     }
 
+    public int getPos() {
+        return this.pos;
+    }
+    
     // Modifica o alcance da estrutura
     public void setAlcance(int alcance) {
         this.alcance = alcance;
@@ -69,42 +78,7 @@ public class Estrutura extends JPanel {
     public void setAtaque(int ataque) {
         this.ataque = ataque;
     }
-
-    public void setMaximoDeAlvos(int maximo_de_alvos) {
-        this.maximo_de_alvos = maximo_de_alvos;
-    }
-
-    public void setAlvo(Inimigo inimigo) {
-        if (alvos.size() < maximo_de_alvos) {
-            this.alvos.add(inimigo);
-        }
-    }
-
-    public boolean isAlvo(Inimigo inimigo) {
-        return alvos.contains(inimigo);
-    }
-
-    public void limpaAlvos() {
-        ArrayList<Inimigo> alvos_clone = (ArrayList<Inimigo>) alvos.clone();
-        for (Inimigo inimigo : alvos_clone) {
-            if (inimigo.isMorto() || !this.isNoRange(inimigo)) {
-                alvos.remove(inimigo);
-            }
-        }
-
-    }
-
-    public ArrayList getAlvos_sendo_atacados() {
-        return alvos;
-    }
-
-    // Ataca um dado inimigo, reduzindo sua vida
-    public void atacar() {
-        for (Inimigo inimigo : alvos) {
-            inimigo.reduzVida(this.ataque);
-        }
-    }
-
+    
     // Verifica se um dado inimigo está no alcance de ataque, retorna true se sim
     // e else se não
     public boolean isNoRange(Inimigo inimigo) {
@@ -117,7 +91,7 @@ public class Estrutura extends JPanel {
     }
 
     // Aumenta o nivel da torre
-    public void update() {
+    public void upgrade() {
         this.nivel++;
         this.ataque++;
         this.alcance++;

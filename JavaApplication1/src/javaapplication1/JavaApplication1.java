@@ -15,7 +15,6 @@ import javax.imageio.ImageIO;
  * @author joao.pbsilva20
  */
 public class JavaApplication1  {    
-    //public static ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
     public static void main(String[] args) throws IOException, InterruptedException {
         Tile_layer layer = Tile_layer.From_file("mapa.txt");
         ArrayList<BufferedImage> sprites = new ArrayList();
@@ -27,7 +26,8 @@ public class JavaApplication1  {
         //sprites[5] = IMP morrendo
         //sprites[6] = dragão andando
         //sprites[7] = dragão morrendo
-        //sprites[8] = dragão morrendo
+        //sprites[8] = base
+        //sprites[9] = ataque da torre (provisorio)
         
         sprites.add(ImageIO.read(new File("minitaur.png")));
         sprites.add(ImageIO.read(new File("Minotauro-morrendo.png")));
@@ -38,6 +38,7 @@ public class JavaApplication1  {
         sprites.add(ImageIO.read(new File("Dragao-voando.png")));        
         sprites.add(ImageIO.read(new File("Dragao-morrendo.png")));
         sprites.add(ImageIO.read(new File("base1.png")));        
+        sprites.add(ImageIO.read(new File("Ataque-torre.png")));        
         
         
         Window screen = new Window(sprites, layer);

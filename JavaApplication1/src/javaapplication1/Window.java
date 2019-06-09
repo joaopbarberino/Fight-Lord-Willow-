@@ -6,7 +6,6 @@
 package javaapplication1;
 
 import Estrutura.*;
-//import Estrutura.Torre_terrestre;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -31,9 +30,9 @@ public class Window extends JFrame implements KeyListener {
 
     //private BufferedImage minotaur = null;    
     private Tile_layer MAP;
-    private ArrayList<BufferedImage> sprites;
+    public ArrayList<BufferedImage> sprites;
     private ArrayList<Integer> caminho = new ArrayList();
-    private ArrayList<Desenhavel> desenhaveis = new ArrayList();
+    public ArrayList<Desenhavel> desenhaveis = new ArrayList();
     private ArrayList<Terrestre_pesado> lista_terrestres_pesados = new ArrayList();
     private ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
     private ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
@@ -43,6 +42,10 @@ public class Window extends JFrame implements KeyListener {
 
     private int qtds[] = new int[4], pula_geracao = 0;
     private boolean setou = true;
+
+    public void setDesenhavel(Desenhavel object) {
+        this.desenhaveis.add(object);
+    }
 
     public Window(ArrayList<BufferedImage> sprites, Tile_layer layer) {
         super("Attack, Lord Willow!");
@@ -56,7 +59,7 @@ public class Window extends JFrame implements KeyListener {
         this.sprites = sprites;
     }
 
-    public void run() throws InterruptedException {
+    public void run() throws InterruptedException, IOException {
         Sprite_sheet sprite_terrestre;
         boolean gameLoop = true;
 
@@ -70,7 +73,7 @@ public class Window extends JFrame implements KeyListener {
         caminho = Mapa_exec(caminho);
         System.out.println("Caminho: " + caminho);
 
-        Torre_terrestre torre = new Torre_terrestre(144, sprites.get(0));
+        Torre_terrestre torre = new Torre_terrestre(144, sprites.get(0), sprites.get(9));
         torre.set_casas_no_alcance();
         torre.get_casas_no_alcance();
 
@@ -96,29 +99,38 @@ public class Window extends JFrame implements KeyListener {
             while (excess > DESIRED_UPDATE_TIME) {
                 moverInimigos();
                 limparListas();
-                for (Torre_terrestre x : lista_torres_terrestres) {
-                    for (Inimigo inimigo : inimigos) {
-                        if (x.isNoRange(inimigo)) {
-                            x.setAlvo(inimigo);
-                        }
-                    }
-                    x.atacar();
-                    x.limpaAlvos();
-                }
+//                for (Torre_terrestre x : lista_torres_terrestres) {
+//                    for (Inimigo inimigo : inimigos) {
+//                        if (x.isNoRange(inimigo)) {
+//                            x.setAlvo(inimigo);
+//                        }
+//                    }
+//                    x.atacar();
+//                    x.limpaAlvos();
+//                }
                 excess -= DESIRED_UPDATE_TIME;
             }
             moverInimigos();
             limparListas();
 
-            for (Torre_terrestre x : lista_torres_terrestres) {
-                for (Inimigo inimigo : inimigos) {
+//            for (Torre_terrestre x : lista_torres_terrestres) {
+//                for (Inimigo inimigo : inimigos) {
+//                    if (x.isNoRange(inimigo)) {
+//                        x.setAlvo(inimigo);
+//                    }
+//                }
+//                x.atacar();
+//                System.out.println(x.getAlvos_sendo_atacados());
+//                x.limpaAlvos();
+//            }
+            for (Inimigo inimigo : inimigos) {
+                for (Torre_terrestre x : lista_torres_terrestres) {
                     if (x.isNoRange(inimigo)) {
-                        x.setAlvo(inimigo);
+                        x.atacar(inimigo);
+                    } else if (!x.isNoRange(inimigo)) {
+                        x.naoAtacar(inimigo);
                     }
                 }
-                x.atacar();
-                System.out.println(x.getAlvos_sendo_atacados());
-                x.limpaAlvos();
             }
 
             /*
