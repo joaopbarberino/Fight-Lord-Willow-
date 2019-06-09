@@ -20,11 +20,14 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
     private final int qtdColunas = 20;
-    private final int VEL_MOVIMENTO = 50;
+    private final int VEL_MOVIMENTO = 10;
     
     private int posAtual, proxPos, difPos;
     private int x, y, prox_x, prox_y;
     private int x_aux, y_aux, por_x, por_y;
+    private int contaSprite = 0;
+    private int maxSprite = 8;
+    private boolean trocaAnimação = false;
     private boolean pode_andar = false, andou = true;
     private String movimento = "";
 
@@ -98,6 +101,9 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
             this.andou = false;
             this.pode_andar = false;
         }
+         if (trocaAnimação == true) {
+            contaSprite++;
+        }
     }
 
 
@@ -107,7 +113,7 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
 
         switch (movimento) {
             case "baixo":
-                this.y_aux = this.y_aux + por_y;
+                this.y_aux = this.y_aux + por_y+1;
                 if (y_aux >= prox_y) {
                     this.andou = true;
                     this.pode_andar = true;
@@ -115,7 +121,7 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
                 break;
 
             case "cima":
-                this.y_aux -= por_y;
+                this.y_aux -= por_y+1;
                 if (y_aux <= prox_y) {
                     this.andou = true;
                     this.pode_andar = true;
@@ -123,7 +129,7 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
                 break;
 
             case "direita":
-                this.x_aux += por_x;
+                this.x_aux += por_x+1;
                 if (x_aux >= prox_x) {
                     this.andou = true;
                     this.pode_andar = true;
@@ -134,7 +140,13 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
                 break;
         }
 
-        g.drawImage(this.SPRITE.getSubimage(0, 0, 40, 40), x_aux, y_aux, null);
+        if (contaSprite == maxSprite) {
+            contaSprite = 0;
+        }
+
+
+        g.drawImage(this.SPRITE.getSubimage(contaSprite * 40, 0, 40, 40), x_aux, y_aux, null);
+        trocaAnimação = !trocaAnimação;
 
     }
 }

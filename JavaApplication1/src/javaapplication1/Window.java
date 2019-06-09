@@ -68,8 +68,9 @@ public class Window extends JFrame implements KeyListener {
         Estrutura x = new Torre_terrestre(83);
         x.set_casas_no_alcance();
         x.get_casas_no_alcance();
-
-        Base jogador = new Base();
+        
+        Base jogador = new Base(710,25,50,0,5000,0,sprites.get(8));
+        desenhaveis.add(jogador);
         int round = 1;
 
         // Cria double-buffering strategy genérico

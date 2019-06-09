@@ -1,7 +1,10 @@
 package javaapplication1;
 
-public class Base {
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
+public class Base implements Desenhavel {
+    private final BufferedImage SPRITE;
     /*
         Essa classe é responsável pela base do jogador
     
@@ -11,14 +14,18 @@ public class Base {
     private int xp;
     private int gold;
     private int nivel;
+    private int x,y;
+    private boolean morreu;
 
-    public Base() {
-        this.vida_maxima = 50;
-        this.vida_atual = 50;
-        this.xp = 0;
-        this.gold = 0;
-        this.nivel = 1;
-
+    public Base(int x, int y,int vida,int xp,int gold,int nivel,BufferedImage sprite) {
+        this.vida_maxima = vida;
+        this.vida_atual = vida;
+        this.xp = xp;
+        this.gold = gold;
+        this.nivel = nivel;
+        this.SPRITE = sprite;
+        this.x = x;
+        this.y = y;
     }
 
     public int getVidaMaxima() {
@@ -40,6 +47,31 @@ public class Base {
     public int getXp() {
         return xp;
     }
+    
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public boolean isMorreu() {
+        return morreu;
+    }
+
+    public void setMorreu(boolean morreu) {
+        this.morreu = morreu;
+    }
+    
 
     public void ganhaXp(int xp) {
         this.xp += xp;
@@ -78,4 +110,10 @@ public class Base {
         }
     }
 
+    @Override
+    public void paintComponent(Graphics g) {
+
+        g.drawImage(this.SPRITE, x,y,null);
+
+    }
 }
