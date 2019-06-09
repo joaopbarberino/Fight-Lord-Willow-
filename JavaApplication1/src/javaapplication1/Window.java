@@ -18,9 +18,12 @@ import mapa.AEstrela;
 import mapa.Mapa;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
+import mapa.No;
 
 /**
  *
@@ -39,6 +42,11 @@ public class Window extends JFrame implements KeyListener {
     private ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
     private ArrayList<Inimigo> inimigos = new ArrayList();
     private ArrayList<Torre_terrestre> lista_torres_terrestres = new ArrayList();
+    private static ArrayList<int[]> posicoes = new ArrayList<int[]>();
+    private static ArrayList<No> construiveis = new ArrayList<No>();
+    private int clickX, clickY, id;
+    private static int elementoLista[] = new int[2];
+    private No teste = null;
 
     private int qtds[] = new int[4], pula_geracao = 0;
     private boolean setou = true;
@@ -57,6 +65,14 @@ public class Window extends JFrame implements KeyListener {
         this.addKeyListener(this);
         this.MAP = layer;
         this.sprites = sprites;
+        this.addMouseListener(new MouseAdapter() {// Precisa adicionar o evento na window para q o clique funcione apenas dentro da tela
+            @Override //Override apenas para o metodo de demonstracao
+            public void mousePressed(MouseEvent e) {
+                clickX = e.getX();
+                clickY = e.getY();
+                System.out.println("X :" + clickX + ", y: " + clickY);
+            }
+        });
     }
 
     public void run() throws InterruptedException, IOException {
@@ -72,6 +88,7 @@ public class Window extends JFrame implements KeyListener {
         // Instanciar o mapa da fase
         caminho = Mapa_exec(caminho);
         System.out.println("Caminho: " + caminho);
+        System.out.println("contruiveis: " + construiveis.toString());
 
         Torre_terrestre torre = new Torre_terrestre(144, sprites.get(0), sprites.get(9));
         torre.set_casas_no_alcance();
@@ -79,6 +96,7 @@ public class Window extends JFrame implements KeyListener {
 
         lista_torres_terrestres.add(torre);
         desenhaveis.add(torre);
+        teste = construiveis.get(0);
 
         Base jogador = new Base(710, 25, 50, 0, 5000, 0, sprites.get(8));
         desenhaveis.add(jogador);
@@ -88,6 +106,17 @@ public class Window extends JFrame implements KeyListener {
         this.createBufferStrategy(2);
 
         while (gameLoop) {
+            if (clickX != 0 && clickY != 0) {
+                for (int i = 0; i < construiveis.size(); i++) {
+                    teste = construiveis.get(i);
+                    if (teste.getX() - clickX >= 0 && teste.getY() - clickY >= 0) {
+                        Torre_terrestre tower = new Torre_terrestre(teste.getId(), sprites.get(9));
+                        lista_torres_terrestres.add(torre);
+                        desenhaveis.add(tower);
+                        break;
+                    }
+                }
+            }
 
             geraWave(round);
 
@@ -471,6 +500,9 @@ public class Window extends JFrame implements KeyListener {
 
         AEstrela.aEstrela(mapa.getMapa().get(3), mapa.getMapa().get(79), mapa);
         caminho = AEstrela.caminhos;
+        posicoes = mapa.pega_Pos();
+        elementoLista = posicoes.get(200);
+        construiveis = mapa.Get_construiveis();
 
         return caminho;
     }

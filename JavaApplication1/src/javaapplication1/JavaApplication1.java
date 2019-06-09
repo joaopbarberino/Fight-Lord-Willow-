@@ -28,6 +28,7 @@ public class JavaApplication1  {
         //sprites[7] = dragão morrendo
         //sprites[8] = base
         //sprites[9] = ataque da torre (provisorio)
+        //sprites[10] = Torre 1
         
         sprites.add(ImageIO.read(new File("minitaur.png")));
         sprites.add(ImageIO.read(new File("Minotauro-morrendo.png")));
@@ -38,7 +39,8 @@ public class JavaApplication1  {
         sprites.add(ImageIO.read(new File("Dragao-voando.png")));        
         sprites.add(ImageIO.read(new File("Dragao-morrendo.png")));
         sprites.add(ImageIO.read(new File("base1.png")));        
-        sprites.add(ImageIO.read(new File("Ataque-torre.png")));        
+        sprites.add(ImageIO.read(new File("Ataque-torre.png")));
+        sprites.add(ImageIO.read(new File("torre1.png")));  
         
         
         Window screen = new Window(sprites, layer);
