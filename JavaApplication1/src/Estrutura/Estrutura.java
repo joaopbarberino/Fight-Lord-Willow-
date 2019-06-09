@@ -15,9 +15,9 @@ import mapa.*;
  * @author joao.pbsilva20
  */
 public class Estrutura extends JPanel {
-    
+
     private int ataque;
-    private int maximo_de_alvos = 1;
+    private int maximo_de_alvos = 2;
     private ArrayList<Inimigo> alvos = new ArrayList();
     private int alcance;
     private int velo_atk;
@@ -25,7 +25,7 @@ public class Estrutura extends JPanel {
     private int nivel = 1;
     private ArrayList<Integer> casas_no_alcance = new ArrayList();
     private Mapa mapa;
-    
+
     public Estrutura(int ataque, int alcance, int velo_atk, int pos) {
         this.ataque = ataque;
         this.alcance = alcance;
@@ -69,21 +69,21 @@ public class Estrutura extends JPanel {
     public void setAtaque(int ataque) {
         this.ataque = ataque;
     }
-    
+
     public void setMaximoDeAlvos(int maximo_de_alvos) {
         this.maximo_de_alvos = maximo_de_alvos;
     }
-    
+
     public void setAlvo(Inimigo inimigo) {
         if (alvos.size() < maximo_de_alvos) {
             this.alvos.add(inimigo);
         }
     }
-    
+
     public boolean isAlvo(Inimigo inimigo) {
         return alvos.contains(inimigo);
     }
-    
+
     public void limpaAlvos() {
         ArrayList<Inimigo> alvos_clone = (ArrayList<Inimigo>) alvos.clone();
         for (Inimigo inimigo : alvos_clone) {
@@ -91,9 +91,9 @@ public class Estrutura extends JPanel {
                 alvos.remove(inimigo);
             }
         }
-        
+
     }
-    
+
     public ArrayList getAlvos_sendo_atacados() {
         return alvos;
     }
@@ -121,7 +121,7 @@ public class Estrutura extends JPanel {
         this.nivel++;
         this.ataque++;
         this.alcance++;
-        //this.setRange();    
+        this.set_casas_no_alcance();
     }
 
     // mostra as casas no alcance da torre
@@ -147,7 +147,7 @@ public class Estrutura extends JPanel {
             diagonal_sup_dir = y1 + j;
             diagonal_inf_esq = y2 - j;
             diagonal_inf_dir = y2 + j;
-            
+
             ArrayList<Integer> telhado = new ArrayList();
             ArrayList<Integer> chao = new ArrayList();
             ArrayList<Integer> parede_esq = new ArrayList();
@@ -175,24 +175,32 @@ public class Estrutura extends JPanel {
 
             // adicionar telhado chao e paredes a lista principal
             telhado.forEach((casa) -> {
-                this.casas_no_alcance.add(casa);
+                if (!this.casas_no_alcance.contains(casa)) {
+                    this.casas_no_alcance.add(casa);
+                }
             });
             telhado.clear();
             chao.forEach((casa) -> {
-                this.casas_no_alcance.add(casa);
+                if (!this.casas_no_alcance.contains(casa)) {
+                    this.casas_no_alcance.add(casa);
+                }
             });
             chao.clear();
             parede_dir.forEach((casa) -> {
-                this.casas_no_alcance.add(casa);
+                if (!this.casas_no_alcance.contains(casa)) {
+                    this.casas_no_alcance.add(casa);
+                }
             });
             parede_dir.clear();
             parede_esq.forEach((casa) -> {
-                this.casas_no_alcance.add(casa);
+                if (!this.casas_no_alcance.contains(casa)) {
+                    this.casas_no_alcance.add(casa);
+                }
             });
             parede_esq.clear();
-            
+
         }
-        
+
     }
-    
+
 }

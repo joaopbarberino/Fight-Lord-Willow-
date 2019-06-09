@@ -70,7 +70,7 @@ public class Window extends JFrame implements KeyListener {
         caminho = Mapa_exec(caminho);
         System.out.println("Caminho: " + caminho);
 
-        Torre_terrestre torre = new Torre_terrestre(124, sprites.get(0));
+        Torre_terrestre torre = new Torre_terrestre(144, sprites.get(0));
         torre.set_casas_no_alcance();
         torre.get_casas_no_alcance();
 
@@ -117,16 +117,10 @@ public class Window extends JFrame implements KeyListener {
                     }
                 }
                 x.atacar();
+                System.out.println(x.getAlvos_sendo_atacados());
                 x.limpaAlvos();
             }
 
-//            for (Torre_terrestre x : lista_torres_terrestres) {
-//                for (Inimigo inimigo : inimigos) {
-//                    if (!x.isNoRange(inimigo) && x.isAlvo(inimigo)) {
-//                        x.removeAlvo(inimigo);
-//                    } 
-//                }
-//            }
             /*
                          
              Para cada inimigo da lista diferente de null
@@ -230,7 +224,7 @@ public class Window extends JFrame implements KeyListener {
         }
 
         for (Terrestre_pesado inimigo : lista_terrestres_pesados_clone) {
-            if (inimigo.isMorto() && inimigo.acabou_animacao_morte) {
+            if (inimigo.isMorto()) {
                 this.lista_terrestres_pesados.remove(inimigo);
                 this.inimigos.remove(inimigo);
             }
