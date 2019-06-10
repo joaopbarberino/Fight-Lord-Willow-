@@ -102,22 +102,24 @@ public class Window extends JFrame implements KeyListener {
                     for (int i = 0; i < construiveis.size(); i++) {
                         teste = construiveis.get(i);
                         if (Math.abs(teste.getX() - clickX) < 40 && Math.abs(teste.getY() - clickY) < 40) {
+                            jogador.reduzGold(50);
                             System.out.println("Construiu");
-                            clickX = -1;
-                            clickY = -1;
                             mapa.getMapa().get(teste.getId()).setBloqueado(true);
                             mapa.getMapa().get(teste.getId()).setConstruivel(false);
                             Torre_terrestre torre = new Torre_terrestre(teste.getId(), sprites.get(10), sprites.get(9));
                             torre.set_casas_no_alcance();
+                            torre.get_casas_no_alcance();
                             lista_torres_terrestres.add(torre);
                             desenhaveis.add(torre);
                             break;
                         }
                     }
+                    clickX = -1;
+                    clickY = -1;
                 }
             }
 
-            if (segura_wave % 300 == 0) {
+            if (segura_wave % 100 == 0) {
                 geraWave(round);
             } else {
                 this.segura_wave++;
@@ -134,28 +136,17 @@ public class Window extends JFrame implements KeyListener {
 
                 excess -= DESIRED_UPDATE_TIME;
             }
+
             moverInimigos();
             limparListas();
 
-//            for (Torre_terrestre x : lista_torres_terrestres) {
-//                for (Inimigo inimigo : inimigos) {
-//                    if (x.isNoRange(inimigo)) {
-//                        x.setAlvo(inimigo);
-//                    }
-//                }
-//                x.atacar();
-//                System.out.println(x.getAlvos_sendo_atacados());
-//                x.limpaAlvos();
-//            }
-//            for (Inimigo inimigo : inimigos) {
-//                for (Torre_terrestre x : lista_torres_terrestres) {
-//                    if (x.isNoRange(inimigo)) {
-//                        x.atacar(inimigo);
-//                    } else if (!x.isNoRange(inimigo)) {
-//                        x.naoAtacar(inimigo);
-//                    }
-//                }
-//            }
+            for (Inimigo inimigo : inimigos) {
+                for (Torre_terrestre torre : lista_torres_terrestres) {
+                    if (torre.isNoRange(inimigo)) {
+                        torre.atacar(inimigo);
+                    } 
+                }
+            }
 
             /*
                          
@@ -166,19 +157,14 @@ public class Window extends JFrame implements KeyListener {
              -> Se tiver, a torre ataca enquanto o inimigo estiver no range {
              -> Inimigo recebe o ataque
              -> Se vida do inimigo <= 0, ele morre e é removido da lista
-             -> Se não, inimigo anda
-
-             -> Se chegou no destino, se mata e da dano no jogador
-             -> Se vida atual do jogador <= 0, gameLoop = false, break;
 
              -> Se o inimigo morrer, jogador recebe o gold e o xp q ele vale
              }
 
-             -> Se não estiver
-             -> Inimigo anda
+
              -> Se chegou no destino, se mata e da dano no jogador
              -> Se vida atual do jogador <= 0, gameLoop = false, break;
-                                    
+                                  
                     
              */
             // Caso todos os inimigos estejam mortos, round acaba
@@ -190,7 +176,8 @@ public class Window extends JFrame implements KeyListener {
                     if (round < 7) {
                         round++;
                     }
-                    comecou_round = false;
+                    this.comecou_round = false;
+                    this.segura_wave = 0;
                 }
             }
 
@@ -298,10 +285,10 @@ public class Window extends JFrame implements KeyListener {
         switch (round) {
             case 1:
                 if (setou) {
-                    this.qtds[0] = 10;
+                    this.qtds[0] = 0;
                     this.qtds[1] = 1;
                     this.qtds[2] = 0;
-                    this.qtds[3] = 0;
+                    this.qtds[3] = 2;
                     this.setou = false;
                 }
                 break;

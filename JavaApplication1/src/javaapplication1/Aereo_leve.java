@@ -114,7 +114,7 @@ public class Aereo_leve extends Inimigo implements Desenhavel {
 
         switch (movimento) {
             case "baixo":
-                this.y_aux = this.y_aux + por_y+2;
+                this.y_aux = this.y_aux + por_y;
                 if (y_aux >= prox_y) {
                     this.andou = true;
                     this.pode_andar = true;
@@ -122,7 +122,7 @@ public class Aereo_leve extends Inimigo implements Desenhavel {
                 break;
 
             case "cima":
-                this.y_aux -= por_y+2;
+                this.y_aux -= por_y;
                 if (y_aux <= prox_y) {
                     this.andou = true;
                     this.pode_andar = true;
@@ -130,7 +130,7 @@ public class Aereo_leve extends Inimigo implements Desenhavel {
                 break;
 
             case "direita":
-                this.x_aux += por_x+2;
+                this.x_aux += por_x;
                 if (x_aux >= prox_x) {
                     this.andou = true;
                     this.pode_andar = true;

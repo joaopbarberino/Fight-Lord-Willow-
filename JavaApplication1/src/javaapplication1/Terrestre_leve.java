@@ -113,7 +113,7 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
 
         switch (movimento) {
             case "baixo":
-                this.y_aux = this.y_aux + por_y;
+                this.y_aux += por_y;
                 if (y_aux >= prox_y) {
                     this.andou = true;
                     this.pode_andar = true;

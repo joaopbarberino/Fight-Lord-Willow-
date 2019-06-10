@@ -1,12 +1,14 @@
 package javaapplication1;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Base implements Desenhavel {
+
     private final BufferedImage SPRITE;
     /*
-        Essa classe é responsável pela base do jogador
+     Essa classe é responsável pela base do jogador
     
      */
     private int vida_maxima;
@@ -14,10 +16,10 @@ public class Base implements Desenhavel {
     private int xp;
     private int gold;
     private int nivel;
-    private int x,y;
+    private int x, y;
     private boolean morreu;
 
-    public Base(int x, int y,int vida,int xp,int gold,int nivel,BufferedImage sprite) {
+    public Base(int x, int y, int vida, int xp, int gold, int nivel, BufferedImage sprite) {
         this.vida_maxima = vida;
         this.vida_atual = vida;
         this.xp = xp;
@@ -47,7 +49,7 @@ public class Base implements Desenhavel {
     public int getXp() {
         return xp;
     }
-    
+
     public int getX() {
         return x;
     }
@@ -71,18 +73,21 @@ public class Base implements Desenhavel {
     public void setMorreu(boolean morreu) {
         this.morreu = morreu;
     }
-    
 
     public void ganhaXp(int xp) {
         this.xp += xp;
     }
-    
+
     public void ganhaGold(int valor) {
-        this.gold += valor;        
+        this.gold += valor;
     }
-    
+
     public void recebeDano(int dano) {
         this.vida_atual = this.vida_atual - dano;
+    }
+
+    public void reduzGold(int valor) {
+        this.gold -= valor;
     }
 
     public void upgrade() {
@@ -90,30 +95,31 @@ public class Base implements Desenhavel {
             case 50:
                 this.vida_maxima += 20;
                 this.vida_atual = (this.vida_maxima / 3);
-                this.nivel ++;
+                this.nivel++;
                 break;
-            
+
             case 110:
                 this.vida_maxima += 40;
                 this.vida_atual = (this.vida_maxima / 3);
-                this.nivel ++;
+                this.nivel++;
                 break;
-            
+
             case 160:
                 this.vida_maxima += 60;
                 this.vida_atual = (this.vida_maxima / 3);
-                this.nivel ++;
+                this.nivel++;
                 break;
-            
+
             default:
-                break;               
+                break;
         }
     }
 
     @Override
     public void paintComponent(Graphics g) {
 
-        g.drawImage(this.SPRITE, x,y,null);
+        g.drawImage(this.SPRITE, x, y, null);
+        g.drawString("Ouro atual" + this.gold, 100, 700);
 
     }
 }
