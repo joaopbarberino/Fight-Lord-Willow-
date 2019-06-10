@@ -190,6 +190,7 @@ public class Window extends JFrame implements KeyListener {
                     if (round < 7) {
                         round++;
                     }
+                    comecou_round = false;
                 }
             }
 
