@@ -51,7 +51,6 @@ public class Window extends JFrame implements KeyListener {
     private No teste = null;
 
     private int qtds[] = new int[4], pula_geracao = 0, segura_wave = 1;
-    private boolean setou = true, comecou_round = false;
 
     public Window(ArrayList<BufferedImage> sprites, Tile_layer layer) {
         super("Attack, Lord Willow!");
@@ -102,7 +101,7 @@ public class Window extends JFrame implements KeyListener {
                     for (int i = 0; i < construiveis.size(); i++) {
                         teste = construiveis.get(i);
                         if (Math.abs(teste.getX() - clickX) < 40 && Math.abs(teste.getY() - clickY) < 40) {
-                            jogador.reduzGold(50);
+                        if (Math.abs(teste.getX() - clickX) < 40 && Math.abs(teste.getY() - clickY) < 40 && (torre_1 == true || torre_2 == true)) {
                             System.out.println("Construiu");
                             mapa.getMapa().get(teste.getId()).setBloqueado(true);
                             mapa.getMapa().get(teste.getId()).setConstruivel(false);
@@ -111,6 +110,8 @@ public class Window extends JFrame implements KeyListener {
                             torre.get_casas_no_alcance();
                             lista_torres_terrestres.add(torre);
                             desenhaveis.add(torre);
+                            torre_1 = false;
+                            torre_2 = false;
                             break;
                         }
                     }
@@ -522,19 +523,15 @@ public class Window extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyChar() == '1') {
             // mostra tipo da torre e onde pode consturir 
-            System.out.println("APERTEI A 1");
         }
         if (e.getKeyChar() == '2') {
             // mostra tipo da torre e onde pode consturir 
-            System.out.println("APERTEI A 2");
         }
         if (e.getKeyChar() == '3') {
             // mostra tipo da torre e onde pode consturir 
-            System.out.println("APERTEI A 3");
         }
         if (e.getKeyChar() == '4') {
             // mostra tipo da torre e onde pode consturir 
-            System.out.println("APERTEI A 4");
         }
     }
 
@@ -542,19 +539,17 @@ public class Window extends JFrame implements KeyListener {
     public void keyReleased(KeyEvent e) {
         if (e.getKeyChar() == '1') {
             // constroe torre terreste
-            System.out.println("SOLTEI A 1");
+            torre_1 = true;
         }
         if (e.getKeyChar() == '2') {
             // constroe torre aerea
-            System.out.println("SOLTEI A 2");
+            torre_2 = true;
         }
         if (e.getKeyChar() == '3') {
             //  constroe torre hibrida
-            System.out.println("SOLTEI A 3");
         }
         if (e.getKeyChar() == '4') {
             //  constroe armadilha
-            System.out.println("SOLTEI A 4");
         }
 
     }
