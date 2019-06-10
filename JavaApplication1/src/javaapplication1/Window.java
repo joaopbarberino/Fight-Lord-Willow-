@@ -51,6 +51,7 @@ public class Window extends JFrame implements KeyListener {
     private No teste = null;
 
     private int qtds[] = new int[4], pula_geracao = 0, segura_wave = 1;
+    private boolean setou = true, comecou_round = false, torre_1 = false, torre_2 = false;
 
     public Window(ArrayList<BufferedImage> sprites, Tile_layer layer) {
         super("Attack, Lord Willow!");
@@ -100,7 +101,6 @@ public class Window extends JFrame implements KeyListener {
                 if (clickX != 0 && clickY != 0) {
                     for (int i = 0; i < construiveis.size(); i++) {
                         teste = construiveis.get(i);
-                        if (Math.abs(teste.getX() - clickX) < 40 && Math.abs(teste.getY() - clickY) < 40) {
                         if (Math.abs(teste.getX() - clickX) < 40 && Math.abs(teste.getY() - clickY) < 40 && (torre_1 == true || torre_2 == true)) {
                             System.out.println("Construiu");
                             mapa.getMapa().get(teste.getId()).setBloqueado(true);
