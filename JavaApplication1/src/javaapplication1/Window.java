@@ -35,7 +35,9 @@ public class Window extends JFrame implements KeyListener {
     private Tile_layer MAP;
     public ArrayList<BufferedImage> sprites;
     private ArrayList<Integer> caminho = new ArrayList();
+    private Mapa mapa = null;
     public ArrayList<Desenhavel> desenhaveis = new ArrayList();
+    public ArrayList<Desenhavel> torres_desenhaveis = new ArrayList();
     private ArrayList<Terrestre_pesado> lista_terrestres_pesados = new ArrayList();
     private ArrayList<Terrestre_leve> lista_terrestres_leves = new ArrayList();
     private ArrayList<Aereo_pesado> lista_aereos_pesados = new ArrayList();
@@ -48,12 +50,8 @@ public class Window extends JFrame implements KeyListener {
     private static int elementoLista[] = new int[2];
     private No teste = null;
 
-    private int qtds[] = new int[4], pula_geracao = 0;
-    private boolean setou = true;
-
-    public void setDesenhavel(Desenhavel object) {
-        this.desenhaveis.add(object);
-    }
+    private int qtds[] = new int[4], pula_geracao = 0, segura_wave = 1;
+    private boolean setou = true, comecou_round = false;
 
     public Window(ArrayList<BufferedImage> sprites, Tile_layer layer) {
         super("Attack, Lord Willow!");
@@ -90,14 +88,6 @@ public class Window extends JFrame implements KeyListener {
         System.out.println("Caminho: " + caminho);
         System.out.println("contruiveis: " + construiveis.toString());
 
-        Torre_terrestre torre = new Torre_terrestre(144, sprites.get(0), sprites.get(9));
-        torre.set_casas_no_alcance();
-        torre.get_casas_no_alcance();
-
-        lista_torres_terrestres.add(torre);
-        desenhaveis.add(torre);
-        teste = construiveis.get(0);
-
         Base jogador = new Base(710, 25, 50, 0, 5000, 0, sprites.get(8));
         desenhaveis.add(jogador);
         int round = 1;
@@ -105,20 +95,31 @@ public class Window extends JFrame implements KeyListener {
         // Cria double-buffering strategy genérico
         this.createBufferStrategy(2);
 
+        teste = construiveis.get(0);
         while (gameLoop) {
-            if (clickX != 0 && clickY != 0) {
-                for (int i = 0; i < construiveis.size(); i++) {
-                    teste = construiveis.get(i);
-                    if (teste.getX() - clickX >= 0 && teste.getY() - clickY >= 0) {
-                        Torre_terrestre tower = new Torre_terrestre(teste.getId(), sprites.get(9));
-                        lista_torres_terrestres.add(torre);
-                        desenhaveis.add(tower);
-                        break;
+            if (!comecou_round) {
+                if (clickX != 0 && clickY != 0) {
+                    for (int i = 0; i < construiveis.size(); i++) {
+                        teste = construiveis.get(i);
+                        if ((Math.abs(teste.getX() - clickX) < 40 && Math.abs(teste.getY() - clickY) < 40) && mapa.getMapa().get(teste.getId()).isConstruivel()) {
+                            System.out.println("Construiu");
+                            mapa.getMapa().get(teste.getId()).setBloqueado(true);
+                            mapa.getMapa().get(teste.getId()).setConstruivel(false);
+                            Torre_terrestre torre = new Torre_terrestre(teste.getId(), sprites.get(10), sprites.get(9));
+                            torre.set_casas_no_alcance();
+                            lista_torres_terrestres.add(torre);
+                            desenhaveis.add(torre);
+                            break;
+                        }
                     }
                 }
             }
 
-            geraWave(round);
+            if (segura_wave % 300 == 0) {
+                geraWave(round);
+            } else {
+                this.segura_wave++;
+            }
 
             long beforeTime = System.currentTimeMillis();
 
@@ -128,15 +129,7 @@ public class Window extends JFrame implements KeyListener {
             while (excess > DESIRED_UPDATE_TIME) {
                 moverInimigos();
                 limparListas();
-//                for (Torre_terrestre x : lista_torres_terrestres) {
-//                    for (Inimigo inimigo : inimigos) {
-//                        if (x.isNoRange(inimigo)) {
-//                            x.setAlvo(inimigo);
-//                        }
-//                    }
-//                    x.atacar();
-//                    x.limpaAlvos();
-//                }
+
                 excess -= DESIRED_UPDATE_TIME;
             }
             moverInimigos();
@@ -152,15 +145,15 @@ public class Window extends JFrame implements KeyListener {
 //                System.out.println(x.getAlvos_sendo_atacados());
 //                x.limpaAlvos();
 //            }
-            for (Inimigo inimigo : inimigos) {
-                for (Torre_terrestre x : lista_torres_terrestres) {
-                    if (x.isNoRange(inimigo)) {
-                        x.atacar(inimigo);
-                    } else if (!x.isNoRange(inimigo)) {
-                        x.naoAtacar(inimigo);
-                    }
-                }
-            }
+//            for (Inimigo inimigo : inimigos) {
+//                for (Torre_terrestre x : lista_torres_terrestres) {
+//                    if (x.isNoRange(inimigo)) {
+//                        x.atacar(inimigo);
+//                    } else if (!x.isNoRange(inimigo)) {
+//                        x.naoAtacar(inimigo);
+//                    }
+//                }
+//            }
 
             /*
                          
@@ -187,12 +180,14 @@ public class Window extends JFrame implements KeyListener {
                     
              */
             // Caso todos os inimigos estejam mortos, round acaba
-            if (lista_aereos_leves.isEmpty() && lista_aereos_pesados.isEmpty() && lista_terrestres_leves.isEmpty() && lista_terrestres_pesados.isEmpty()) {
-                System.out.println("!!!!!!");
-                this.setou = true;
-                this.pula_geracao = 0;
-                if (round < 7) {
-                    round++;
+            if (comecou_round) {
+                if (lista_aereos_leves.isEmpty() && lista_aereos_pesados.isEmpty() && lista_terrestres_leves.isEmpty() && lista_terrestres_pesados.isEmpty()) {
+                    System.out.println("!!!!!!");
+                    this.setou = true;
+                    this.pula_geracao = 0;
+                    if (round < 7) {
+                        round++;
+                    }
                 }
             }
 
@@ -257,6 +252,10 @@ public class Window extends JFrame implements KeyListener {
         ArrayList<Aereo_pesado> lista_aereos_pesados_clone = (ArrayList<Aereo_pesado>) lista_aereos_pesados.clone();
         ArrayList<Aereo_leve> lista_aereos_leves_clone = (ArrayList<Aereo_leve>) lista_aereos_leves.clone();
 
+//        for (Desenhavel objeto : desenhaveis_clone) {
+//            this.desenhaveis.add(objeto);
+//        }
+//        desenhaveis_clone.clear();
         for (Terrestre_leve inimigo : lista_terrestres_leves_clone) {
             if (inimigo.isMorto()) {
                 this.lista_terrestres_leves.remove(inimigo);
@@ -285,13 +284,10 @@ public class Window extends JFrame implements KeyListener {
             }
         }
 
-        // Limpa alvos das torres
-//        for (Torre_terrestre torre : lista_torres_terrestres) {
-//            torre.removeAlvo();
-//        }
     }
 
     public void geraWave(int round) {
+        this.comecou_round = true;
         //qtds[0] == terrestre leve
         //qtds[1] == terrestre pesado
         //qtds[2] == aereo leve
@@ -408,8 +404,8 @@ public class Window extends JFrame implements KeyListener {
 
     }
 
-    private static ArrayList Mapa_exec(ArrayList caminho) {
-        Mapa mapa = new Mapa(20, 20);
+    private ArrayList Mapa_exec(ArrayList caminho) {
+        this.mapa = new Mapa(20, 20);
         for (int i = 0; i < 400; i++) {
             mapa.getMapa().get(i).setBloqueado(true);
         }
@@ -521,9 +517,11 @@ public class Window extends JFrame implements KeyListener {
                 graphics.clearRect(0, 0, 800, 800);
                 // For each drawable object in list, paint
                 this.MAP.paintComponent(graphics);
+
                 for (Desenhavel objeto : desenhaveis) {
                     objeto.paintComponent(graphics);
                 }
+
                 graphics.dispose();
             } while (strategy.contentsRestored());
             strategy.show();
