@@ -289,7 +289,7 @@ public class Window extends JFrame implements KeyListener {
                     this.qtds[0] = 0;
                     this.qtds[1] = 1;
                     this.qtds[2] = 0;
-                    this.qtds[3] = 2;
+                    this.qtds[3] = 0;
                     this.setou = false;
                 }
                 break;
