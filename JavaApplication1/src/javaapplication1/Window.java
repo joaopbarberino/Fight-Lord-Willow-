@@ -101,8 +101,10 @@ public class Window extends JFrame implements KeyListener {
                 if (clickX != 0 && clickY != 0) {
                     for (int i = 0; i < construiveis.size(); i++) {
                         teste = construiveis.get(i);
-                        if ((Math.abs(teste.getX() - clickX) < 40 && Math.abs(teste.getY() - clickY) < 40) && mapa.getMapa().get(teste.getId()).isConstruivel()) {
+                        if (Math.abs(teste.getX() - clickX) < 40 && Math.abs(teste.getY() - clickY) < 40) {
                             System.out.println("Construiu");
+                            clickX = -1;
+                            clickY = -1;
                             mapa.getMapa().get(teste.getId()).setBloqueado(true);
                             mapa.getMapa().get(teste.getId()).setConstruivel(false);
                             Torre_terrestre torre = new Torre_terrestre(teste.getId(), sprites.get(10), sprites.get(9));
