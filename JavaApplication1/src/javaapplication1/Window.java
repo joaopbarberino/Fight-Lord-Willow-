@@ -88,7 +88,7 @@ public class Window extends JFrame implements KeyListener {
         System.out.println("Caminho: " + caminho);
         System.out.println("contruiveis: " + construiveis.toString());
 
-        Base jogador = new Base(710, 25, 100000, 0, 500000, 0, sprites.get(8), sprites);
+        Base jogador = new Base(710, 25, 1000, 0, 10000, 0, sprites.get(8), sprites);
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
 
@@ -577,6 +577,9 @@ public class Window extends JFrame implements KeyListener {
             } while (strategy.contentsRestored());
             strategy.show();
         } while (strategy.contentsLost());
+        g.drawString("" + 200, 480, 744);
+        g.drawString("" + 400, 480, 780);
+        g.drawString("" + this.round, 380, 744);
     }
 
     @Override

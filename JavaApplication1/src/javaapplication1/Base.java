@@ -126,7 +126,9 @@ public class Base implements Desenhavel {
     public void paintComponent(Graphics g) {
 
         g.drawImage(this.SPRITE, x, y, null);
-        g.drawString("Ouro atual" + this.gold, 100, 700);
+        g.drawString("" + this.gold, 295, 748);
+        g.drawString("" + this.xp, 380, 780);
+        g.drawString("" + this.vida_atual, 295, 780);
 
     }
 }
