@@ -30,7 +30,7 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
     private boolean trocaAnimação = false;
     private boolean pode_andar = false, andou = true;
     private String movimento = "";
-//Vida:5 
+//Vida:10
 //Dano: 2 
 //Defesa:2
 //Gold: +10 
@@ -40,7 +40,7 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
         //Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         //e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(5, 2, 2, 10, 10, "terrestre", caminho);
+        super(10, 2, 2, 10, 10, "terrestre", caminho);
         this.SPRITE = sprite;
     }
 
