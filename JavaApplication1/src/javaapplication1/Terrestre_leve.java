@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javaapplication1.Som;
 
 /**
  *
@@ -19,6 +20,7 @@ import javax.imageio.ImageIO;
 public class Terrestre_leve extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
+    private final ArrayList<Som> Sons;
     private final int qtdColunas = 20;
     private final int VEL_MOVIMENTO = 10;
     
@@ -30,18 +32,20 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
     private boolean trocaAnimação = false;
     private boolean pode_andar = false, andou = true;
     private String movimento = "";
-//Vida:10
-//Dano: 2 
-//Defesa:2
-//Gold: +10 
-//Exp: +10 
+    
+    //Vida:10
+    //Dano: 2 
+    //Defesa:2
+    //Gold: +10 
+    //Exp: +10 
 
-    public Terrestre_leve(BufferedImage sprite, ArrayList<Integer> caminho) {
+    public Terrestre_leve(BufferedImage sprite, ArrayList<Integer> caminho,ArrayList<Som> sounds) {
         //Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         //e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
         super(10, 2, 2, 10, 10, "terrestre", caminho);
         this.SPRITE = sprite;
+        this.Sons = sounds;
     }
 
     public BufferedImage getSprite() {
@@ -111,6 +115,9 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
         }
     }
 
+    public void tocaSom(int ref) {
+        Sons.get(ref).tocaUmaVez();
+    }
 
     @Override
     public void paintComponent(Graphics g) {

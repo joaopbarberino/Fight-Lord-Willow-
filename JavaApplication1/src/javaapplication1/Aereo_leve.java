@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javaapplication1.Engine;
+import javaapplication1.Som;
 
 /**
  *
@@ -20,6 +21,7 @@ import javaapplication1.Engine;
 public class Aereo_leve extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
+    private final ArrayList<Som> Sons;
     private final int qtdColunas = 20;
     private final int VEL_MOVIMENTO = 10;
 
@@ -37,12 +39,13 @@ public class Aereo_leve extends Inimigo implements Desenhavel {
     //Gold: +15 
     //Exp: +15 
 
-    public Aereo_leve(BufferedImage sprite, ArrayList<Integer> caminho) {
+    public Aereo_leve(BufferedImage sprite, ArrayList<Integer> caminho, ArrayList<Som> sounds) {
         //// Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         //// e tipo, respectivamente
         ////coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
         super(10, 3, 2, 10, 15, "aereo", caminho);
         this.SPRITE = sprite;
+        this.Sons = sounds;
 
     }
 
@@ -111,6 +114,10 @@ public class Aereo_leve extends Inimigo implements Desenhavel {
          if (trocaAnimação == true) {
             contaSprite++;
         }
+    }
+
+    public void tocaSom(int ref) {
+        Sons.get(ref).tocaUmaVez();
     }
 
     @Override

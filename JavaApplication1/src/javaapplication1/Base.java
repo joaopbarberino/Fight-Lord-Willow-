@@ -10,6 +10,7 @@ public class Base implements Desenhavel {
 
     private BufferedImage SPRITE;
     public ArrayList<BufferedImage> sprites;
+    private final ArrayList<Som> Sons;
     /*
      Essa classe é responsável pela base do jogador
     
@@ -22,7 +23,7 @@ public class Base implements Desenhavel {
     private int x, y;
     private boolean morreu;
 
-    public Base(int x, int y, int vida, int xp, int gold, int nivel, BufferedImage sprite, ArrayList<BufferedImage> sprites) {
+    public Base(int x, int y, int vida, int xp, int gold, int nivel, BufferedImage sprite, ArrayList<BufferedImage> sprites,ArrayList<Som> sound) {
         this.vida_maxima = vida;
         this.vida_atual = vida;
         this.xp = xp;
@@ -32,6 +33,7 @@ public class Base implements Desenhavel {
         this.x = x;
         this.y = y;
         this.sprites = sprites;
+        this.Sons = sound;
     }
 
     public int getVidaMaxima() {
@@ -52,6 +54,7 @@ public class Base implements Desenhavel {
 
     public void perdeVida(int valor) {
         this.vida_atual -= valor;
+        tocaSom(0);
     }
 
     public int getXp() {
@@ -74,7 +77,7 @@ public class Base implements Desenhavel {
         this.y = y;
     }
 
-    public boolean isMorreu() {
+    public boolean isMorto() {
         return morreu;
     }
 
@@ -103,7 +106,7 @@ public class Base implements Desenhavel {
     }
 
     public void upgrade() {
-        if (this.xp >= 500 && this.nivel==0) {
+        if (this.xp >= 500 && this.nivel == 0) {
             this.vida_maxima += 10;
             this.vida_atual += 10;
             if (vida_atual > vida_maxima) {
@@ -112,7 +115,7 @@ public class Base implements Desenhavel {
             this.nivel++;
             this.SPRITE = this.sprites.get(11);
         }
-        if (this.xp >= 1000&& this.nivel==1) {
+        if (this.xp >= 1000 && this.nivel == 1) {
             this.vida_maxima += 30;
             this.vida_atual += 30;
             if (vida_atual > vida_maxima) {
@@ -121,6 +124,10 @@ public class Base implements Desenhavel {
             this.nivel++;
             this.SPRITE = this.sprites.get(12);
         }
+    }
+
+    public void tocaSom(int ref) {
+        Sons.get(ref).tocaUmaVez();
     }
 
     @Override

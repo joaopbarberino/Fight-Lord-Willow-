@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 public class Terrestre_pesado extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
+    private final ArrayList<Som> Sons;
     private final BufferedImage SPRITEMORTE;
     private final int qtdColunas = 20;
     private final int VEL_MOVIMENTO = 100;
@@ -35,19 +36,21 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     public boolean acabou_animacao_morte = false;
     private boolean pode_andar = false, andou = true;
     private String movimento = "";
-//Vida:25 
-//Dano: 3 
-//Defesa: 3 
-//Gold: +25 
-//Exp: +20 
 
-    public Terrestre_pesado(BufferedImage sprite, ArrayList<Integer> caminho, BufferedImage spriteMorte) {
+    //Vida:25 
+    //Dano: 3 
+    //Defesa: 3 
+    //Gold: +25 
+    //Exp: +20 
+
+    public Terrestre_pesado(BufferedImage sprite, ArrayList<Integer> caminho, BufferedImage spriteMorte,ArrayList<Som> sounds) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
         super(25, 3, 3, 25, 20, "terrestre", caminho);
         this.SPRITE = sprite;
         this.SPRITEMORTE = spriteMorte;
+        this.sons = sounds;
 
     }
 
@@ -123,6 +126,10 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
         if (trocaAnimacaoMorte == true) {
             contaSpriteMorte++;
         }
+    }
+    
+    public void tocaSom(int ref) {
+        sons.get(ref).tocaUmaVez();
     }
 
     @Override

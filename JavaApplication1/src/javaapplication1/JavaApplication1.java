@@ -18,6 +18,7 @@ public class JavaApplication1  {
     public static void main(String[] args) throws IOException, InterruptedException {
         Tile_layer layer = Tile_layer.From_file("mapa.txt");
         ArrayList<BufferedImage> sprites = new ArrayList();
+        ArrayList<Som> sonsList = new ArrayList();
         //sprites[0] = minotauro andando
         //sprites[1] = minotauro morrendo
         //sprites[2] = morcego andando
@@ -45,9 +46,28 @@ public class JavaApplication1  {
         sprites.add(ImageIO.read(new File("torre1.png")));
         sprites.add(ImageIO.read(new File("base2.png")));  
         sprites.add(ImageIO.read(new File("base3.png")));  
+
+        //som[0] baseDMG
+        //som[1] mageATK
+        //som[2] minotaurDeath
+        //som[3] dragonDeath
+        //som[4] impDeath
+        //som[5] batDeath
+        //som[6] magic
+        //som[7] gameOver
+        //som[8] destructionCastle
         
-        
-        Window screen = new Window(sprites, layer);
+        sonsList.add(new Som("sons/sfx/baseDMG.wav"));
+        sonsList.add(new Som("sons/sfx/mageATK.wav"));
+        sonsList.add(new Som("sons/sfx/minotaurDeath.wav"));
+        sonsList.add(new Som("sons/sfx/dragonDeath.wav"));
+        sonsList.add(new Som("sons/sfx/impDeath.wav"));
+        sonsList.add(new Som("sons/sfx/batDeath.wav"));
+        sonsList.add(new Som("sons/sfx/magic.wav"));
+        sonsList.add(new Som("sons/sfx/gameOver.wav"));
+        sonsList.add(new Som("sons/sfx/destructionCastle.wav"));
+
+        Window screen = new Window(sprites, layer, sonsList);
         screen.run();
     }
 

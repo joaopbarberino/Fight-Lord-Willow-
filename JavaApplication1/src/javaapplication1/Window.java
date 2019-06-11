@@ -35,6 +35,7 @@ public class Window extends JFrame implements KeyListener {
     // ----------------------- TO DO ----------------------------
     private Tile_layer MAP;
     public ArrayList<BufferedImage> sprites;
+    private final ArrayList<Som> sons;
     private ArrayList<Integer> caminho = new ArrayList();
     private Mapa mapa = null;
     private boolean gameLoop = true;
@@ -55,7 +56,7 @@ public class Window extends JFrame implements KeyListener {
     private int qtds[] = new int[4], pula_geracao = 0, segura_wave = 1, qtdsRound7[] = new int[4];
     private boolean setou = true, comecou_round = false, torre_1 = false, torre_2 = false;
 
-    public Window(ArrayList<BufferedImage> sprites, Tile_layer layer) {
+    public Window(ArrayList<BufferedImage> sprites, Tile_layer layer,ArrayList<Som> sounds) {
         super("Attack, Lord Willow!");
         this.setResizable(false);
         this.setSize(800, 800);
@@ -65,6 +66,7 @@ public class Window extends JFrame implements KeyListener {
         this.addKeyListener(this);
         this.MAP = layer;
         this.sprites = sprites;
+        this.sons = sounds;
         this.addMouseListener(new MouseAdapter() {// Precisa adicionar o evento na window para q o clique funcione apenas dentro da tela
             @Override
             public void mousePressed(MouseEvent e) {
@@ -89,7 +91,7 @@ public class Window extends JFrame implements KeyListener {
         System.out.println("Caminho: " + caminho);
         System.out.println("contruiveis: " + construiveis.toString());
 
-        Base jogador = new Base(710, 25, 10, 0, 50, 0, sprites.get(8), sprites);
+        Base jogador = new Base(710, 25, 10, 0, 50, 0, sprites.get(8), sprites, sons);
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
 
@@ -119,24 +121,26 @@ public class Window extends JFrame implements KeyListener {
                         mapa.getMapa().get(no_torre.getId()).setConstruivel(false);
 
                         if (torre_1) {
-                            Torre_terrestre torre_terrestre = new Torre_terrestre(no_torre.getId(), sprites.get(10), sprites.get(9));
+                            Torre_terrestre torre_terrestre = new Torre_terrestre(no_torre.getId(), sprites.get(10), sprites.get(9), sons);
                             if (jogador.getGold() >= torre_terrestre.getPreco()) {
                                 jogador.reduzGold(torre_terrestre.getPreco());
                                 torre_terrestre.set_casas_no_alcance();
                                 torre_terrestre.get_casas_no_alcance();
                                 lista_torres_terrestres.add(torre_terrestre);
+                                torre_terrestre.tocaSom(6);
                                 desenhaveis.add(torre_terrestre);
                             } else {
                                 torre_terrestre = null;
                                 System.out.println("n tem dinheiro pra construir torre 1");
                             }
                         } else if (torre_2) {
-                            Torre_terrestre torre_aerea = new Torre_terrestre(no_torre.getId(), sprites.get(2), sprites.get(9));
+                            Torre_terrestre torre_aerea = new Torre_terrestre(no_torre.getId(), sprites.get(2), sprites.get(9), sons);
                             if (jogador.getGold() >= torre_aerea.getPreco()) {
                                 jogador.reduzGold(torre_aerea.getPreco());
                                 torre_aerea.set_casas_no_alcance();
                                 torre_aerea.get_casas_no_alcance();
                                 lista_torres_terrestres.add(torre_aerea);
+                                torre_aerea.tocaSom(6);
                                 desenhaveis.add(torre_aerea);
                             } else {
                                 torre_aerea = null;
@@ -185,6 +189,8 @@ public class Window extends JFrame implements KeyListener {
             // em algum lugar)
             // ----------------------- TO DO ----------------------------
             if (jogador.getVidaAtual() <= 0) {
+                jogador.tocaSom(8);
+                jogador.tocaSom(7);
                 this.gameLoop = false;
             }
 
@@ -194,6 +200,7 @@ public class Window extends JFrame implements KeyListener {
                         // ----------------------- TO DO ----------------------------
                         // -> Arrumar desenho de ataque da torre e animação
                         // ----------------------- TO DO ----------------------------
+                        torre.tocaSom(1);
                         torre.atacar(inimigo);
                     }
                 }
@@ -253,6 +260,7 @@ public class Window extends JFrame implements KeyListener {
             }
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
+                inimigo.tocaSom(4);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
             }
@@ -265,6 +273,7 @@ public class Window extends JFrame implements KeyListener {
             }
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
+                inimigo.tocaSom(2);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
             }
@@ -277,6 +286,7 @@ public class Window extends JFrame implements KeyListener {
             }
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
+                inimigo.tocaSom(5);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
             }
@@ -289,6 +299,7 @@ public class Window extends JFrame implements KeyListener {
             }
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
+                inimigo.tocaSom(3);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
             }

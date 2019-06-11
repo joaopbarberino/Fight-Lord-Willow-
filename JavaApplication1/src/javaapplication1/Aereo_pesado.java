@@ -8,6 +8,7 @@ package javaapplication1;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import javaapplication1.Som;
 
 /**
  *
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class Aereo_pesado extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
+    private final ArrayList<Som> Sons;
     private final int qtdColunas = 20;
     private final int VEL_MOVIMENTO = 100;
 
@@ -33,7 +35,7 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
 //Gold: +40 
 //Exp: +35 
 
-    public Aereo_pesado(BufferedImage sprite, ArrayList<Integer> caminho) {
+    public Aereo_pesado(BufferedImage sprite, ArrayList<Integer> caminho,ArrayList<Som> sounds) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
@@ -107,6 +109,10 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
         if (trocaAnimação == true) {
             contaSprite++;
         }
+    }
+
+    public void tocaSom(int ref) {
+        Sons.get(ref).tocaUmaVez();
     }
 
     @Override
