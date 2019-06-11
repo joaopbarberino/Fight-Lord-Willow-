@@ -1,6 +1,7 @@
 package javaapplication1;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -102,18 +103,18 @@ public class Base implements Desenhavel {
     }
 
     public void upgrade() {
-        if (this.xp >= 100) {
-            this.vida_maxima += 20;
-            this.vida_atual += (this.vida_maxima / 5);
+        if (this.xp >= 500 && this.nivel==0) {
+            this.vida_maxima += 10;
+            this.vida_atual += 10;
             if (vida_atual > vida_maxima) {
                 this.vida_atual = vida_maxima;
             }
             this.nivel++;
             this.SPRITE = this.sprites.get(11);
         }
-        if (this.xp >= 250) {
-            this.vida_maxima += 20;
-            this.vida_atual += (this.vida_maxima / 5);
+        if (this.xp >= 1000&& this.nivel==1) {
+            this.vida_maxima += 30;
+            this.vida_atual += 30;
             if (vida_atual > vida_maxima) {
                 this.vida_atual = vida_maxima;
             }
@@ -125,6 +126,7 @@ public class Base implements Desenhavel {
     @Override
     public void paintComponent(Graphics g) {
 
+        g.setFont(new Font("Serif", Font.BOLD, 12));
         g.drawImage(this.SPRITE, x, y, null);
         g.drawString("" + this.gold, 295, 748);
         g.drawString("" + this.xp, 380, 780);

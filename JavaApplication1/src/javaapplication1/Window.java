@@ -6,6 +6,7 @@
 package javaapplication1;
 
 import Estrutura.*;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -88,7 +89,7 @@ public class Window extends JFrame implements KeyListener {
         System.out.println("Caminho: " + caminho);
         System.out.println("contruiveis: " + construiveis.toString());
 
-        Base jogador = new Base(710, 25, 1000, 0, 10000, 0, sprites.get(8), sprites);
+        Base jogador = new Base(710, 25, 10, 0, 50, 0, sprites.get(8), sprites);
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
 
@@ -341,8 +342,8 @@ public class Window extends JFrame implements KeyListener {
         switch (round) {
             case 1:
                 if (setou) {
-                    this.qtds[0] = 0;
-                    this.qtds[1] = 2;
+                    this.qtds[0] = 5;
+                    this.qtds[1] = 0;
                     this.qtds[2] = 0;
                     this.qtds[3] = 0;
                     this.setou = false;
@@ -352,7 +353,7 @@ public class Window extends JFrame implements KeyListener {
             case 2:
                 if (setou) {
                     this.qtds[0] = 10;
-                    this.qtds[1] = 3;
+                    this.qtds[1] = 0;
                     this.qtds[2] = 0;
                     this.qtds[3] = 0;
                     this.setou = false;
@@ -361,9 +362,9 @@ public class Window extends JFrame implements KeyListener {
 
             case 3:
                 if (setou) {
-                    this.qtds[0] = 10;
-                    this.qtds[1] = 3;
-                    this.qtds[2] = 2;
+                    this.qtds[0] = 7;
+                    this.qtds[1] = 2;
+                    this.qtds[2] = 0;
                     this.qtds[3] = 0;
                     this.setou = false;
                 }
@@ -371,30 +372,30 @@ public class Window extends JFrame implements KeyListener {
 
             case 4:
                 if (setou) {
-                    this.qtds[0] = 10;
-                    this.qtds[1] = 3;
+                    this.qtds[0] = 7;
+                    this.qtds[1] = 2;
                     this.qtds[2] = 2;
-                    this.qtds[3] = 2;
+                    this.qtds[3] = 0;
                     this.setou = false;
                 }
                 break;
 
             case 5:
                 if (setou) {
-                    this.qtds[0] = 15;
-                    this.qtds[1] = 5;
-                    this.qtds[2] = 5;
-                    this.qtds[3] = 3;
+                    this.qtds[0] = 7;
+                    this.qtds[1] = 2;
+                    this.qtds[2] = 3;
+                    this.qtds[3] = 1;
                     this.setou = false;
                 }
                 break;
 
             case 6:
                 if (setou) {
-                    this.qtds[0] = 25;
-                    this.qtds[1] = 10;
-                    this.qtds[2] = 7;
-                    this.qtds[3] = 4;
+                    this.qtds[0] = 10;
+                    this.qtds[1] = 3;
+                    this.qtds[2] = 5;
+                    this.qtds[3] = 2;
                     this.setou = false;
                 }
                 break;
@@ -408,7 +409,7 @@ public class Window extends JFrame implements KeyListener {
                     this.qtdsRound7[0] += 3;
                     this.qtdsRound7[1] += 2;
                     this.qtdsRound7[2] += 3;
-                    this.qtdsRound7[3] += 2;
+                    this.qtdsRound7[3] += 1;
 
                     this.setou = false;
                 }
@@ -577,8 +578,9 @@ public class Window extends JFrame implements KeyListener {
             } while (strategy.contentsRestored());
             strategy.show();
         } while (strategy.contentsLost());
-        g.drawString("" + 200, 480, 744);
-        g.drawString("" + 400, 480, 780);
+        g.setFont(new Font("Serif", Font.BOLD, 12));
+        g.drawString("" + 50, 480, 744);
+        g.drawString("" + 50, 480, 780);
         g.drawString("" + this.round, 380, 744);
     }
 

@@ -27,12 +27,17 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
     private boolean trocaAnimação = false;
     private boolean pode_andar = false, andou = true;
     private String movimento = "";
+//Vida:50 
+//Dano: 6 
+//Dano: 6 
+//Gold: +40 
+//Exp: +35 
 
     public Aereo_pesado(BufferedImage sprite, ArrayList<Integer> caminho) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(20, 2, 2, 10, 20, "aereo", caminho);
+        super(50, 6, 6, 40, 35, "aereo", caminho);
         this.SPRITE = sprite;
 
     }

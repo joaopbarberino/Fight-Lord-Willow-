@@ -29,8 +29,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
 
     public Torre_terrestre(int pos, BufferedImage sprite, BufferedImage sprite_ataque) {
         // ataque, alcance, preco, pos
-        super(3, 1, 200, pos);
-        this.preco = 200;
+        super(5, 1, 50, pos);
         this.SPRITE = sprite;
         this.pos_tiro = pos;
         this.SPRITE_ATAQUE = sprite_ataque;

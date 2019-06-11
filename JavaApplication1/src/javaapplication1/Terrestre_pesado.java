@@ -35,12 +35,17 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     public boolean acabou_animacao_morte = false;
     private boolean pode_andar = false, andou = true;
     private String movimento = "";
+//Vida:25 
+//Dano: 3 
+//Defesa: 3 
+//Gold: +25 
+//Exp: +20 
 
     public Terrestre_pesado(BufferedImage sprite, ArrayList<Integer> caminho, BufferedImage spriteMorte) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(20, 2, 2, 10, 20, "terrestre", caminho);
+        super(25, 3, 3, 25, 20, "terrestre", caminho);
         this.SPRITE = sprite;
         this.SPRITEMORTE = spriteMorte;
 
