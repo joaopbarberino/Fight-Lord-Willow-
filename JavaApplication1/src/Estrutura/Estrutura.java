@@ -20,30 +20,22 @@ public class Estrutura extends JPanel {
 
     private int ataque;
     public int maximo_de_alvos = 1;
-    private int alvos_atuais = 0;
     private ArrayList<Inimigo> alvos = new ArrayList();
     private int alcance;
     private int velo_atk;
-    private int tentativa_de_ataque;
+    private int preco;
     private int pos;
     private int nivel = 1;
     private ArrayList<Integer> casas_no_alcance = new ArrayList();
     private Mapa mapa;
 
-    public Estrutura(int ataque, int alcance, int velo_atk, int pos) {
+    public Estrutura(int ataque, int alcance, int preco, int pos) {
         this.ataque = ataque;
         this.alcance = alcance;
-        this.velo_atk = velo_atk;
-        this.tentativa_de_ataque = velo_atk;
+        this.preco = preco;
         this.pos = pos;
     }
 
-//  
-//    public void construir(int pos) {
-//        // desenha na tela
-//        // poe no objeto mapa pelo main
-//    }
-//      
     // Retorna o alcance de ataque da estrutura
     public int getAlcance() {
         return alcance;
@@ -85,6 +77,10 @@ public class Estrutura extends JPanel {
         return casas_no_alcance.contains(inimigo.getPos());
     }
 
+    public int getPreco(){
+        return this.preco;
+    }
+    
     // Da um mapa pra estrutura e calcula as casas que ela pode atacar
     public void setMapa(Mapa mapa) {
         this.mapa = mapa;

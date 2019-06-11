@@ -27,6 +27,7 @@ public abstract class Inimigo extends JPanel {
     private ArrayList<Integer> caminho = null;
     private int qtdPassos = 0; // Quantos passos ele já deu
     private boolean andando = true;
+    private boolean chegouNoDestino = false;
     private String tipo;
 
     public static BufferedImage terrestre_pesado;
@@ -110,8 +111,13 @@ public abstract class Inimigo extends JPanel {
             } else if (this.qtdPassos == this.caminho.size() - 1) {
                 this.matar();
                 this.andando = false;
+                this.chegouNoDestino = true;
             }
         }
+    }
+    
+    public boolean chegouNoDestino(){
+        return this.chegouNoDestino;
     }
 
     public boolean isAndando() {
@@ -126,5 +132,5 @@ public abstract class Inimigo extends JPanel {
     public int getProxPos() {
         return this.caminho.get(this.qtdPassos);
     }
-    
+
 }

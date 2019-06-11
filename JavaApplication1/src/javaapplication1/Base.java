@@ -49,6 +49,10 @@ public class Base implements Desenhavel {
         this.vida_atual = vida_atual;
     }
 
+    public void perdeVida(int valor) {
+        this.vida_atual -= valor;
+    }
+
     public int getXp() {
         return xp;
     }
@@ -85,6 +89,10 @@ public class Base implements Desenhavel {
         this.gold += valor;
     }
 
+    public int getGold() {
+        return this.gold;
+    }
+
     public void recebeDano(int dano) {
         this.vida_atual = this.vida_atual - dano;
     }
@@ -96,13 +104,19 @@ public class Base implements Desenhavel {
     public void upgrade() {
         if (this.xp >= 100) {
             this.vida_maxima += 20;
-            this.vida_atual = (this.vida_maxima / 3);
+            this.vida_atual += (this.vida_maxima / 5);
+            if (vida_atual > vida_maxima) {
+                this.vida_atual = vida_maxima;
+            }
             this.nivel++;
             this.SPRITE = this.sprites.get(11);
         }
         if (this.xp >= 250) {
             this.vida_maxima += 20;
-            this.vida_atual = (this.vida_maxima / 3);
+            this.vida_atual += (this.vida_maxima / 5);
+            if (vida_atual > vida_maxima) {
+                this.vida_atual = vida_maxima;
+            }
             this.nivel++;
             this.SPRITE = this.sprites.get(12);
         }

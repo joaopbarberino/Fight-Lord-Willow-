@@ -28,8 +28,8 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     private String movimento = "";
 
     public Torre_terrestre(int pos, BufferedImage sprite, BufferedImage sprite_ataque) {
-        // ataque, alcance, velo_atk, pos
-        super(1, 1, 3, pos);
+        // ataque, alcance, preco, pos
+        super(1, 1, 3000, pos);
         this.SPRITE = sprite;
         this.pos_tiro = pos;
         this.SPRITE_ATAQUE = sprite_ataque;
@@ -42,7 +42,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     public void atacar(Inimigo inimigo) {
         //System.out.println(inimigo);
 
-        if (inimigo.getTipo().equals("terrestre")) {
+        //if (inimigo.getTipo().equals("terrestre")) {
             this.alvo = inimigo;
             this.atacando = true;
             this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
@@ -68,7 +68,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
                 this.movimento = "diagonal sup direita";
             }
 
-        }
+        //}
 
     }
 
@@ -77,9 +77,9 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
         if (atacando) {
             this.alvo_tiro_novo = alvo.getPos();
             if (alvo_tiro_antigo != alvo_tiro_novo) {
-                System.out.println(alvo.getPos());
+                //System.out.println(alvo.getPos());
                 this.alvo_tiro_antigo = alvo_tiro_novo;
-                System.out.println("tiro seguiu");
+                //System.out.println("tiro seguiu");
             }
 
             if (!this.isNoRange(alvo) || this.alvo.isMorto()) {

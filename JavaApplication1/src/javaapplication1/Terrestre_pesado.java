@@ -40,7 +40,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(20, 2, 2, 10, 20, "terrestre", caminho);
+        super(20, 49, 2, 10, 20, "terrestre", caminho);
         this.SPRITE = sprite;
         this.SPRITEMORTE = spriteMorte;
 
@@ -126,7 +126,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
 
         switch (movimento) {
             case "baixo":
-                this.y_aux = this.y_aux + por_y;
+                this.y_aux += por_y + 5;
                 if (y_aux >= prox_y) {
                     this.andou = true;
                     this.pode_andar = true;
@@ -134,7 +134,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
                 break;
 
             case "cima":
-                this.y_aux -= por_y;
+                this.y_aux -= por_y + 5;
                 if (y_aux <= prox_y) {
                     this.andou = true;
                     this.pode_andar = true;
@@ -142,7 +142,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
                 break;
 
             case "direita":
-                this.x_aux += por_x;
+                this.x_aux += por_x + 5;
                 if (x_aux >= prox_x) {
                     this.andou = true;
                     this.pode_andar = true;
@@ -152,7 +152,6 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
             default:
                 break;
         }
-        
 
         if (contaSprite == maxSprite) {
             contaSprite = 0;
@@ -165,7 +164,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
         if (this.isMorto()) {
             g.drawImage(this.SPRITEMORTE.getSubimage(contaSpriteMorte * 40, 0, 40, 40), x, y, null);
             trocaAnimacaoMorte = !trocaAnimacaoMorte;
-            
+
         } else if (!this.isMorto()) {
             g.drawImage(this.SPRITE.getSubimage(contaSprite * 40, 0, 40, 40), x_aux, y_aux, null);
             trocaAnimacao = !trocaAnimacao;
