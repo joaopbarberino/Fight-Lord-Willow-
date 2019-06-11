@@ -79,7 +79,7 @@ public abstract class Inimigo extends JPanel {
 
     // Retorna true se o inimigo está morto e false se não
     public boolean isMorto() {
-        return this.vida == 0;
+        return this.vida <= 0;
     }
 
     // Mata o inimigo, reduzindo sua vida a 0

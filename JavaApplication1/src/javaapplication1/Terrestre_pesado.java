@@ -40,7 +40,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(20, 49, 2, 10, 20, "terrestre", caminho);
+        super(20, 2, 2, 10, 20, "terrestre", caminho);
         this.SPRITE = sprite;
         this.SPRITEMORTE = spriteMorte;
 
@@ -126,7 +126,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
 
         switch (movimento) {
             case "baixo":
-                this.y_aux += por_y + 5;
+                this.y_aux += por_y;
                 if (y_aux >= prox_y) {
                     this.andou = true;
                     this.pode_andar = true;
@@ -134,7 +134,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
                 break;
 
             case "cima":
-                this.y_aux -= por_y + 5;
+                this.y_aux -= por_y;
                 if (y_aux <= prox_y) {
                     this.andou = true;
                     this.pode_andar = true;
@@ -142,7 +142,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
                 break;
 
             case "direita":
-                this.x_aux += por_x + 5;
+                this.x_aux += por_x;
                 if (x_aux >= prox_x) {
                     this.andou = true;
                     this.pode_andar = true;

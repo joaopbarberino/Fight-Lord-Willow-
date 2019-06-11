@@ -37,7 +37,7 @@ public class Window extends JFrame implements KeyListener {
     private ArrayList<Integer> caminho = new ArrayList();
     private Mapa mapa = null;
     private boolean gameLoop = true;
-    private int round = 1;
+    private int round = 1, wave = 1;
     public ArrayList<Desenhavel> desenhaveis = new ArrayList();
     public ArrayList<Desenhavel> torres_desenhaveis = new ArrayList();
     private ArrayList<Terrestre_pesado> lista_terrestres_pesados = new ArrayList();
@@ -51,7 +51,7 @@ public class Window extends JFrame implements KeyListener {
     private int clickX, clickY;
     private No no_torre = null;
 
-    private int qtds[] = new int[4], pula_geracao = 0, segura_wave = 1;
+    private int qtds[] = new int[4], pula_geracao = 0, segura_wave = 1, qtdsRound7[] = new int[4];
     private boolean setou = true, comecou_round = false, torre_1 = false, torre_2 = false;
 
     public Window(ArrayList<BufferedImage> sprites, Tile_layer layer) {
@@ -80,7 +80,7 @@ public class Window extends JFrame implements KeyListener {
         long excess = 0;
         long noDelays = 0;
 
-        final long DESIRED_UPDATE_TIME = 15;
+        final long DESIRED_UPDATE_TIME = 30;
         final long NO_DELAYS_PER_YIELD = 4;
 
         // Instanciar o mapa da fase
@@ -88,7 +88,7 @@ public class Window extends JFrame implements KeyListener {
         System.out.println("Caminho: " + caminho);
         System.out.println("contruiveis: " + construiveis.toString());
 
-        Base jogador = new Base(710, 25, 50, 0, 5000, 0, sprites.get(8), sprites);
+        Base jogador = new Base(710, 25, 100000, 0, 500000, 0, sprites.get(8), sprites);
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
 
@@ -117,9 +117,6 @@ public class Window extends JFrame implements KeyListener {
                         mapa.getMapa().get(no_torre.getId()).setBloqueado(true);
                         mapa.getMapa().get(no_torre.getId()).setConstruivel(false);
 
-                        // ----------------------- TO DO ----------------------------
-                        // -> Checar se o jogador possui gold pra construir a torre
-                        // ----------------------- TO DO ----------------------------
                         if (torre_1) {
                             Torre_terrestre torre_terrestre = new Torre_terrestre(no_torre.getId(), sprites.get(10), sprites.get(9));
                             if (jogador.getGold() >= torre_terrestre.getPreco()) {
@@ -157,9 +154,10 @@ public class Window extends JFrame implements KeyListener {
 
             // Segura a wave por algum tempo para o jogador pensar
             // ----------------------- TO DO ----------------------------
-            // -> Descobrir a relação desse numero x segundos
+            // -> Descobrir a relação desse numero x segundos e por que só
+            // segura no primeiro round
             // ----------------------- TO DO ----------------------------
-            if (segura_wave % 200 == 0) {
+            if (segura_wave % 1 == 0) {
                 geraWave();
             } else {
                 this.segura_wave++;
@@ -180,6 +178,11 @@ public class Window extends JFrame implements KeyListener {
             moverInimigos(jogador);
             limparListas();
 
+            // ----------------------- TO DO ----------------------------
+            // -> Descobrir pq o replay (ta no key pressed/released) não faz
+            // o jogo começar dnv e trava o jframe (provavelmente loop infinito
+            // em algum lugar)
+            // ----------------------- TO DO ----------------------------
             if (jogador.getVidaAtual() <= 0) {
                 this.gameLoop = false;
             }
@@ -198,16 +201,23 @@ public class Window extends JFrame implements KeyListener {
 
             // Caso todos os inimigos estejam mortos, round acaba
             if (comecou_round) {
-                if (lista_aereos_leves.isEmpty() && lista_aereos_pesados.isEmpty() && lista_terrestres_leves.isEmpty() && lista_terrestres_pesados.isEmpty()) {
+                if (lista_aereos_leves.isEmpty()
+                        && lista_aereos_pesados.isEmpty()
+                        && lista_terrestres_leves.isEmpty()
+                        && lista_terrestres_pesados.isEmpty()) {
+
                     System.out.println("!!!!!!");
                     jogador.upgrade();
                     this.setou = true;
                     this.pula_geracao = 0;
                     if (round < 7) {
-                        round++;
+                        this.round++;
+                        System.out.println("round: " + round);
                     }
+                    this.wave++;
+                    System.out.println("wave: " + wave);
                     this.comecou_round = false;
-                    this.segura_wave = 0;
+                    this.segura_wave = 1;
                 }
             }
 
@@ -391,10 +401,15 @@ public class Window extends JFrame implements KeyListener {
 
             case 7:
                 if (setou) {
-                    this.qtds[0] = 10;
-                    this.qtds[1] = 0;
-                    this.qtds[2] = 0;
-                    this.qtds[3] = 0;
+                    this.qtds[0] = 30 + qtdsRound7[0];
+                    this.qtds[1] = 12 + qtdsRound7[1];
+                    this.qtds[2] = 10 + qtdsRound7[2];
+                    this.qtds[3] = 7 + qtdsRound7[3];
+                    this.qtdsRound7[0] += 3;
+                    this.qtdsRound7[1] += 2;
+                    this.qtdsRound7[2] += 3;
+                    this.qtdsRound7[3] += 2;
+
                     this.setou = false;
                 }
                 break;
