@@ -3,10 +3,12 @@ package javaapplication1;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Base implements Desenhavel {
 
-    private final BufferedImage SPRITE;
+    private BufferedImage SPRITE;
+    public ArrayList<BufferedImage> sprites;
     /*
      Essa classe é responsável pela base do jogador
     
@@ -19,7 +21,7 @@ public class Base implements Desenhavel {
     private int x, y;
     private boolean morreu;
 
-    public Base(int x, int y, int vida, int xp, int gold, int nivel, BufferedImage sprite) {
+    public Base(int x, int y, int vida, int xp, int gold, int nivel, BufferedImage sprite, ArrayList<BufferedImage> sprites) {
         this.vida_maxima = vida;
         this.vida_atual = vida;
         this.xp = xp;
@@ -28,6 +30,7 @@ public class Base implements Desenhavel {
         this.SPRITE = sprite;
         this.x = x;
         this.y = y;
+        this.sprites = sprites;
     }
 
     public int getVidaMaxima() {
@@ -91,27 +94,17 @@ public class Base implements Desenhavel {
     }
 
     public void upgrade() {
-        switch (this.xp) {
-            case 50:
-                this.vida_maxima += 20;
-                this.vida_atual = (this.vida_maxima / 3);
-                this.nivel++;
-                break;
-
-            case 110:
-                this.vida_maxima += 40;
-                this.vida_atual = (this.vida_maxima / 3);
-                this.nivel++;
-                break;
-
-            case 160:
-                this.vida_maxima += 60;
-                this.vida_atual = (this.vida_maxima / 3);
-                this.nivel++;
-                break;
-
-            default:
-                break;
+        if (this.xp >= 100) {
+            this.vida_maxima += 20;
+            this.vida_atual = (this.vida_maxima / 3);
+            this.nivel++;
+            this.SPRITE = this.sprites.get(11);
+        }
+        if (this.xp >= 250) {
+            this.vida_maxima += 20;
+            this.vida_atual = (this.vida_maxima / 3);
+            this.nivel++;
+            this.SPRITE = this.sprites.get(12);
         }
     }
 

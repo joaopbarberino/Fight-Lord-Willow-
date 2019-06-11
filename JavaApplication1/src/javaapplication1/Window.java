@@ -44,8 +44,7 @@ public class Window extends JFrame implements KeyListener {
     private ArrayList<Torre_terrestre> lista_torres_terrestres = new ArrayList();
     private static ArrayList<int[]> posicoes = new ArrayList<int[]>();
     private static ArrayList<No> construiveis = new ArrayList<No>();
-    private int clickX, clickY, id;
-    private static int elementoLista[] = new int[2];
+    private int clickX, clickY;
     private No no_torre = null;
 
     private int qtds[] = new int[4], pula_geracao = 0, segura_wave = 1;
@@ -86,7 +85,7 @@ public class Window extends JFrame implements KeyListener {
         System.out.println("Caminho: " + caminho);
         System.out.println("contruiveis: " + construiveis.toString());
 
-        Base jogador = new Base(710, 25, 50, 0, 5000, 0, sprites.get(8));
+        Base jogador = new Base(710, 25, 50, 0, 5000, 0, sprites.get(8),sprites);
         desenhaveis.add(jogador);
         int round = 1;
 
@@ -146,19 +145,18 @@ public class Window extends JFrame implements KeyListener {
             long beforeTime = System.currentTimeMillis();
 
             while (excess > DESIRED_UPDATE_TIME) {
-                moverInimigos();
+                moverInimigos(jogador);
                 limparListas();
 
                 excess -= DESIRED_UPDATE_TIME;
             }
 
             // ----------------------- TO DO ----------------------------
-            // -> Se o inimigo morrer, jogador recebe o gold e o xp q ele vale
             // -> Arrumar animação de morte do inimigo
             // -> Se chegou no destino da dano no jogador
             // -> Se vida atual do jogador <= 0, gameLoop = false, break;
             // ----------------------- TO DO ----------------------------
-            moverInimigos();
+            moverInimigos(jogador);
             limparListas();
 
             for (Inimigo inimigo : inimigos) {
@@ -177,9 +175,7 @@ public class Window extends JFrame implements KeyListener {
             if (comecou_round) {
                 if (lista_aereos_leves.isEmpty() && lista_aereos_pesados.isEmpty() && lista_terrestres_leves.isEmpty() && lista_terrestres_pesados.isEmpty()) {
                     System.out.println("!!!!!!");
-                    // ----------------------- TO DO ----------------------------
-                    // Checa se o jogador tem xp o suficente para subir de nivel
-                    // ----------------------- TO DO ----------------------------
+                    jogador.upgrade();
                     this.setou = true;
                     this.pula_geracao = 0;
                     if (round < 7) {
@@ -212,11 +208,13 @@ public class Window extends JFrame implements KeyListener {
         }
     }
 
-    public void moverInimigos() {
+    public void moverInimigos(Base jogador) {
         for (Terrestre_leve inimigo : lista_terrestres_leves) {
             inimigo.andar();
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
+                jogador.ganhaXp(inimigo.getXp());
+                jogador.ganhaGold(inimigo.getGold());
             }
         }
 
@@ -224,6 +222,8 @@ public class Window extends JFrame implements KeyListener {
             inimigo.andar();
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
+                jogador.ganhaXp(inimigo.getXp());
+                jogador.ganhaGold(inimigo.getGold());
             }
         }
 
@@ -231,6 +231,8 @@ public class Window extends JFrame implements KeyListener {
             inimigo.andar();
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
+                jogador.ganhaXp(inimigo.getXp());
+                jogador.ganhaGold(inimigo.getGold());
             }
         }
 
@@ -238,6 +240,8 @@ public class Window extends JFrame implements KeyListener {
             inimigo.andar();
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
+                jogador.ganhaXp(inimigo.getXp());
+                jogador.ganhaGold(inimigo.getGold());
             }
 
         }
@@ -491,7 +495,6 @@ public class Window extends JFrame implements KeyListener {
         AEstrela.aEstrela(mapa.getMapa().get(3), mapa.getMapa().get(79), mapa);
         caminho = AEstrela.caminhos;
         posicoes = mapa.pega_Pos();
-        elementoLista = posicoes.get(200);
         construiveis = mapa.Get_construiveis();
 
         return caminho;
