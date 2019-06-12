@@ -43,7 +43,7 @@ public class JavaApplication1  {
         sprites.add(ImageIO.read(new File("Dragao-morrendo.png")));
         sprites.add(ImageIO.read(new File("base1.png")));    
         sprites.add(ImageIO.read(new File("Ataque-torre.png")));
-        sprites.add(ImageIO.read(new File("torre1.png")));
+        sprites.add(ImageIO.read(new File("torre-1-idle.png")));
         sprites.add(ImageIO.read(new File("base2.png")));  
         sprites.add(ImageIO.read(new File("base3.png")));  
 
