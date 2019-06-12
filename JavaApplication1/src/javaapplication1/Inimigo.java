@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//***********************************************************/
+//********************Sem Referencias************************/
+//***********************************************************/
 package javaapplication1;
 
-import java.awt.*;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import javax.swing.JPanel;
-import java.lang.Math;
-
 /**
  *
  * @author joao.pbsilva20
@@ -25,9 +19,9 @@ public abstract class Inimigo extends JPanel {
     private int xp;
     private int pos; // Posição do mapa em que o inimigo está
     private ArrayList<Integer> caminho = null;
-    private int qtdPassos = 0; // Quantos passos ele já deu
+    private int qtd_passos = 0; // Quantos passos ele já deu
     private boolean andando = true;
-    private boolean chegouNoDestino = false;
+    private boolean chegou_no_destino = false;
     private String tipo;
 
     public static BufferedImage terrestre_pesado;
@@ -89,13 +83,12 @@ public abstract class Inimigo extends JPanel {
 
     public void setCaminho(ArrayList caminho) {
         this.caminho = caminho;
-        this.pos = this.caminho.get(this.qtdPassos);
+        this.pos = this.caminho.get(this.qtd_passos);
     }
 
     public ArrayList getCaminho() {
         return this.caminho;
     }
-
     // Faz o inimigo andar caso haja um caminho, ele irá para a posição dada na
     // string de caminhos baseado em quantos passos ele já deu, começa em 1 pois
     // 0, o primeiro char da string de caminho, sempre vai ser 0, o ponto inicial,
@@ -103,21 +96,21 @@ public abstract class Inimigo extends JPanel {
     public void andar(boolean pode_andar) {
         if (pode_andar) {
 
-            if (this.qtdPassos != this.caminho.size() - 1) {
-                this.pos = (int) this.caminho.get(this.qtdPassos);
-                this.qtdPassos++;
+            if (this.qtd_passos != this.caminho.size() - 1) {
+                this.pos = (int) this.caminho.get(this.qtd_passos);
+                this.qtd_passos++;
                 this.andando = true;
 
-            } else if (this.qtdPassos == this.caminho.size() - 1) {
+            } else if (this.qtd_passos == this.caminho.size() - 1) {
                 this.matar();
                 this.andando = false;
-                this.chegouNoDestino = true;
+                this.chegou_no_destino = true;
             }
         }
     }
     
     public boolean chegouNoDestino(){
-        return this.chegouNoDestino;
+        return this.chegou_no_destino;
     }
 
     public boolean isAndando() {
@@ -130,7 +123,7 @@ public abstract class Inimigo extends JPanel {
     }
 
     public int getProxPos() {
-        return this.caminho.get(this.qtdPassos);
+        return this.caminho.get(this.qtd_passos);
     }
 
 }

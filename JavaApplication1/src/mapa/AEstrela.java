@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//***********************************************************/
+//********************Referencias****************************/
+//***************Professor Dr. Adalberto Bosco***************/
+//https://www.linkedin.com/in/adalberto-pereira-08497517 ****/
+//***********************************************************/
 package mapa;
 
 import java.util.ArrayList;
@@ -12,39 +12,39 @@ import java.util.List;
 
 public class AEstrela {
 
-    public static List<No> listaFechada = new ArrayList();
-    public static List<No> listaAberta = new ArrayList();
+    public static List<No> lista_fechada = new ArrayList();
+    public static List<No> lista_aberta = new ArrayList();
     public static List<No> caminho = new ArrayList();
-    public static int colunasDoMapa = 0;
-    public static int linhasDoMapa = 0;
-    public static int tamanhoDoMapa = 0;
+    public static int colunas_do_mapa = 0;
+    public static int linhas_do_mapa = 0;
+    public static int tamanho_do_mapa = 0;
     public static ArrayList<Integer> caminhos = new ArrayList();
 
     public static List<No> aEstrela(No noInicial, No noDestino, Mapa mapa) {
-        colunasDoMapa = Mapa.getColunas();
-        linhasDoMapa = Mapa.getLinhas();
-        tamanhoDoMapa = Mapa.getMapa().size();
+        colunas_do_mapa = Mapa.getColunas();
+        linhas_do_mapa = Mapa.getLinhas();
+        tamanho_do_mapa = Mapa.getMapa().size();
 
-        listaFechada.clear();
-        listaAberta.clear();
+        lista_fechada.clear();
+        lista_aberta.clear();
         caminho.clear();
 
         boolean achouCaminho = false;
 
         No noAtual = noInicial;
-        listaAberta.add(noInicial);
+        lista_aberta.add(noInicial);
 
         while (!achouCaminho) {
             noAtual = procurarMenorF();
-            listaAberta.remove(noAtual);
-            listaFechada.add(noAtual);
+            lista_aberta.remove(noAtual);
+            lista_fechada.add(noAtual);
             achouCaminho = noAtual.equals(noDestino);
             for (No no : noAtual.getVizinhos()) {
-                if (no.isBloqueado() || listaFechada.contains(no) || no.isConstruivel()) {
+                if (no.isBloqueado() || lista_fechada.contains(no) || no.isConstruivel()) {
                     continue;
                 } else {
-                    if (!listaAberta.contains(no)) {
-                        listaAberta.add(no);
+                    if (!lista_aberta.contains(no)) {
+                        lista_aberta.add(no);
                         no.setPai(noAtual);
                         no.setH(calcularH(no, noDestino));
                         no.setG(calcularG(no, noAtual));
@@ -58,7 +58,7 @@ public class AEstrela {
                     }
                 }
             }
-            if (listaFechada.isEmpty()) {
+            if (lista_fechada.isEmpty()) {
                 System.out.println("Nao achou caminho");
                 return null;
             }
@@ -67,17 +67,17 @@ public class AEstrela {
     }
 
     private static No procurarMenorF() {
-        Collections.sort(listaAberta, Comparator.comparing(No::getF));
-        return listaAberta.get(0);
+        Collections.sort(lista_aberta, Comparator.comparing(No::getF));
+        return lista_aberta.get(0);
     }
 
     private static float calcularH(No noAtual, No noDestino) {
-        int posicaoDestinoX = (noDestino.getId() % colunasDoMapa) + 1;
-        int posicaoNoAtualX = (noAtual.getId() % colunasDoMapa) + 1;
+        int posicaoDestinoX = (noDestino.getId() % colunas_do_mapa) + 1;
+        int posicaoNoAtualX = (noAtual.getId() % colunas_do_mapa) + 1;
         int distanciaX = posicaoDestinoX > posicaoNoAtualX ? posicaoDestinoX - posicaoNoAtualX : posicaoNoAtualX - posicaoDestinoX;
 
-        int posicaoDestinoY = (noDestino.getId() / linhasDoMapa) + 1;
-        int posicaoNoAtualY = (noAtual.getId() % linhasDoMapa) + 1;
+        int posicaoDestinoY = (noDestino.getId() / linhas_do_mapa) + 1;
+        int posicaoNoAtualY = (noAtual.getId() % linhas_do_mapa) + 1;
         int distanciaY = posicaoDestinoY > posicaoNoAtualY ? posicaoDestinoY - posicaoNoAtualY : posicaoNoAtualY - posicaoDestinoY;
 
         float distanciaTotal = (float) Math.sqrt((Math.pow(distanciaX, 2) + Math.pow(distanciaY, 2))) * 10;
@@ -85,7 +85,7 @@ public class AEstrela {
     }
 
     private static float calcularG(No noAtual, No noVizinho) {
-        if (noVizinho.getId() % colunasDoMapa == noAtual.getId() % colunasDoMapa || noVizinho.getId() + 1 == noAtual.getId() || noVizinho.getId() - 1 == noAtual.getId()) {
+        if (noVizinho.getId() % colunas_do_mapa == noAtual.getId() % colunas_do_mapa || noVizinho.getId() + 1 == noAtual.getId() || noVizinho.getId() - 1 == noAtual.getId()) {
             return noVizinho.getG() + 10;
         }
         return noVizinho.getG() + 14;
@@ -99,7 +99,7 @@ public class AEstrela {
         List<No> listaAuxiliar = new ArrayList();
         No noAtual = noDestino;
         int contador = 0;
-        while (!listaAuxiliar.contains(noInicial) || contador > tamanhoDoMapa) {
+        while (!listaAuxiliar.contains(noInicial) || contador > tamanho_do_mapa) {
             listaAuxiliar.add(noAtual);
 
             noAtual = noAtual.getPai();
@@ -112,7 +112,6 @@ public class AEstrela {
         //imprimir caminho
         System.out.println("Caminho: ");
         for (No no : listaAuxiliar) {
-            //System.out.print(" -> " + no.getId());
             caminhos.add(no.getId());
         }
         //inicio artificio apenas para printar caminho
@@ -124,9 +123,7 @@ public class AEstrela {
         }
         //fim do artificio
 
-        System.out.println("");
         desenha(mapa);
-        System.out.println("Fim ! ");
 
         //retorno do caminho
         return listaAuxiliar;

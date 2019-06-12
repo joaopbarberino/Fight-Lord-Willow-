@@ -1,13 +1,18 @@
+//***********************************************************/
+//********************Referencias****************************/
+//***************Professor Dr. Adalberto Bosco***************/
+//https://www.linkedin.com/in/adalberto-pereira-08497517 ****/
+//***********************************************************/
+
 package mapa;
 
 import java.util.ArrayList;
 import java.util.List;
 import javaapplication1.Engine;
-import static mapa.Mapa.colunas;
 
 public class No {
 
-    private int id, pos[],qtdColunas,x,y;
+    private int id, pos[],qtd_colunas,x,y;
     float h, g, f;
     private boolean visitado, bloqueado, construivel;
     public List<No> vizinhos = new ArrayList();
@@ -16,9 +21,9 @@ public class No {
     public No(int id) {
         this.id = id;
         this.pos = new int[2];
-        this.qtdColunas = 20;
-        this.x = ((this.getId() % qtdColunas) * Engine.TILE_SIZE);
-        this.y = ((this.getId() / qtdColunas) * Engine.TILE_SIZE);
+        this.qtd_colunas = Mapa.getColunas();
+        this.x = ((this.getId() % qtd_colunas) * Engine.TILE_SIZE);
+        this.y = ((this.getId() / qtd_colunas) * Engine.TILE_SIZE);
     }
 
     public int getX() {
@@ -112,7 +117,6 @@ public class No {
 
     @Override
     public String toString() {
-        //return "{" + this.elemento + ", \n" + this.prox + '}';
         return "{" +this.id +'}';
     }
 

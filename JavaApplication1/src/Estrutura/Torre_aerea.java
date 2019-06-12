@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//***********************************************************/
+//********************Sem Referencias************************/
+//***********************************************************/
 package Estrutura;
 
 import javaapplication1.Inimigo;
@@ -29,7 +27,6 @@ public class Torre_aerea extends Estrutura implements Desenhavel {
     private boolean troca_animacao = false, troca_animacao_ataque = false, troca_animacao_tiro = false;
 
     private int x_tiro, y_tiro, x_tiro_por, y_tiro_por, x_alvo, y_alvo;
-    private String movimento = "";
 
     public Torre_aerea(int pos, ArrayList<BufferedImage> sprites, ArrayList<Som> sounds) {
         // ataque, alcance, preco, pos
@@ -45,7 +42,6 @@ public class Torre_aerea extends Estrutura implements Desenhavel {
     }
 
     public void atacar(Inimigo inimigo) {
-        //System.out.println(inimigo);
 
         if (inimigo.getTipo().equals("aereo")) {
             this.alvo = inimigo;

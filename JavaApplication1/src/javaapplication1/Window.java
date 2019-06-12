@@ -1,19 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*********************************************************************/
+/** Centro Universitario Senac ***************************************/
+/** Tecnologia em Jogos Digitais - 1o semestre de 2019 ***************/
+/** Professor: <Bruno Sanches> ***************************************/
+/** Projeto Integrador III - Projeto Final ***************************/
+/** Arquivo: <Fight, Lord Willow!> ***********************************/
+/*********************************************************************/
+/**Nome 1: <Pedro Henrique Lacerda Aredes> ***************************/
+/**Nome 2: <Joao Pedro Barberino> ************************************/
+/**Nome 3: <Emerson Marques Ferreira> ********************************/
+/**Data de entrega: <12/06/2019> **/
+/*********************************************************************/
+//********************************************************************/
+//*********************** Referencias*********************************/
+//***********Auxilio colegas classe(into the dwarfness)***************/
+/*********************************************************************/
 package javaapplication1;
 
 import Estrutura.*;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import mapa.AEstrela;
 import mapa.Mapa;
@@ -22,8 +30,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
-import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mapa.No;
@@ -31,7 +37,8 @@ import mapa.No;
 public class Window extends JFrame implements KeyListener {
 
     // ----------------------- TO DO ----------------------------
-    // -> Sons
+    // -> colocar som ambiente, som base upando
+    //-> tirar oq ainda resta de HARDCODED
     // ----------------------- TO DO ----------------------------
     private Tile_layer MAP;
     public ArrayList<BufferedImage> sprites;
@@ -50,9 +57,6 @@ public class Window extends JFrame implements KeyListener {
     private ArrayList<Torre_terrestre> lista_torres_terrestres = new ArrayList();
     private ArrayList<Torre_aerea> lista_torres_aereas = new ArrayList();
     private static ArrayList<No> construiveis = new ArrayList<No>();
-    private static ArrayList<int[]> posicoes = new ArrayList<int[]>();
-    private Torre_terrestre torre_terrestre_interface;
-    private Torre_terrestre torre_aerea_interface;
 
     private int clickX, clickY;
     private No no_torre = null;
@@ -82,11 +86,6 @@ public class Window extends JFrame implements KeyListener {
     }
 
     public void run() throws InterruptedException, IOException {
-        Sprite_sheet sprite_terrestre;
-
-        //Torre_terrestre torre_terrestre_interface = new Torre_terrestre(0, sprites.get(10), sprites.get(9), sons);
-        //Torre_terrestre torre_aerea_interface = new Torre_terrestre(0, sprites.get(10), sprites.get(9), sons);
-
         long excess = 0;
         long noDelays = 0;
 
@@ -95,8 +94,6 @@ public class Window extends JFrame implements KeyListener {
 
         // Instanciar o mapa da fase
         caminho = Mapa_exec(caminho);
-        System.out.println("Caminho: " + caminho);
-        System.out.println("contruiveis: " + construiveis.toString());
         
         Base jogador = new Base(710, 25, 10, 0, 170, 0, sprites.get(8), sprites, sons);
         desenhaveis.add(jogador);
@@ -123,7 +120,6 @@ public class Window extends JFrame implements KeyListener {
                 for (int i = 0; i < construiveis.size(); i++) {
                     no_torre = construiveis.get(i);
                     if (Math.abs(no_torre.getX() - clickX) < 40 && Math.abs(no_torre.getY() - clickY) < 40 && (torre_1 || torre_2)) {
-                        System.out.println("Construiu");
                         mapa.getMapa().get(no_torre.getId()).setBloqueado(true);
                         mapa.getMapa().get(no_torre.getId()).setConstruivel(false);
 
@@ -131,8 +127,8 @@ public class Window extends JFrame implements KeyListener {
                             Torre_terrestre torre_terrestre = new Torre_terrestre(no_torre.getId(), sprites, sons);
                             if (jogador.getGold() >= torre_terrestre.getPreco()) {
                                 jogador.reduzGold(torre_terrestre.getPreco());
-                                torre_terrestre.set_casas_no_alcance();
-                                torre_terrestre.get_casas_no_alcance();
+                                torre_terrestre.setCasasNoAlcance();
+                                torre_terrestre.getCasasNoAlcance();
                                 lista_torres_terrestres.add(torre_terrestre);
                                 torre_terrestre.tocaSom(6);
                                 desenhaveis.add(torre_terrestre);
@@ -144,8 +140,8 @@ public class Window extends JFrame implements KeyListener {
                             Torre_aerea torre_aerea = new Torre_aerea(no_torre.getId(), sprites, sons);
                             if (jogador.getGold() >= torre_aerea.getPreco()) {
                                 jogador.reduzGold(torre_aerea.getPreco());
-                                torre_aerea.set_casas_no_alcance();
-                                torre_aerea.get_casas_no_alcance();
+                                torre_aerea.setCasasNoAlcance();
+                                torre_aerea.getCasasNoAlcance();
                                 lista_torres_aereas.add(torre_aerea);
                                 torre_aerea.tocaSom(6);
                                 desenhaveis.add(torre_aerea);
@@ -232,8 +228,6 @@ public class Window extends JFrame implements KeyListener {
                         && lista_aereos_pesados.isEmpty()
                         && lista_terrestres_leves.isEmpty()
                         && lista_terrestres_pesados.isEmpty()) {
-
-                    System.out.println("!!!!!!");
                     jogador.upgrade();
                     this.setou = true;
                     this.pula_geracao = 0;
@@ -578,8 +572,7 @@ public class Window extends JFrame implements KeyListener {
 
         AEstrela.aEstrela(mapa.getMapa().get(3), mapa.getMapa().get(79), mapa);
         caminho = AEstrela.caminhos;
-        posicoes = mapa.pega_Pos();
-        construiveis = mapa.Get_construiveis();
+        construiveis = mapa.GetConstruiveis();
 
         return caminho;
     }

@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//***********************************************************/
+//********************Sem Referencias************************/
+//***********************************************************/
 package javaapplication1;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javaapplication1.Som;
-
 /**
  *
  * @author joao.pbsilva20
@@ -18,21 +15,21 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
     private final ArrayList<Som> Sons;
-    private final int qtdColunas = 20;
+    private final int qtd_colunas = 20;
     private final int VEL_MOVIMENTO = 100;
 
-    private int posAtual, proxPos, difPos;
+    private int pos_atual, prox_pos, dif_pos;
     private int x, y, prox_x, prox_y;
     private int x_aux, y_aux, por_x, por_y;
-    private int contaSprite = 0;
-    private int maxSprite = 10;
-    private boolean trocaAnimação = false;
+    private int conta_sprite = 0;
+    private int max_sprite = 10;
+    private boolean troca_animação = false;
     private boolean pode_andar = false, andou = true;
     private String movimento = "";
 //Vida:50 
 //Dano: 6 
 //Dano: 6 
-//Gold: +40 
+//Gold: +25 
 //Exp: +35 
 
     public Aereo_pesado(BufferedImage sprite, ArrayList<Integer> caminho,ArrayList<Som> sounds) {
@@ -56,21 +53,21 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
 
         if (this.andou == true) {
 
-            this.posAtual = this.getPos();
-            this.proxPos = super.getProxPos();
-            this.difPos = proxPos - posAtual;
+            this.pos_atual = this.getPos();
+            this.prox_pos = super.getProxPos();
+            this.dif_pos = prox_pos - pos_atual;
 
-            if (difPos == 20 || difPos == 0) {
+            if (dif_pos == 20 || dif_pos == 0) {
                 this.movimento = "baixo";
-            } else if (difPos == -20) {
+            } else if (dif_pos == -20) {
                 this.movimento = "cima";
-            } else if (difPos == 1) {
+            } else if (dif_pos == 1) {
                 this.movimento = "direita";
             }
-            this.x = ((posAtual % qtdColunas) * Engine.TILE_SIZE);
-            this.prox_x = ((proxPos % qtdColunas) * Engine.TILE_SIZE);
-            this.y = ((posAtual / qtdColunas) * Engine.TILE_SIZE);
-            this.prox_y = ((proxPos / qtdColunas) * Engine.TILE_SIZE);
+            this.x = ((pos_atual % qtd_colunas) * Engine.TILE_SIZE);
+            this.prox_x = ((prox_pos % qtd_colunas) * Engine.TILE_SIZE);
+            this.y = ((pos_atual / qtd_colunas) * Engine.TILE_SIZE);
+            this.prox_y = ((prox_pos / qtd_colunas) * Engine.TILE_SIZE);
 
             this.y_aux = y;
             this.x_aux = x;
@@ -78,17 +75,17 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
             switch (movimento) {
                 case "baixo":
                     this.y_aux = y;
-                    this.por_y = difPos / VEL_MOVIMENTO;
+                    this.por_y = dif_pos / VEL_MOVIMENTO;
                     break;
 
                 case "direita":
                     this.x_aux = x;
-                    this.por_x = difPos / VEL_MOVIMENTO;
+                    this.por_x = dif_pos / VEL_MOVIMENTO;
                     break;
 
                 case "cima":
                     this.y_aux = y;
-                    this.por_y = Math.abs(difPos) / VEL_MOVIMENTO;
+                    this.por_y = Math.abs(dif_pos) / VEL_MOVIMENTO;
                     break;
             }
 
@@ -106,8 +103,8 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
             this.pode_andar = false;
 
         }
-        if (trocaAnimação == true) {
-            contaSprite++;
+        if (troca_animação == true) {
+            conta_sprite++;
         }
     }
 
@@ -147,12 +144,12 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
             default:
                 break;
         }
-        if (contaSprite == maxSprite) {
-            contaSprite = 0;
+        if (conta_sprite == max_sprite) {
+            conta_sprite = 0;
         }
 
-        g.drawImage(this.SPRITE.getSubimage(contaSprite * 40, 0, 40, 40), x_aux, y_aux, null);
-        trocaAnimação = !trocaAnimação;
+        g.drawImage(this.SPRITE.getSubimage(conta_sprite * 40, 0, 40, 40), x_aux, y_aux, null);
+        troca_animação = !troca_animação;
 
     }
 }

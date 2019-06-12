@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//***********************************************************/
+//********************Referencias****************************/
+//********https://www.youtube.com/watch?v=91repoElLZU&t=498s*/
+//********https://www.youtube.com/watch?v=rWzINXeC0lY *******/
+//***********************************************************/
 package javaapplication1;
 
 import java.awt.image.BufferedImage;
@@ -16,17 +16,17 @@ import javax.imageio.ImageIO;
  */
 public class Sprite_sheet {
 
-    private BufferedImage spritesheet;
+    private BufferedImage sprite_sheet;
 
     public Sprite_sheet(String path) {
         try {
-            spritesheet = ImageIO.read(new File(path));
+            sprite_sheet = ImageIO.read(new File(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public  BufferedImage getSprite(int x, int y, int width, int height) {
-        return spritesheet.getSubimage(x, y, width, height);
+        return sprite_sheet.getSubimage(x, y, width, height);
     }
 }

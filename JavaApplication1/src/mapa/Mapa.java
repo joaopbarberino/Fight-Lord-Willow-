@@ -1,9 +1,12 @@
+//***********************************************************/
+//********************Referencias****************************/
+//********https://www.youtube.com/watch?v=91repoElLZU&t=498s*/
+//********https://www.youtube.com/watch?v=rWzINXeC0lY *******/
+//***********************************************************/
 package mapa;
 
 import java.util.ArrayList;
 import java.util.List;
-import javaapplication1.Engine;
-
 /**
  *
  * @author pedro.hlaredes
@@ -38,7 +41,7 @@ public class Mapa {
         }
     }
 
-    public ArrayList<No> Get_construiveis() {
+    public ArrayList<No> GetConstruiveis() {
         for (No no : mapa) {
             if (no.isConstruivel()) {
                 this.construiveis.add(no);
@@ -47,15 +50,11 @@ public class Mapa {
         return this.construiveis;
     }
 
-    public ArrayList<int[]> pega_Pos() {
+    public ArrayList<int[]> pegaPos() {
         for (No no : mapa) {
             no.setPos();
             this.posicoes.add(no.getPos());
         }
-//            this.x = ((posAtual % qtdColunas) * Engine.TILE_SIZE);
-//            this.prox_x = ((proxPos % qtdColunas) * Engine.TILE_SIZE);
-//            this.y = ((posAtual / qtdColunas) * Engine.TILE_SIZE);
-//            this.prox_y = ((proxPos / qtdColunas) * Engine.TILE_SIZE);
         return this.posicoes;
     }
 
@@ -140,7 +139,6 @@ public class Mapa {
 
     public static void configuraMapa() {
         for (No no : mapa) {
-            //no.vizinhos.addAll(acharCantos(no));
             no.vizinhos.addAll(acharOrtogonais(no));
         }
     }

@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//***********************************************************/
+//********************Referencias****************************/
+//********https://www.youtube.com/watch?v=91repoElLZU&t=498s*/
+//********https://www.youtube.com/watch?v=rWzINXeC0lY *******/
+//***********************************************************/
 package javaapplication1;
 
 import java.awt.Graphics;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
 /**
  * @author pedro.hlaredes
  *
@@ -22,8 +21,7 @@ import javax.swing.JPanel;
 public class Tile_layer extends JPanel implements Desenhavel {
 
     private int[][] mapa;
-    private BufferedImage tileSheet;
-    //Tile_layer minotaur = null;
+    private BufferedImage tile_sheet;
 
     public Tile_layer(int[][] existingMap) {
         mapa = new int[existingMap.length][existingMap[0].length];
@@ -32,7 +30,7 @@ public class Tile_layer extends JPanel implements Desenhavel {
                 mapa[y][x] = existingMap[y][x];
             }
         }
-        tileSheet = LoadTileSheet("/pics/blocks.png");
+        tile_sheet = LoadTileSheet("/pics/blocks.png");
     }
 
     //Pega o tamanho do mapa
@@ -41,7 +39,7 @@ public class Tile_layer extends JPanel implements Desenhavel {
     }
 
     //Le o mapa atraves de um txt
-    public static Tile_layer From_file(String fileName) {
+    public static Tile_layer FromFile(String fileName) {
         Tile_layer layer = null;
         ArrayList<ArrayList<Integer>> tempLayout = new ArrayList<>();
 
@@ -75,8 +73,7 @@ public class Tile_layer extends JPanel implements Desenhavel {
                 layer.mapa[y][x] = tempLayout.get(y).get(x);
             }
         }
-        layer.tileSheet = layer.LoadTileSheet("blocks.png");
-        //layer.minitaur = layer.LoadTileSheet("minitaur.png");
+        layer.tile_sheet = layer.LoadTileSheet("blocks.png");
 
         return layer;
     }
@@ -97,11 +94,11 @@ public class Tile_layer extends JPanel implements Desenhavel {
             for (int x = 0; x < mapa[y].length; x++) {
                 int index = mapa[y][x];
                 int yOffset = 0;
-                if (index > (tileSheet.getWidth() / Engine.TILE_WIDTH) - 1) {
+                if (index > (tile_sheet.getWidth() / Engine.TILE_WIDTH) - 1) {
                     yOffset++;
-                    index = index - (tileSheet.getWidth() / Engine.TILE_WIDTH);
+                    index = index - (tile_sheet.getWidth() / Engine.TILE_WIDTH);
                 }
-                g.drawImage(tileSheet, x * Engine.TILE_WIDTH,
+                g.drawImage(tile_sheet, x * Engine.TILE_WIDTH,
                         y * Engine.TILE_HEIGTH,
                         (x * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
                         (y * Engine.TILE_HEIGTH) + Engine.TILE_HEIGTH,

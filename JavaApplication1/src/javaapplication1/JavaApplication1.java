@@ -1,22 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*********************************************************************/
+/** Centro Universitario Senac ***************************************/
+/** Tecnologia em Jogos Digitais - 1o semestre de 2019 ***************/
+/** Professor: <Bruno Sanches> ***************************************/
+/** Projeto Integrador III - Projeto Final ***************************/
+/** Arquivo: <Fight, Lord Willow!> ***********************************/
+/*********************************************************************/
+/**Nome 1: <Pedro Henrique Lacerda Aredes> ***************************/
+/**Nome 2: <Joao Pedro Barberino> ************************************/
+/**Nome 3: <Emerson Marques Ferreira> ********************************/
+/**Data de entrega: <12/06/2019> **/
+/*********************************************************************/
+//********************************************************************/
+//*********************** Referencias*********************************/
+//***********Auxilio colegas classe(into the dwarfness)***************/
+/*********************************************************************/
 package javaapplication1;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-
 /**
  *
  * @author joao.pbsilva20
  */
 public class JavaApplication1  {    
     public static void main(String[] args) throws IOException, InterruptedException {
-        Tile_layer layer = Tile_layer.From_file("mapa.txt");
+        Tile_layer layer = Tile_layer.FromFile("mapa.txt");
         ArrayList<BufferedImage> sprites = new ArrayList();
         ArrayList<Som> sonsList = new ArrayList();
         //sprites[0] = minotauro andando

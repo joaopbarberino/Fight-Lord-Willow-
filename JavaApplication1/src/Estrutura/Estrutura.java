@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//***********************************************************/
+//********************Sem Referencias************************/
+//***********************************************************/
 package Estrutura;
 
-import java.io.IOException;
 import javaapplication1.Inimigo;
 import java.util.*;
 import javax.swing.JPanel;
-import javaapplication1.Window;
 import mapa.*;
 
 /**
@@ -20,14 +16,12 @@ public class Estrutura extends JPanel {
 
     private int ataque;
     public int maximo_de_alvos = 1;
-    private ArrayList<Inimigo> alvos = new ArrayList();
     private int alcance;
     private int velo_atk;
     private int preco;
     private int pos;
     private int nivel = 1;
     private ArrayList<Integer> casas_no_alcance = new ArrayList();
-    private Mapa mapa;
 
     public Estrutura(int ataque, int alcance, int preco, int pos) {
         this.ataque = ataque;
@@ -48,16 +42,16 @@ public class Estrutura extends JPanel {
     // Modifica o alcance da estrutura
     public void setAlcance(int alcance) {
         this.alcance = alcance;
-        this.set_casas_no_alcance();
+        this.setCasasNoAlcance();
     }
 
     // Retorna a velocidade de ataque da estrutura
-    public int getVelo_atk() {
+    public int getVeloAtk() {
         return velo_atk;
     }
 
     // Modifica a velocidade de ataque da estrutura
-    public void setVelo_atk(int velo_atk) {
+    public void setVeloAtk(int velo_atk) {
         this.velo_atk = velo_atk;
     }
 
@@ -80,28 +74,21 @@ public class Estrutura extends JPanel {
     public int getPreco(){
         return this.preco;
     }
-    
-    // Da um mapa pra estrutura e calcula as casas que ela pode atacar
-    public void setMapa(Mapa mapa) {
-        this.mapa = mapa;
-    }
-
     // Aumenta o nivel da torre
     public void upgrade() {
         this.nivel++;
         this.ataque++;
         this.alcance++;
-        this.set_casas_no_alcance();
+        this.setCasasNoAlcance();
     }
 
     // mostra as casas no alcance da torre
-    public void get_casas_no_alcance() {
+    public void getCasasNoAlcance() {
         System.out.println(this.casas_no_alcance);
     }
 
     // responsável por calcular quais posições do mapa estão no alcance da torre
-    public void set_casas_no_alcance() {
-        int x1, x2;
+    public void setCasasNoAlcance() {
         int y1, y2;
         int diagonal_sup_esq, diagonal_inf_esq;
         int diagonal_sup_dir, diagonal_inf_dir;
@@ -109,8 +96,6 @@ public class Estrutura extends JPanel {
 
         // for, alcance --
         for (int j = this.alcance; j > 0; j--) {
-            x1 = this.pos - j;
-            x2 = this.pos + j;
             y1 = this.pos - (qtdColunas * j);
             y2 = this.pos + (qtdColunas * j);
             diagonal_sup_esq = y1 - j;

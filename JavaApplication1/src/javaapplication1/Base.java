@@ -1,6 +1,8 @@
+//***********************************************************/
+//********************Sem Referencias************************/
+//***********************************************************/
 package javaapplication1;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -107,19 +109,19 @@ public class Base implements Desenhavel {
 
     public void upgrade() {
         if (this.xp >= 500 && this.nivel == 0) {
-            this.vida_maxima += 10;
-            this.vida_atual += 10;
+            setVidaMaxima(this.vida_maxima += 10);
+            setVidaAtual(this.vida_atual += 10);
             if (vida_atual > vida_maxima) {
-                this.vida_atual = vida_maxima;
+                setVidaAtual(this.vida_maxima);
             }
             this.nivel++;
             this.SPRITE = this.sprites.get(11);
         }
         if (this.xp >= 1000 && this.nivel == 1) {
-            this.vida_maxima += 30;
-            this.vida_atual += 30;
+            setVidaMaxima(this.vida_maxima += 30);
+            setVidaAtual(this.vida_atual += 30);
             if (vida_atual > vida_maxima) {
-                this.vida_atual = vida_maxima;
+                setVidaAtual(this.vida_maxima);
             }
             this.nivel++;
             this.SPRITE = this.sprites.get(12);
