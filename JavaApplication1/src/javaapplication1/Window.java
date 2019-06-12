@@ -48,18 +48,19 @@ public class Window extends JFrame implements KeyListener {
     private ArrayList<Aereo_leve> lista_aereos_leves = new ArrayList();
     private ArrayList<Inimigo> inimigos = new ArrayList();
     private ArrayList<Torre_terrestre> lista_torres_terrestres = new ArrayList();
+    private ArrayList<Torre_aerea> lista_torres_aereas = new ArrayList();
     private static ArrayList<No> construiveis = new ArrayList<No>();
     private static ArrayList<int[]> posicoes = new ArrayList<int[]>();
     private Torre_terrestre torre_terrestre_interface;
     private Torre_terrestre torre_aerea_interface;
-    
+
     private int clickX, clickY;
     private No no_torre = null;
 
     private int qtds[] = new int[4], pula_geracao = 0, segura_wave = 1, qtdsRound7[] = new int[4];
     private boolean setou = true, comecou_round = false, torre_1 = false, torre_2 = false;
 
-    public Window(ArrayList<BufferedImage> sprites, Tile_layer layer,ArrayList<Som> sounds) {
+    public Window(ArrayList<BufferedImage> sprites, Tile_layer layer, ArrayList<Som> sounds) {
         super("Attack, Lord Willow!");
         this.setResizable(false);
         this.setSize(800, 800);
@@ -82,10 +83,10 @@ public class Window extends JFrame implements KeyListener {
 
     public void run() throws InterruptedException, IOException {
         Sprite_sheet sprite_terrestre;
-        
+
         Torre_terrestre torre_terrestre_interface = new Torre_terrestre(0, sprites.get(10), sprites.get(9), sons);
         Torre_terrestre torre_aerea_interface = new Torre_terrestre(0, sprites.get(10), sprites.get(9), sons);
-        
+
         long excess = 0;
         long noDelays = 0;
 
@@ -97,7 +98,7 @@ public class Window extends JFrame implements KeyListener {
         System.out.println("Caminho: " + caminho);
         System.out.println("contruiveis: " + construiveis.toString());
 
-        Base jogador = new Base(710, 25, 10, 0, 500, 0, sprites.get(8), sprites, sons);
+        Base jogador = new Base(710, 25, 10, 0, 100, 0, sprites.get(8), sprites, sons);
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
 
@@ -140,12 +141,12 @@ public class Window extends JFrame implements KeyListener {
                                 System.out.println("n tem dinheiro pra construir torre 1");
                             }
                         } else if (torre_2) {
-                            Torre_terrestre torre_aerea = new Torre_terrestre(no_torre.getId(), sprites.get(2), sprites.get(9), sons);
+                            Torre_aerea torre_aerea = new Torre_aerea(no_torre.getId(), sprites.get(10), sprites.get(9), sons);
                             if (jogador.getGold() >= torre_aerea.getPreco()) {
                                 jogador.reduzGold(torre_aerea.getPreco());
                                 torre_aerea.set_casas_no_alcance();
                                 torre_aerea.get_casas_no_alcance();
-                                lista_torres_terrestres.add(torre_aerea);
+                                lista_torres_aereas.add(torre_aerea);
                                 torre_aerea.tocaSom(6);
                                 desenhaveis.add(torre_aerea);
                             } else {
@@ -202,6 +203,18 @@ public class Window extends JFrame implements KeyListener {
 
             for (Inimigo inimigo : inimigos) {
                 for (Torre_terrestre torre : lista_torres_terrestres) {
+                    if (torre.isNoRange(inimigo)) {
+                        // ----------------------- TO DO ----------------------------
+                        // -> Arrumar desenho de ataque da torre e animação
+                        // ----------------------- TO DO ----------------------------
+                        torre.tocaSom(1);
+                        torre.atacar(inimigo);
+                    }
+                }
+
+            }
+            for (Inimigo inimigo : inimigos) {
+                for (Torre_aerea torre : lista_torres_aereas) {
                     if (torre.isNoRange(inimigo)) {
                         // ----------------------- TO DO ----------------------------
                         // -> Arrumar desenho de ataque da torre e animação
@@ -596,8 +609,8 @@ public class Window extends JFrame implements KeyListener {
             strategy.show();
         } while (strategy.contentsLost());
         g.setFont(new Font("Serif", Font.BOLD, 12));
-        g.drawString("" + 50, 480, 744);
-        g.drawString("" + 50, 480, 780);
+        g.drawString("" + 80, 480, 744);
+        g.drawString("" + 80, 480, 780);
         g.drawString("" + this.wave, 380, 744);
     }
 
@@ -639,6 +652,7 @@ public class Window extends JFrame implements KeyListener {
                 lista_aereos_leves.clear();
                 inimigos.clear();
                 lista_torres_terrestres.clear();
+                lista_torres_aereas.clear();;
                 construiveis.clear();
                 try {
                     //repaint();

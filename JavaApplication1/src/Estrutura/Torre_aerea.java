@@ -15,9 +15,9 @@ import javaapplication1.Som;
 
 /**
  *
- * @author emerson.mferreira1
+ * @author PEDROKREIDABALA
  */
-public class Torre_terrestre extends Estrutura implements Desenhavel {
+public class Torre_aerea extends Estrutura implements Desenhavel {
 
     private final BufferedImage SPRITE;
     private final ArrayList<Som> Sons;
@@ -30,7 +30,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     private int pos_tiro, alvo_tiro_novo, alvo_tiro_antigo, x_tiro, y_tiro, x_alvo, y_alvo, dif_pos;
     private String movimento = "";
 
-    public Torre_terrestre(int pos, BufferedImage sprite, BufferedImage sprite_ataque, ArrayList<Som> sounds) {
+    public Torre_aerea(int pos, BufferedImage sprite, BufferedImage sprite_ataque, ArrayList<Som> sounds) {
         // ataque, alcance, preco, pos
         super(5, 1, 80, pos);
         this.SPRITE = sprite;
@@ -46,7 +46,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     public void atacar(Inimigo inimigo) {
         //System.out.println(inimigo);
 
-        if (inimigo.getTipo().equals("terrestre")) {
+        if (inimigo.getTipo().equals("aereo")) {
         this.alvo = inimigo;
         this.atacando = true;
         this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);

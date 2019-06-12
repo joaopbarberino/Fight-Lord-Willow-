@@ -36,14 +36,14 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
     //Vida:10
     //Dano: 2 
     //Defesa:2
-    //Gold: +10 
+    //Gold: +15 
     //Exp: +10 
 
     public Terrestre_leve(BufferedImage sprite, ArrayList<Integer> caminho,ArrayList<Som> sounds) {
         //Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         //e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(10, 2, 2, 10, 10, "terrestre", caminho);
+        super(10, 2, 2, 15, 10, "terrestre", caminho);
         this.SPRITE = sprite;
         this.Sons = sounds;
     }
