@@ -15,23 +15,22 @@ import javaapplication1.Som;
 
 /**
  *
- * @author emerson.mferreira1
+ * @author PEDROKREIDABALA
  */
-public class Torre_terrestre extends Estrutura implements Desenhavel {
+public class Torre_aerea extends Estrutura implements Desenhavel {
 
     private final BufferedImage SPRITE;
     private final ArrayList<Som> Sons;
     private final BufferedImage SPRITE_ATAQUE;
-    private int x, y;
+    private int x, y, preco;
     private boolean atacando, hitou = false;
     private Inimigo alvo;
     private int contador = 0;
-    private int conta_sprite = 1;
 
     private int pos_tiro, alvo_tiro_novo, alvo_tiro_antigo, x_tiro, y_tiro, x_alvo, y_alvo, dif_pos;
     private String movimento = "";
 
-    public Torre_terrestre(int pos, BufferedImage sprite, BufferedImage sprite_ataque, ArrayList<Som> sounds) {
+    public Torre_aerea(int pos, BufferedImage sprite, BufferedImage sprite_ataque, ArrayList<Som> sounds) {
         // ataque, alcance, preco, pos
         super(5, 1, 80, pos);
         this.SPRITE = sprite;
@@ -47,7 +46,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     public void atacar(Inimigo inimigo) {
         //System.out.println(inimigo);
 
-        if (inimigo.getTipo().equals("terrestre")) {
+        if (inimigo.getTipo().equals("aereo")) {
         this.alvo = inimigo;
         this.atacando = true;
         this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
@@ -102,6 +101,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     @Override
     public void paintComponent(Graphics g) {
         update();
+
         g.drawImage(SPRITE.getSubimage(0, 0, 40, 40), x, y, null);
 
         if (atacando) {
@@ -116,26 +116,27 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
             this.contador++;
 
             if (!hitou) {
-//                if (movimento.equals("cima")) {
-//                    
-//                } else if (movimento.equals("diagonal sup direita")) {
-//                    
-//                    
-//                } else if (movimento.equals("direita")) {
-//                    
-//                } else if (movimento.equals("diagonal inf esquerda")) {
-//                    
-//                    
-//                } else if (movimento.equals("baixo")) {
-//                   
-//                } else if (movimento.equals("diagonal inf esquerda")) {
-//                    
-//                    
-//                } else if (movimento.equals("esquerda")) {
-//                    
-//                } else if (movimento.equals("diagonal sup direita")) {
-//                    
-//                }
+                if (movimento.equals("cima")) {
+                    y_tiro -= 2;
+                } else if (movimento.equals("diagonal sup direita")) {
+                    y_tiro -= 2;
+                    x_tiro += 1;
+                } else if (movimento.equals("direita")) {
+                    x_tiro += 2;
+                } else if (movimento.equals("diagonal inf esquerda")) {
+                    y_tiro += 2;
+                    x_tiro += 1;
+                } else if (movimento.equals("baixo")) {
+                    y_tiro -= 2;
+                } else if (movimento.equals("diagonal inf esquerda")) {
+                    y_tiro += 2;
+                    x_tiro -= 1;
+                } else if (movimento.equals("esquerda")) {
+                    x_tiro -= 2;
+                } else if (movimento.equals("diagonal sup direita")) {
+                    y_tiro -= 2;
+                    x_tiro -= 1;
+                }
 
                 if (y_tiro == y_alvo && x_tiro == x_alvo) {
                     hitou = true;
