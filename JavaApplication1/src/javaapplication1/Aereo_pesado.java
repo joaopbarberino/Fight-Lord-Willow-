@@ -41,7 +41,7 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
         super(50, 6, 6, 40, 35, "aereo", caminho);
         this.SPRITE = sprite;
-
+        this.Sons = sounds;
     }
 
     public BufferedImage getSprite() {

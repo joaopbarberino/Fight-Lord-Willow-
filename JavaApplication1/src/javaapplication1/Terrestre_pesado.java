@@ -50,7 +50,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
         super(25, 3, 3, 25, 20, "terrestre", caminho);
         this.SPRITE = sprite;
         this.SPRITEMORTE = spriteMorte;
-        this.sons = sounds;
+        this.Sons = sounds;
 
     }
 
@@ -129,7 +129,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     }
     
     public void tocaSom(int ref) {
-        sons.get(ref).tocaUmaVez();
+        Sons.get(ref).tocaUmaVez();
     }
 
     @Override

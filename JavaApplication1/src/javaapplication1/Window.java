@@ -432,7 +432,7 @@ public class Window extends JFrame implements KeyListener {
         // Adiciona na sua respectiva lista
         if (pula_geracao % 10 == 0) {
             if (qtds[0] > 0) {
-                Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4), caminho);
+                Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4), caminho, sons);
                 this.lista_terrestres_leves.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
@@ -440,7 +440,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[1] > 0) {
-                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho, sprites.get(1));
+                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho, sprites.get(1), sons);
                 this.lista_terrestres_pesados.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
@@ -448,7 +448,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[2] > 0) {
-                Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho);
+                Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho, sons);
                 this.lista_aereos_leves.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
@@ -456,7 +456,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[3] > 0) {
-                Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho);
+                Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho, sons);
                 this.lista_aereos_pesados.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);

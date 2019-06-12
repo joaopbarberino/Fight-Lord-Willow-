@@ -9,7 +9,9 @@ import javaapplication1.Inimigo;
 import javaapplication1.Desenhavel;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javaapplication1.Engine;
+import javaapplication1.Som;
 
 /**
  *
@@ -18,6 +20,7 @@ import javaapplication1.Engine;
 public class Torre_terrestre extends Estrutura implements Desenhavel {
 
     private final BufferedImage SPRITE;
+    private final ArrayList<Som> Sons;
     private final BufferedImage SPRITE_ATAQUE;
     private int x, y, preco;
     private boolean atacando, hitou = false;
@@ -27,7 +30,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     private int pos_tiro, alvo_tiro_novo, alvo_tiro_antigo, x_tiro, y_tiro, x_alvo, y_alvo, dif_pos;
     private String movimento = "";
 
-    public Torre_terrestre(int pos, BufferedImage sprite, BufferedImage sprite_ataque) {
+    public Torre_terrestre(int pos, BufferedImage sprite, BufferedImage sprite_ataque, ArrayList<Som> sounds) {
         // ataque, alcance, preco, pos
         super(5, 1, 50, pos);
         this.SPRITE = sprite;
@@ -37,39 +40,39 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
         this.x_tiro = x;
         this.y = ((pos / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
         this.y_tiro = y;
+        this.Sons = sounds;
     }
 
     public void atacar(Inimigo inimigo) {
         //System.out.println(inimigo);
 
         //if (inimigo.getTipo().equals("terrestre")) {
-            this.alvo = inimigo;
-            this.atacando = true;
-            this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
-            this.y_alvo = ((alvo.getPos() / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
-            this.alvo_tiro_antigo = alvo.getPos();
-            this.dif_pos = alvo.getPos() - this.getPos();
+        this.alvo = inimigo;
+        this.atacando = true;
+        this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
+        this.y_alvo = ((alvo.getPos() / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
+        this.alvo_tiro_antigo = alvo.getPos();
+        this.dif_pos = alvo.getPos() - this.getPos();
 
-            if (dif_pos == -1) {
-                this.movimento = "esquerda";
-            } else if (dif_pos == 1) {
-                this.movimento = "direita";
-            } else if (dif_pos == -20) {
-                this.movimento = "cima";
-            } else if (dif_pos == 20) {
-                this.movimento = "baixo";
-            } else if (dif_pos == -21) {
-                this.movimento = "diagonal sup esquerda";
-            } else if (dif_pos == 21) {
-                this.movimento = "diagonal inf direita";
-            } else if (dif_pos == 19) {
-                this.movimento = "diagonal inf esquerda";
-            } else if (dif_pos == -19) {
-                this.movimento = "diagonal sup direita";
-            }
+        if (dif_pos == -1) {
+            this.movimento = "esquerda";
+        } else if (dif_pos == 1) {
+            this.movimento = "direita";
+        } else if (dif_pos == -20) {
+            this.movimento = "cima";
+        } else if (dif_pos == 20) {
+            this.movimento = "baixo";
+        } else if (dif_pos == -21) {
+            this.movimento = "diagonal sup esquerda";
+        } else if (dif_pos == 21) {
+            this.movimento = "diagonal inf direita";
+        } else if (dif_pos == 19) {
+            this.movimento = "diagonal inf esquerda";
+        } else if (dif_pos == -19) {
+            this.movimento = "diagonal sup direita";
+        }
 
         //}
-
     }
 
     private void update() {
@@ -89,6 +92,10 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
                 y_tiro = this.y;
             }
         }
+    }
+
+    public void tocaSom(int ref) {
+        Sons.get(ref).tocaUmaVez();
     }
 
     @Override
