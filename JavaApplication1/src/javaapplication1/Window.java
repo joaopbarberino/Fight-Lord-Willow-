@@ -97,8 +97,8 @@ public class Window extends JFrame implements KeyListener {
         caminho = Mapa_exec(caminho);
         System.out.println("Caminho: " + caminho);
         System.out.println("contruiveis: " + construiveis.toString());
-
-        Base jogador = new Base(710, 25, 10, 0, 100, 0, sprites.get(8), sprites, sons);
+        
+        Base jogador = new Base(710, 25, 10, 0, 170, 0, sprites.get(8), sprites, sons);
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
 
@@ -141,7 +141,7 @@ public class Window extends JFrame implements KeyListener {
                                 System.out.println("n tem dinheiro pra construir torre 1");
                             }
                         } else if (torre_2) {
-                            Torre_aerea torre_aerea = new Torre_aerea(no_torre.getId(), sprites.get(10), sprites.get(9), sons);
+                            Torre_aerea torre_aerea = new Torre_aerea(no_torre.getId(), sprites, sons);
                             if (jogador.getGold() >= torre_aerea.getPreco()) {
                                 jogador.reduzGold(torre_aerea.getPreco());
                                 torre_aerea.set_casas_no_alcance();
@@ -219,7 +219,7 @@ public class Window extends JFrame implements KeyListener {
                         // ----------------------- TO DO ----------------------------
                         // -> Arrumar desenho de ataque da torre e animação
                         // ----------------------- TO DO ----------------------------
-                        torre.tocaSom(1);
+                        //torre.tocaSom(1);
                         torre.atacar(inimigo);
                     }
                 }
@@ -609,8 +609,8 @@ public class Window extends JFrame implements KeyListener {
             strategy.show();
         } while (strategy.contentsLost());
         g.setFont(new Font("Serif", Font.BOLD, 12));
-        g.drawString("" + 80, 480, 744);
-        g.drawString("" + 80, 480, 780);
+        g.drawString("" + 90, 480, 744);
+        g.drawString("" + 90, 480, 780);
         g.drawString("" + this.wave, 380, 744);
     }
 

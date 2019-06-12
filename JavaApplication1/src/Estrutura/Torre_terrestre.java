@@ -32,7 +32,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
 
     public Torre_terrestre(int pos, ArrayList<BufferedImage> sprites, ArrayList<Som> sounds) {
         // ataque, alcance, preco, pos
-        super(5, 1, 80, pos);
+        super(4, 1, 90, pos);
         this.SPRITE = sprites.get(10);
         this.SPRITE_ATAQUE = sprites.get(14);
         this.SPRITE_TIRO = sprites.get(9);
@@ -60,8 +60,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
 
     private void update() {
 
-        if (atacando) {
-            System.out.println("!!!!");
+        if (atacando) {           
             this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
             this.y_alvo = ((alvo.getPos() / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
 
