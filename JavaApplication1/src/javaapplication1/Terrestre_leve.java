@@ -29,7 +29,7 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
     private int x_aux, y_aux, por_x, por_y;
     private int contaSprite = 0;
     private int maxSprite = 8;
-    private boolean trocaAnimação = false;
+    private boolean trocaAnimacao = false;
     private boolean pode_andar = false, andou = true;
     private String movimento = "";
     
@@ -110,7 +110,7 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
             this.andou = false;
             this.pode_andar = false;
         }
-         if (trocaAnimação == true) {
+         if (trocaAnimacao == true) {
             contaSprite++;
         }
     }
@@ -158,7 +158,7 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
 
 
         g.drawImage(this.SPRITE.getSubimage(contaSprite * 40, 0, 40, 40), x_aux, y_aux, null);
-        trocaAnimação = !trocaAnimação;
+        trocaAnimacao = !trocaAnimacao;
 
     }
 }

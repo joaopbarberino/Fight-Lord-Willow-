@@ -32,6 +32,9 @@ public class JavaApplication1  {
         //sprites[10] = Torre 1
         //sprites[11] = base 2
         //sprites[12] = base 3
+        //sprites[13] = torre 2
+        //sprites[14] = torre 1 atacando
+        //sprites[15] = torre 2 atacando
         
         sprites.add(ImageIO.read(new File("minitaur.png")));
         sprites.add(ImageIO.read(new File("Minotauro-morrendo.png")));
@@ -42,10 +45,13 @@ public class JavaApplication1  {
         sprites.add(ImageIO.read(new File("Dragao-voando.png")));        
         sprites.add(ImageIO.read(new File("Dragao-morrendo.png")));
         sprites.add(ImageIO.read(new File("base1.png")));    
-        sprites.add(ImageIO.read(new File("Ataque-torre.png")));
+        sprites.add(ImageIO.read(new File("torre-ataque.png")));
         sprites.add(ImageIO.read(new File("torre-1-idle.png")));
         sprites.add(ImageIO.read(new File("base2.png")));  
-        sprites.add(ImageIO.read(new File("base3.png")));  
+        sprites.add(ImageIO.read(new File("base3.png")));
+        sprites.add(ImageIO.read(new File("torre-2-idle.png")));
+        sprites.add(ImageIO.read(new File("torre-1-atacando.png")));
+        sprites.add(ImageIO.read(new File("torre-2-atacando.png")));
 
         //som[0] baseDMG
         //som[1] mageATK

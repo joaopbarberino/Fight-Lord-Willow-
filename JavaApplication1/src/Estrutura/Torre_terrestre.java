@@ -19,24 +19,23 @@ import javaapplication1.Som;
  */
 public class Torre_terrestre extends Estrutura implements Desenhavel {
 
-    private final BufferedImage SPRITE;
+    private final BufferedImage SPRITE, SPRITE_ATAQUE, SPRITE_TIRO;
     private final ArrayList<Som> Sons;
-    private final BufferedImage SPRITE_ATAQUE;
     private int x, y;
     private boolean atacando, hitou = false;
-    private Inimigo alvo;
+    private Inimigo alvo = null;
     private int contador = 0;
-    private int conta_sprite = 1;
+    private int conta_sprite = 0, max_sprite = 10, conta_sprite_ataque = 0, max_sprite_ataque = 6, conta_sprite_tiro = 0, max_sprite_tiro = 4;
+    private boolean troca_animacao = false, troca_animacao_ataque = false, troca_animacao_tiro = false;
 
-    private int pos_tiro, alvo_tiro_novo, alvo_tiro_antigo, x_tiro, y_tiro, x_alvo, y_alvo, dif_pos;
-    private String movimento = "";
+    private int x_tiro, y_tiro, x_tiro_por, y_tiro_por, x_alvo, y_alvo;
 
-    public Torre_terrestre(int pos, BufferedImage sprite, BufferedImage sprite_ataque, ArrayList<Som> sounds) {
+    public Torre_terrestre(int pos, ArrayList<BufferedImage> sprites, ArrayList<Som> sounds) {
         // ataque, alcance, preco, pos
         super(5, 1, 80, pos);
-        this.SPRITE = sprite;
-        this.pos_tiro = pos;
-        this.SPRITE_ATAQUE = sprite_ataque;
+        this.SPRITE = sprites.get(10);
+        this.SPRITE_ATAQUE = sprites.get(14);
+        this.SPRITE_TIRO = sprites.get(9);
         this.x = ((pos % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
         this.x_tiro = x;
         this.y = ((pos / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
@@ -45,33 +44,16 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     }
 
     public void atacar(Inimigo inimigo) {
-        //System.out.println(inimigo);
 
-        if (inimigo.getTipo().equals("terrestre")) {
-        this.alvo = inimigo;
-        this.atacando = true;
-        this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
-        this.y_alvo = ((alvo.getPos() / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
-        this.alvo_tiro_antigo = alvo.getPos();
-        this.dif_pos = alvo.getPos() - this.getPos();
+        if (this.alvo == null && inimigo.getTipo().equals("terrestre")) {
+            this.alvo = inimigo;
+            this.atacando = true;
 
-        if (dif_pos == -1) {
-            this.movimento = "esquerda";
-        } else if (dif_pos == 1) {
-            this.movimento = "direita";
-        } else if (dif_pos == -20) {
-            this.movimento = "cima";
-        } else if (dif_pos == 20) {
-            this.movimento = "baixo";
-        } else if (dif_pos == -21) {
-            this.movimento = "diagonal sup esquerda";
-        } else if (dif_pos == 21) {
-            this.movimento = "diagonal inf direita";
-        } else if (dif_pos == 19) {
-            this.movimento = "diagonal inf esquerda";
-        } else if (dif_pos == -19) {
-            this.movimento = "diagonal sup direita";
-        }
+            this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
+            this.y_alvo = ((alvo.getPos() / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
+
+            this.x_tiro_por = (x_alvo - x_tiro) / 5;
+            this.y_tiro_por = (y_alvo - y_tiro) / 5;
 
         }
     }
@@ -79,12 +61,9 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     private void update() {
 
         if (atacando) {
-            this.alvo_tiro_novo = alvo.getPos();
-            if (alvo_tiro_antigo != alvo_tiro_novo) {
-                //System.out.println(alvo.getPos());
-                this.alvo_tiro_antigo = alvo_tiro_novo;
-                //System.out.println("tiro seguiu");
-            }
+            System.out.println("!!!!");
+            this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
+            this.y_alvo = ((alvo.getPos() / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
 
             if (!this.isNoRange(alvo) || this.alvo.isMorto()) {
                 this.alvo = null;
@@ -92,6 +71,20 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
                 x_tiro = this.x;
                 y_tiro = this.y;
             }
+        }
+
+        if (!atacando) {
+            if (troca_animacao == true) {
+                this.conta_sprite++;
+            }
+        }
+
+        if (atacando) {
+            if (troca_animacao_ataque == true) {
+                this.conta_sprite_ataque++;
+            }
+            this.conta_sprite_tiro++;
+
         }
     }
 
@@ -102,51 +95,47 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
     @Override
     public void paintComponent(Graphics g) {
         update();
-        g.drawImage(SPRITE.getSubimage(0, 0, 40, 40), x, y, null);
 
-        if (atacando) {
+        if (!atacando) {
 
+            if (conta_sprite == max_sprite) {
+                this.conta_sprite = 0;
+            }
+            g.drawImage(SPRITE.getSubimage(conta_sprite * 40, 0, 40, 40), x, y, null);
+            this.troca_animacao = !troca_animacao;
+
+        } else if (atacando) {
+
+            if (conta_sprite_ataque == max_sprite_ataque) {
+                this.conta_sprite_ataque = 0;
+            }
+
+            if (conta_sprite_tiro == max_sprite_tiro) {
+                this.conta_sprite_tiro = 0;
+            }
+
+            g.drawImage(SPRITE_ATAQUE.getSubimage(conta_sprite_ataque * 40, 0, 40, 40), x, y, null);
+            this.troca_animacao_ataque = !troca_animacao_ataque;
+
+            // Velocidade de ataque da torre
             if (this.contador % 20 == 0) {
                 if (this.alvo != null) {
-                    this.alvo_tiro_antigo = alvo.getPos();
                     alvo.reduzVida(this.getAtaque());
                     this.contador = 0;
                 }
             }
+
             this.contador++;
 
-            if (!hitou) {
-//                if (movimento.equals("cima")) {
-//                    
-//                } else if (movimento.equals("diagonal sup direita")) {
-//                    
-//                    
-//                } else if (movimento.equals("direita")) {
-//                    
-//                } else if (movimento.equals("diagonal inf esquerda")) {
-//                    
-//                    
-//                } else if (movimento.equals("baixo")) {
-//                   
-//                } else if (movimento.equals("diagonal inf esquerda")) {
-//                    
-//                    
-//                } else if (movimento.equals("esquerda")) {
-//                    
-//                } else if (movimento.equals("diagonal sup direita")) {
-//                    
-//                }
-
-                if (y_tiro == y_alvo && x_tiro == x_alvo) {
-                    hitou = true;
-                }
-
-                g.drawImage(SPRITE_ATAQUE.getSubimage(68, 160, 40, 40), x_tiro, y_tiro, null);
-            } else {
-                hitou = false;
-                x_tiro = this.x;
-                y_tiro = this.y;
+            if (y_tiro == y_alvo && x_tiro == x_alvo) {
+                x_tiro = x;
+                y_tiro = y;
             }
+
+            g.drawImage(SPRITE_TIRO.getSubimage(conta_sprite_tiro * 40, 0, 40, 40), x_tiro, y_tiro, null);
+            this.x_tiro += x_tiro_por;
+            this.y_tiro += y_tiro_por;
+
         }
     }
 

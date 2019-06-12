@@ -47,30 +47,30 @@ public class Torre_aerea extends Estrutura implements Desenhavel {
         //System.out.println(inimigo);
 
         if (inimigo.getTipo().equals("aereo")) {
-        this.alvo = inimigo;
-        this.atacando = true;
-        this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
-        this.y_alvo = ((alvo.getPos() / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
-        this.alvo_tiro_antigo = alvo.getPos();
-        this.dif_pos = alvo.getPos() - this.getPos();
+            this.alvo = inimigo;
+            this.atacando = true;
+            this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
+            this.y_alvo = ((alvo.getPos() / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
+            this.alvo_tiro_antigo = alvo.getPos();
+            this.dif_pos = alvo.getPos() - this.getPos();
 
-        if (dif_pos == -1) {
-            this.movimento = "esquerda";
-        } else if (dif_pos == 1) {
-            this.movimento = "direita";
-        } else if (dif_pos == -20) {
-            this.movimento = "cima";
-        } else if (dif_pos == 20) {
-            this.movimento = "baixo";
-        } else if (dif_pos == -21) {
-            this.movimento = "diagonal sup esquerda";
-        } else if (dif_pos == 21) {
-            this.movimento = "diagonal inf direita";
-        } else if (dif_pos == 19) {
-            this.movimento = "diagonal inf esquerda";
-        } else if (dif_pos == -19) {
-            this.movimento = "diagonal sup direita";
-        }
+            if (dif_pos == -1) {
+                this.movimento = "esquerda";
+            } else if (dif_pos == 1) {
+                this.movimento = "direita";
+            } else if (dif_pos == -20) {
+                this.movimento = "cima";
+            } else if (dif_pos == 20) {
+                this.movimento = "baixo";
+            } else if (dif_pos == -21) {
+                this.movimento = "diagonal sup esquerda";
+            } else if (dif_pos == 21) {
+                this.movimento = "diagonal inf direita";
+            } else if (dif_pos == 19) {
+                this.movimento = "diagonal inf esquerda";
+            } else if (dif_pos == -19) {
+                this.movimento = "diagonal sup direita";
+            }
 
         }
     }
@@ -142,7 +142,7 @@ public class Torre_aerea extends Estrutura implements Desenhavel {
                     hitou = true;
                 }
 
-                g.drawImage(SPRITE_ATAQUE.getSubimage(68, 160, 40, 40), x_tiro, y_tiro, null);
+                g.drawImage(SPRITE_ATAQUE.getSubimage(0, 0, 40, 40), x_tiro, y_tiro, null);
             } else {
                 hitou = false;
                 x_tiro = this.x;

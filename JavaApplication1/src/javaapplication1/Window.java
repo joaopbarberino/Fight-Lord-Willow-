@@ -84,8 +84,8 @@ public class Window extends JFrame implements KeyListener {
     public void run() throws InterruptedException, IOException {
         Sprite_sheet sprite_terrestre;
 
-        Torre_terrestre torre_terrestre_interface = new Torre_terrestre(0, sprites.get(10), sprites.get(9), sons);
-        Torre_terrestre torre_aerea_interface = new Torre_terrestre(0, sprites.get(10), sprites.get(9), sons);
+        //Torre_terrestre torre_terrestre_interface = new Torre_terrestre(0, sprites.get(10), sprites.get(9), sons);
+        //Torre_terrestre torre_aerea_interface = new Torre_terrestre(0, sprites.get(10), sprites.get(9), sons);
 
         long excess = 0;
         long noDelays = 0;
@@ -128,7 +128,7 @@ public class Window extends JFrame implements KeyListener {
                         mapa.getMapa().get(no_torre.getId()).setConstruivel(false);
 
                         if (torre_1) {
-                            Torre_terrestre torre_terrestre = new Torre_terrestre(no_torre.getId(), sprites.get(10), sprites.get(9), sons);
+                            Torre_terrestre torre_terrestre = new Torre_terrestre(no_torre.getId(), sprites, sons);
                             if (jogador.getGold() >= torre_terrestre.getPreco()) {
                                 jogador.reduzGold(torre_terrestre.getPreco());
                                 torre_terrestre.set_casas_no_alcance();
