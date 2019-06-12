@@ -50,6 +50,9 @@ public class Window extends JFrame implements KeyListener {
     private ArrayList<Torre_terrestre> lista_torres_terrestres = new ArrayList();
     private static ArrayList<No> construiveis = new ArrayList<No>();
     private static ArrayList<int[]> posicoes = new ArrayList<int[]>();
+    private Torre_terrestre torre_terrestre_interface;
+    private Torre_terrestre torre_aerea_interface;
+    
     private int clickX, clickY;
     private No no_torre = null;
 
@@ -79,7 +82,10 @@ public class Window extends JFrame implements KeyListener {
 
     public void run() throws InterruptedException, IOException {
         Sprite_sheet sprite_terrestre;
-
+        
+        Torre_terrestre torre_terrestre_interface = new Torre_terrestre(0, sprites.get(10), sprites.get(9), sons);
+        Torre_terrestre torre_aerea_interface = new Torre_terrestre(0, sprites.get(10), sprites.get(9), sons);
+        
         long excess = 0;
         long noDelays = 0;
 
@@ -91,7 +97,7 @@ public class Window extends JFrame implements KeyListener {
         System.out.println("Caminho: " + caminho);
         System.out.println("contruiveis: " + construiveis.toString());
 
-        Base jogador = new Base(710, 25, 10, 0, 50, 0, sprites.get(8), sprites, sons);
+        Base jogador = new Base(710, 25, 10, 0, 500, 0, sprites.get(8), sprites, sons);
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
 
@@ -592,7 +598,7 @@ public class Window extends JFrame implements KeyListener {
         g.setFont(new Font("Serif", Font.BOLD, 12));
         g.drawString("" + 50, 480, 744);
         g.drawString("" + 50, 480, 780);
-        g.drawString("" + this.round, 380, 744);
+        g.drawString("" + this.wave, 380, 744);
     }
 
     @Override
