@@ -311,6 +311,21 @@ public class Window extends JFrame implements KeyListener {
 
     }
 
+    public void buildGame() {
+        this.round = 0;
+        this.wave = 0;
+        desenhaveis.clear();
+        torres_desenhaveis.clear();
+        lista_terrestres_pesados.clear();
+        lista_terrestres_leves.clear();
+        lista_aereos_pesados.clear();
+        lista_aereos_leves.clear();
+        inimigos.clear();
+        lista_torres_terrestres.clear();
+        lista_torres_aereas.clear();
+        construiveis.clear();
+    }
+
     public void limparListas() {
         ArrayList<Terrestre_pesado> lista_terrestres_pesados_clone = (ArrayList<Terrestre_pesado>) lista_terrestres_pesados.clone();
         ArrayList<Terrestre_leve> lista_terrestres_leves_clone = (ArrayList<Terrestre_leve>) lista_terrestres_leves.clone();
@@ -635,30 +650,7 @@ public class Window extends JFrame implements KeyListener {
         }
 
         if (e.getKeyChar() == 'r') {
-            if (!gameLoop) {
-                this.gameLoop = true;
-                this.round = 1;
-                desenhaveis.clear();
-                torres_desenhaveis.clear();
-                lista_terrestres_pesados.clear();
-                lista_terrestres_leves.clear();
-                lista_aereos_pesados.clear();
-                lista_aereos_leves.clear();
-                inimigos.clear();
-                lista_torres_terrestres.clear();
-                lista_torres_aereas.clear();;
-                construiveis.clear();
-                try {
-                    this.run();
-
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Window.class
-                            .getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(Window.class
-                            .getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            buildGame();
         }
     }
 
