@@ -39,7 +39,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     public Terrestre_pesado(ArrayList<BufferedImage> sprites, ArrayList<Integer> caminho) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
-        super(40, 3, 3, 17, 20, "terrestre", caminho, 2);
+        super(25, 3, 3, 17, 20, "terrestre", caminho, 2);
         this.SPRITE = sprites.get(0);
         this.SPRITE_MORTE = sprites.get(1);
     }

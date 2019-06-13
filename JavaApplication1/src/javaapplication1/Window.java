@@ -47,6 +47,7 @@ public class Window extends JFrame implements KeyListener {
     private ArrayList<Torre_terrestre> lista_torres_terrestres = new ArrayList();
     private ArrayList<Torre_aerea> lista_torres_aereas = new ArrayList();
     private static ArrayList<No> construiveis = new ArrayList<No>();
+    Base jogador;
 
     private int clickX, clickY;
     private No no_torre = null;
@@ -65,6 +66,7 @@ public class Window extends JFrame implements KeyListener {
         this.MAP = layer;
         this.sprites = sprites;
         this.sons = sounds;
+        jogador = new Base(710, 25, 10, 0, 500, 0, sprites.get(8), sprites, sons);
         this.addMouseListener(new MouseAdapter() {// Precisa adicionar o evento na window para q o clique funcione apenas dentro da tela
             @Override
             public void mousePressed(MouseEvent e) {
@@ -77,6 +79,8 @@ public class Window extends JFrame implements KeyListener {
 
     public void run() throws InterruptedException, IOException {
 
+        sons.get(10).tocaLoop();
+        
         long excess = 0;
         long noDelays = 0;
 
@@ -86,7 +90,7 @@ public class Window extends JFrame implements KeyListener {
         // Instanciar o mapa da fase
         caminho = Mapa_exec(caminho);
 
-        Base jogador = new Base(710, 25, 10, 0, 500, 0, sprites.get(8), sprites, sons);
+        
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
 
@@ -264,8 +268,9 @@ public class Window extends JFrame implements KeyListener {
                 desenhaveis.remove(inimigo);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
-            } else if (inimigo.chegouNoDestino()) {
-                jogador.perdeVida(inimigo.getAtaque());
+                if (inimigo.chegouNoDestino()) {
+                    jogador.perdeVida(inimigo.getAtaque());
+                }
             } else if (!inimigo.isMorto()) {
                 inimigo.andar();
             }
@@ -276,8 +281,9 @@ public class Window extends JFrame implements KeyListener {
                 desenhaveis.remove(inimigo);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
-            } else if (inimigo.chegouNoDestino()) {
-                jogador.perdeVida(inimigo.getAtaque());
+                if (inimigo.chegouNoDestino()) {
+                    jogador.perdeVida(inimigo.getAtaque());
+                }
             } else if (!inimigo.isMorto()) {
                 inimigo.andar();
             }
@@ -288,8 +294,9 @@ public class Window extends JFrame implements KeyListener {
                 desenhaveis.remove(inimigo);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
-            } else if (inimigo.chegouNoDestino()) {
-                jogador.perdeVida(inimigo.getAtaque());
+                if (inimigo.chegouNoDestino()) {
+                    jogador.perdeVida(inimigo.getAtaque());
+                }
             } else if (!inimigo.isMorto()) {
                 inimigo.andar();
             }
@@ -301,8 +308,9 @@ public class Window extends JFrame implements KeyListener {
                 desenhaveis.remove(inimigo);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
-            } else if (inimigo.chegouNoDestino()) {
-                jogador.perdeVida(inimigo.getAtaque());
+                if (inimigo.chegouNoDestino()) {
+                    jogador.perdeVida(inimigo.getAtaque());
+                }
             } else if (!inimigo.isMorto()) {
                 inimigo.andar();
             }
@@ -324,6 +332,8 @@ public class Window extends JFrame implements KeyListener {
         lista_torres_terrestres.clear();
         lista_torres_aereas.clear();
         construiveis.clear();
+        jogador = new Base(710, 25, 10, 0, 500, 0, sprites.get(8), sprites, sons);
+        desenhaveis.add(jogador);
     }
 
     public void limparListas() {
@@ -371,8 +381,8 @@ public class Window extends JFrame implements KeyListener {
         switch (round) {
             case 1:
                 if (setou) {
-                    this.qtds[0] = 0;
-                    this.qtds[1] = 1;
+                    this.qtds[0] = 5;
+                    this.qtds[1] = 0;
                     this.qtds[2] = 0;
                     this.qtds[3] = 0;
                     this.setou = false;
