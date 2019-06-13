@@ -24,7 +24,7 @@ public class Torre_aerea extends Estrutura implements Desenhavel {
     private Inimigo alvo = null;
     private int contador = 0;
     private int conta_sprite = 0, max_sprite = 10, conta_sprite_ataque = 0, max_sprite_ataque = 6, conta_sprite_tiro = 0, max_sprite_tiro = 4;
-    private boolean troca_animacao = false, troca_animacao_ataque = false, troca_animacao_tiro = false;
+    private boolean troca_animacao = false, troca_animacao_ataque = false;
 
     private int x_tiro, y_tiro, x_tiro_por, y_tiro_por, x_alvo, y_alvo;
 

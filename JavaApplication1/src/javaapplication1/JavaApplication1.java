@@ -11,9 +11,11 @@
 /**Data de entrega: <12/06/2019> **/
 /*********************************************************************/
 //********************************************************************/
-//*********************** Referencias*********************************/
-//***********Auxilio colegas classe(into the dwarfness)***************/
+//************************Referencias*********************************/
+//*******************Auxilio colegas classe***************************/
+//****Into The Dwarfness: github.com/waffliors/Into-The-Dwarfness*****/
 /*********************************************************************/
+
 package javaapplication1;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -38,7 +40,7 @@ public class JavaApplication1  {
         //sprites[6] = dragão andando
         //sprites[7] = dragão morrendo
         //sprites[8] = base
-        //sprites[9] = ataque da torre (provisorio)
+        //sprites[9] = ataque da torre
         //sprites[10] = Torre 1
         //sprites[11] = base 2
         //sprites[12] = base 3

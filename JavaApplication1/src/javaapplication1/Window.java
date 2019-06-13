@@ -1,39 +1,3 @@
-/**
- * ******************************************************************
- */
-/**
- * Centro Universitario Senac **************************************
- */
-/**
- * Tecnologia em Jogos Digitais - 1o semestre de 2019 **************
- */
-/**
- * Professor: <Bruno Sanches> **************************************
- */
-/**
- * Projeto Integrador III - Projeto Final **************************
- */
-/**
- * Arquivo: <Fight, Lord Willow!> **********************************
- */
-/**
- * ******************************************************************
- */
-/**
- * Nome 1: <Pedro Henrique Lacerda Aredes> **************************
- */
-/**
- * Nome 2: <Joao Pedro Barberino> ***********************************
- */
-/**
- * Nome 3: <Emerson Marques Ferreira> *******************************
- */
-/**
- * Data de entrega: <13/06/2019> ************************************
- */
-/**
- * ******************************************************************
- */
 //********************************************************************/
 //************************Referencias*********************************/
 //*******************Auxilio colegas classe***************************/
@@ -64,7 +28,6 @@ import mapa.No;
 public class Window extends JFrame implements KeyListener {
 
     // ----------------------- TO DO ----------------------------
-    // -> colocar som ambiente, som base upando
     //-> tirar oq ainda resta de HARDCODED
     // ----------------------- TO DO ----------------------------
     private Tile_layer MAP;
@@ -124,7 +87,7 @@ public class Window extends JFrame implements KeyListener {
         // Instanciar o mapa da fase
         caminho = Mapa_exec(caminho);
 
-        Base jogador = new Base(710, 25, 10, 0, 170, 0, sprites.get(8), sprites, sons);
+        Base jogador = new Base(710, 25, 10, 0, 500, 0, sprites.get(8), sprites, sons);
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
 
@@ -184,8 +147,7 @@ public class Window extends JFrame implements KeyListener {
 
             // Segura a wave por algum tempo para o jogador pensar
             // ----------------------- TO DO ----------------------------
-            // -> Descobrir a relação desse numero x segundos e por que só
-            // segura no primeiro round
+            // -> Descobrir a relação desse numero x segundos
             // ----------------------- TO DO ----------------------------
             if (segura_wave % 100 == 0) {
                 geraWave();
@@ -199,6 +161,8 @@ public class Window extends JFrame implements KeyListener {
                 moverInimigos(jogador);
                 limparListas();
                 if (jogador.isMorto()) {
+                    sons.get(8).tocaUmaVez();
+                    sons.get(7).tocaUmaVez();
                     this.gameLoop = false;
                 }
 
@@ -221,9 +185,6 @@ public class Window extends JFrame implements KeyListener {
                 excess -= DESIRED_UPDATE_TIME;
             }
 
-            // ----------------------- TO DO ----------------------------
-            // -> Arrumar animação de morte do inimigo
-            // ----------------------- TO DO ----------------------------
             moverInimigos(jogador);
             limparListas();
 
@@ -233,6 +194,8 @@ public class Window extends JFrame implements KeyListener {
             // em algum lugar)
             // ----------------------- TO DO ----------------------------
             if (jogador.isMorto()) {
+                sons.get(8).tocaUmaVez();
+                sons.get(7).tocaUmaVez();
                 this.gameLoop = false;
             }
 
@@ -298,50 +261,51 @@ public class Window extends JFrame implements KeyListener {
 
     public void moverInimigos(Base jogador) {
         for (Terrestre_leve inimigo : lista_terrestres_leves) {
-            inimigo.andar();
-            if (inimigo.chegouNoDestino()) {
-                jogador.perdeVida(inimigo.getAtaque());
-            }
-            if (inimigo.isMorto()) {
+            if (inimigo.animouMorte()) {
                 desenhaveis.remove(inimigo);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
+            } else if (inimigo.chegouNoDestino()) {
+                jogador.perdeVida(inimigo.getAtaque());
+            } else if (!inimigo.isMorto()) {
+                inimigo.andar();
             }
         }
 
         for (Terrestre_pesado inimigo : lista_terrestres_pesados) {
-            inimigo.andar();
-            if (inimigo.chegouNoDestino()) {
-                jogador.perdeVida(inimigo.getAtaque());
-            }
-            if (inimigo.isMorto()) {
+            if (inimigo.animouMorte()) {
                 desenhaveis.remove(inimigo);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
+            } else if (inimigo.chegouNoDestino()) {
+                jogador.perdeVida(inimigo.getAtaque());
+            } else if (!inimigo.isMorto()) {
+                inimigo.andar();
             }
         }
 
         for (Aereo_leve inimigo : lista_aereos_leves) {
-            inimigo.andar();
-            if (inimigo.chegouNoDestino()) {
-                jogador.perdeVida(inimigo.getAtaque());
-            }
-            if (inimigo.isMorto()) {
+            if (inimigo.animouMorte()) {
                 desenhaveis.remove(inimigo);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
+            } else if (inimigo.chegouNoDestino()) {
+                jogador.perdeVida(inimigo.getAtaque());
+            } else if (!inimigo.isMorto()) {
+                inimigo.andar();
             }
         }
 
         for (Aereo_pesado inimigo : lista_aereos_pesados) {
-            inimigo.andar();
-            if (inimigo.chegouNoDestino()) {
-                jogador.perdeVida(inimigo.getAtaque());
-            }
-            if (inimigo.isMorto()) {
+
+            if (inimigo.animouMorte()) {
                 desenhaveis.remove(inimigo);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
+            } else if (inimigo.chegouNoDestino()) {
+                jogador.perdeVida(inimigo.getAtaque());
+            } else if (!inimigo.isMorto()) {
+                inimigo.andar();
             }
 
         }
@@ -355,28 +319,28 @@ public class Window extends JFrame implements KeyListener {
         ArrayList<Aereo_leve> lista_aereos_leves_clone = (ArrayList<Aereo_leve>) lista_aereos_leves.clone();
 
         for (Terrestre_leve inimigo : lista_terrestres_leves_clone) {
-            if (inimigo.isMorto()) {
+            if (inimigo.isMorto() && inimigo.animouMorte()) {
                 this.lista_terrestres_leves.remove(inimigo);
                 this.inimigos.remove(inimigo);
             }
         }
 
         for (Terrestre_pesado inimigo : lista_terrestres_pesados_clone) {
-            if (inimigo.isMorto()) {
+            if (inimigo.isMorto() && inimigo.animouMorte()) {
                 this.lista_terrestres_pesados.remove(inimigo);
                 this.inimigos.remove(inimigo);
             }
         }
 
         for (Aereo_leve inimigo : lista_aereos_leves_clone) {
-            if (inimigo.isMorto()) {
+            if (inimigo.isMorto() && inimigo.animouMorte()) {
                 this.lista_aereos_leves.remove(inimigo);
                 this.inimigos.remove(inimigo);
             }
         }
 
         for (Aereo_pesado inimigo : lista_aereos_pesados_clone) {
-            if (inimigo.isMorto()) {
+            if (inimigo.isMorto() && inimigo.animouMorte()) {
                 this.lista_aereos_pesados.remove(inimigo);
                 this.inimigos.remove(inimigo);
             }
@@ -393,10 +357,10 @@ public class Window extends JFrame implements KeyListener {
         switch (round) {
             case 1:
                 if (setou) {
-                    this.qtds[0] = 1;
+                    this.qtds[0] = 0;
                     this.qtds[1] = 1;
-                    this.qtds[2] = 1;
-                    this.qtds[3] = 1;
+                    this.qtds[2] = 0;
+                    this.qtds[3] = 0;
                     this.setou = false;
                 }
                 break;
@@ -472,7 +436,7 @@ public class Window extends JFrame implements KeyListener {
         // Adiciona na sua respectiva lista
         if (pula_geracao % 10 == 0) {
             if (qtds[0] > 0) {
-                Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4), caminho);
+                Terrestre_leve inimigo = new Terrestre_leve(sprites, caminho);
                 this.lista_terrestres_leves.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
@@ -480,7 +444,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[1] > 0) {
-                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho, sprites.get(1));
+                Terrestre_pesado inimigo = new Terrestre_pesado(sprites, caminho);
                 this.lista_terrestres_pesados.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
@@ -488,7 +452,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[2] > 0) {
-                Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho);
+                Aereo_leve inimigo = new Aereo_leve(sprites, caminho);
                 this.lista_aereos_leves.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
@@ -496,7 +460,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[3] > 0) {
-                Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho);
+                Aereo_pesado inimigo = new Aereo_pesado(sprites, caminho);
                 this.lista_aereos_pesados.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);

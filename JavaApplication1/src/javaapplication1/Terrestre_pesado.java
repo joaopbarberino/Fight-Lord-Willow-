@@ -6,6 +6,7 @@ package javaapplication1;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
 /**
  *
  * @author joao.pbsilva20
@@ -23,7 +24,7 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     private int conta_sprite = 0;
     private int conta_sprite_morte = 0;
     private int max_sprite = 5;
-    private int max_sprite_morte = 6;
+    private int max_sprite_morte = 5;
     private boolean troca_animacao = false;
     private boolean troca_animacao_morte = false;
     public boolean acabou_animacao_morte = false;
@@ -35,14 +36,12 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     //Defesa: 3 
     //Gold: +17 
     //Exp: +20 
-
-    public Terrestre_pesado(BufferedImage sprite, ArrayList<Integer> caminho, BufferedImage spriteMorte) {
+    public Terrestre_pesado(ArrayList<BufferedImage> sprites, ArrayList<Integer> caminho) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
-        //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
         super(40, 3, 3, 17, 20, "terrestre", caminho, 2);
-        this.SPRITE = sprite;
-        this.SPRITE_MORTE = spriteMorte;
+        this.SPRITE = sprites.get(0);
+        this.SPRITE_MORTE = sprites.get(1);
     }
 
     public BufferedImage getSprite() {
@@ -58,7 +57,6 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     }
 
     public void update() {
-
         if (this.andou == true) {
 
             this.pos_atual = this.getPos();
@@ -111,62 +109,63 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
             this.andou = false;
             this.pode_andar = false;
         }
+
         if (troca_animacao == true) {
             conta_sprite++;
         }
-        if (troca_animacao_morte == true) {
+
+        if (troca_animacao_morte == true && conta_sprite_morte < max_sprite_morte) {
             conta_sprite_morte++;
         }
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
         update();
 
-        switch (movimento) {
-            case "baixo":
-                this.y_aux += por_y;
-                if (y_aux >= prox_y) {
-                    this.andou = true;
-                    this.pode_andar = true;
-                }
-                break;
+        if (!this.isMorto()) {
+            switch (movimento) {
+                case "baixo":
+                    this.y_aux += por_y;
+                    if (y_aux >= prox_y) {
+                        this.andou = true;
+                        this.pode_andar = true;
+                    }
+                    break;
 
-            case "cima":
-                this.y_aux -= por_y;
-                if (y_aux <= prox_y) {
-                    this.andou = true;
-                    this.pode_andar = true;
-                }
-                break;
+                case "cima":
+                    this.y_aux -= por_y;
+                    if (y_aux <= prox_y) {
+                        this.andou = true;
+                        this.pode_andar = true;
+                    }
+                    break;
 
-            case "direita":
-                this.x_aux += por_x;
-                if (x_aux >= prox_x) {
-                    this.andou = true;
-                    this.pode_andar = true;
-                }
-                break;
+                case "direita":
+                    this.x_aux += por_x;
+                    if (x_aux >= prox_x) {
+                        this.andou = true;
+                        this.pode_andar = true;
+                    }
+                    break;
 
-            default:
-                break;
-        }
+                default:
+                    break;
+            }
 
-        if (conta_sprite == max_sprite) {
-            conta_sprite = 0;
-        }
+            if (conta_sprite == max_sprite) {
+                conta_sprite = 0;
+            }
 
-        if (conta_sprite_morte == max_sprite_morte) {
-            this.acabou_animacao_morte = true;
-        }
-
-        if (this.isMorto()) {
-            g.drawImage(this.SPRITE_MORTE.getSubimage(conta_sprite_morte * 40, 0, 40, 40), x, y, null);
-            troca_animacao_morte = !troca_animacao_morte;
-
-        } else if (!this.isMorto()) {
             g.drawImage(this.SPRITE.getSubimage(conta_sprite * 40, 0, 40, 40), x_aux, y_aux, null);
             troca_animacao = !troca_animacao;
+
+        } else if (this.isMorto()) {
+            g.drawImage(this.SPRITE_MORTE.getSubimage(conta_sprite_morte * 40, 0, 40, 40), x_aux, y_aux, null);
+            troca_animacao_morte = !troca_animacao_morte;
+            if (conta_sprite_morte == max_sprite_morte) {
+                this.finalizarAnimacaoMorte();
+            }
         }
 
     }

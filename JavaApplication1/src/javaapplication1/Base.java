@@ -80,8 +80,6 @@ public class Base implements Desenhavel {
     }
 
     public boolean isMorto() {
-        Sons.get(8).tocaUmaVez();
-        Sons.get(7).tocaUmaVez();
         return morreu;
     }
 

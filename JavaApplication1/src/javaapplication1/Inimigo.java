@@ -6,6 +6,7 @@ package javaapplication1;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import javax.swing.JPanel;
+
 /**
  *
  * @author joao.pbsilva20
@@ -22,6 +23,7 @@ public abstract class Inimigo extends JPanel {
     private int qtd_passos = 0; // Quantos passos ele já deu
     private boolean andando = true;
     private boolean chegou_no_destino = false;
+    private boolean acabou_animacao_morte = false;
     private String tipo;
     private final int SOM;
 
@@ -77,6 +79,14 @@ public abstract class Inimigo extends JPanel {
     public boolean isMorto() {
         return this.vida <= 0;
     }
+    
+    public void finalizarAnimacaoMorte(){
+        this.acabou_animacao_morte = true;
+    }
+    
+    public boolean animouMorte() {
+        return acabou_animacao_morte;
+    }
 
     // Mata o inimigo, reduzindo sua vida a 0
     private void matar() {
@@ -91,6 +101,7 @@ public abstract class Inimigo extends JPanel {
     public ArrayList getCaminho() {
         return this.caminho;
     }
+
     // Faz o inimigo andar caso haja um caminho, ele irá para a posição dada na
     // string de caminhos baseado em quantos passos ele já deu, começa em 1 pois
     // 0, o primeiro char da string de caminho, sempre vai ser 0, o ponto inicial,
@@ -110,8 +121,8 @@ public abstract class Inimigo extends JPanel {
             }
         }
     }
-    
-    public boolean chegouNoDestino(){
+
+    public boolean chegouNoDestino() {
         return this.chegou_no_destino;
     }
 
@@ -127,8 +138,8 @@ public abstract class Inimigo extends JPanel {
     public int getProxPos() {
         return this.caminho.get(this.qtd_passos);
     }
-    
-    public int getSom(){
+
+    public int getSom() {
         return this.SOM;
     }
 
