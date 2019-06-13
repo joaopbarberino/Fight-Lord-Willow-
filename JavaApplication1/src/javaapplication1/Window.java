@@ -34,7 +34,7 @@ public class Window extends JFrame implements KeyListener {
     private final ArrayList<Som> sons;
     private ArrayList<Integer> caminho = new ArrayList();
     private Mapa mapa = null;
-    private boolean gameLoop = true;
+    private boolean gameLoop = false;
     public boolean pronto_para_jogar = false;
     private int round = 1, wave = 1;
     public ArrayList<Desenhavel> desenhaveis = new ArrayList();
@@ -99,7 +99,7 @@ public class Window extends JFrame implements KeyListener {
         this.createBufferStrategy(2);
 
         no_torre = construiveis.get(0);
-        while (gameLoop) {
+        while (!gameLoop) {
             if (clickX != 0 && clickY != 0) {
                 for (int i = 0; i < construiveis.size(); i++) {
                     no_torre = construiveis.get(i);
@@ -156,9 +156,46 @@ public class Window extends JFrame implements KeyListener {
             long beforeTime = System.currentTimeMillis();
 
             while (excess > DESIRED_UPDATE_TIME) {
+                if (pronto_para_jogar) {
+                    moverInimigos(jogador);
+                    limparListas();
+                    if (jogador.isMorto()) {
+                        this.gameLoop = false;
+                    }
+
+                    for (Inimigo inimigo : inimigos) {
+                        for (Torre_terrestre torre : lista_torres_terrestres) {
+                            if (torre.isNoRange(inimigo)) {
+                                torre.atacar(inimigo);
+                            }
+                        }
+
+                    }
+                    for (Inimigo inimigo : inimigos) {
+                        for (Torre_aerea torre : lista_torres_aereas) {
+                            if (torre.isNoRange(inimigo)) {
+                                torre.atacar(inimigo);
+                            }
+                        }
+
+                    }
+                    excess -= DESIRED_UPDATE_TIME;
+                }
+            }
+
+            if (pronto_para_jogar) {
                 moverInimigos(jogador);
+
                 limparListas();
+
+                // ----------------------- TO DO ----------------------------
+                // -> Descobrir pq o replay (ta no key pressed/released) não faz
+                // o jogo começar dnv e trava o jframe (provavelmente loop infinito
+                // em algum lugar)
+                // ----------------------- TO DO ----------------------------
                 if (jogador.isMorto()) {
+                    sons.get(8).tocaUmaVez();
+                    sons.get(7).tocaUmaVez();
                     this.gameLoop = false;
                 }
 
@@ -170,6 +207,7 @@ public class Window extends JFrame implements KeyListener {
                     }
 
                 }
+
                 for (Inimigo inimigo : inimigos) {
                     for (Torre_aerea torre : lista_torres_aereas) {
                         if (torre.isNoRange(inimigo)) {
@@ -178,41 +216,7 @@ public class Window extends JFrame implements KeyListener {
                     }
 
                 }
-                excess -= DESIRED_UPDATE_TIME;
             }
-
-            moverInimigos(jogador);
-            limparListas();
-
-            // ----------------------- TO DO ----------------------------
-            // -> Descobrir pq o replay (ta no key pressed/released) não faz
-            // o jogo começar dnv e trava o jframe (provavelmente loop infinito
-            // em algum lugar)
-            // ----------------------- TO DO ----------------------------
-            if (jogador.isMorto()) {
-                sons.get(8).tocaUmaVez();
-                sons.get(7).tocaUmaVez();
-                this.gameLoop = false;
-            }
-
-            for (Inimigo inimigo : inimigos) {
-                for (Torre_terrestre torre : lista_torres_terrestres) {
-                    if (torre.isNoRange(inimigo)) {
-                        torre.atacar(inimigo);
-                    }
-                }
-
-            }
-
-            for (Inimigo inimigo : inimigos) {
-                for (Torre_aerea torre : lista_torres_aereas) {
-                    if (torre.isNoRange(inimigo)) {
-                        torre.atacar(inimigo);
-                    }
-                }
-
-            }
-
             // Caso todos os inimigos estejam mortos, round acaba
             if (comecou_round) {
                 if (lista_aereos_leves.isEmpty()
@@ -565,7 +569,7 @@ public class Window extends JFrame implements KeyListener {
 
     @Override
     public void paint(Graphics g) {
-        if (!gameLoop) {
+        if (!pronto_para_jogar) {
             g.drawImage(this.sprites.get(16), 0, 0, null);
         } else {
             BufferStrategy strategy = this.getBufferStrategy();
@@ -626,9 +630,8 @@ public class Window extends JFrame implements KeyListener {
             torre_1 = false;
             torre_2 = true;
         }
-        if (e.getKeyChar() == '3') {
-            System.out.println("apertei 3");
-            gameLoop = true;
+        if (e.getKeyChar() == ' ') {
+            this.pronto_para_jogar = !this.pronto_para_jogar;
         }
 
         if (e.getKeyChar() == 'r') {
