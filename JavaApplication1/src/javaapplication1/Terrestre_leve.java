@@ -14,7 +14,6 @@ import javaapplication1.Som;
 public class Terrestre_leve extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
-    private final ArrayList<Som> Sons;
     private final int qtd_colunas = 20;
     private final int VEL_MOVIMENTO = 10;
     
@@ -33,13 +32,13 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
     //Gold: +15 
     //Exp: +10 
 
-    public Terrestre_leve(BufferedImage sprite, ArrayList<Integer> caminho,ArrayList<Som> sounds) {
+    public Terrestre_leve(BufferedImage sprite, ArrayList<Integer> caminho) {
         //Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         //e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(10, 2, 2, 15, 10, "terrestre", caminho);
+        super(10, 2, 2, 15, 10, "terrestre", caminho, 4);
         this.SPRITE = sprite;
-        this.Sons = sounds;
+        
     }
 
     public BufferedImage getSprite() {
@@ -108,11 +107,7 @@ public class Terrestre_leve extends Inimigo implements Desenhavel {
             conta_sprite++;
         }
     }
-
-    public void tocaSom(int ref) {
-        Sons.get(ref).tocaUmaVez();
-    }
-
+    
     @Override
     public void paintComponent(Graphics g) {
         update();

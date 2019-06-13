@@ -58,16 +58,19 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
 
     private void update() {
 
-        if (atacando) {           
+        if (atacando) {
             this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
             this.y_alvo = ((alvo.getPos() / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
-
+            if (this.alvo.isMorto()) {
+                Sons.get(alvo.getSom()).tocaUmaVez();
+            }
             if (!this.isNoRange(alvo) || this.alvo.isMorto()) {
                 this.alvo = null;
                 this.atacando = false;
                 x_tiro = this.x;
                 y_tiro = this.y;
             }
+
         }
 
         if (!atacando) {
@@ -83,10 +86,6 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
             this.conta_sprite_tiro++;
 
         }
-    }
-
-    public void tocaSom(int ref) {
-        Sons.get(ref).tocaUmaVez();
     }
 
     @Override
@@ -119,6 +118,7 @@ public class Torre_terrestre extends Estrutura implements Desenhavel {
                 if (this.alvo != null) {
                     alvo.reduzVida(this.getAtaque());
                     this.contador = 0;
+                    Sons.get(1).tocaUmaVez();
                 }
             }
 

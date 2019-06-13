@@ -30,7 +30,7 @@ public class Torre_aerea extends Estrutura implements Desenhavel {
 
     public Torre_aerea(int pos, ArrayList<BufferedImage> sprites, ArrayList<Som> sounds) {
         // ataque, alcance, preco, pos
-        super(4, 1, 100, pos);
+        super(4, 1, 90, pos);
         this.SPRITE = sprites.get(13);
         this.SPRITE_ATAQUE = sprites.get(15);
         this.SPRITE_TIRO = sprites.get(9);
@@ -62,12 +62,17 @@ public class Torre_aerea extends Estrutura implements Desenhavel {
             this.x_alvo = ((alvo.getPos() % Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
             this.y_alvo = ((alvo.getPos() / Engine.QTD_COLUNAS) * Engine.TILE_SIZE);
 
+            if (this.alvo.isMorto()) {
+                Sons.get(alvo.getSom()).tocaUmaVez();
+            }
+            
             if (!this.isNoRange(alvo) || this.alvo.isMorto()) {
                 this.alvo = null;
                 this.atacando = false;
                 x_tiro = this.x;
                 y_tiro = this.y;
             }
+
         }
         if (!atacando) {
             if (troca_animacao == true) {
@@ -79,13 +84,10 @@ public class Torre_aerea extends Estrutura implements Desenhavel {
                 this.conta_sprite_ataque++;
             }
             this.conta_sprite_tiro++;
-
         }
+
     }
 
-    public void tocaSom(int ref) {
-        Sons.get(ref).tocaUmaVez();
-    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -117,6 +119,8 @@ public class Torre_aerea extends Estrutura implements Desenhavel {
                 if (this.alvo != null) {
                     alvo.reduzVida(this.getAtaque());
                     this.contador = 0;
+                    Sons.get(1).tocaUmaVez();
+                    
                 }
             }
 

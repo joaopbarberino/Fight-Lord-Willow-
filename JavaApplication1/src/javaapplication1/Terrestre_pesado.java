@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class Terrestre_pesado extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
-    private final ArrayList<Som> Sons;
     private final BufferedImage SPRITE_MORTE;
     private final int qtd_colunas = 20;
     private final int VEL_MOVIMENTO = 100;
@@ -37,15 +36,13 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
     //Gold: +17 
     //Exp: +20 
 
-    public Terrestre_pesado(BufferedImage sprite, ArrayList<Integer> caminho, BufferedImage spriteMorte,ArrayList<Som> sounds) {
+    public Terrestre_pesado(BufferedImage sprite, ArrayList<Integer> caminho, BufferedImage spriteMorte) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(40, 3, 3, 17, 20, "terrestre", caminho);
+        super(40, 3, 3, 17, 20, "terrestre", caminho, 2);
         this.SPRITE = sprite;
         this.SPRITE_MORTE = spriteMorte;
-        this.Sons = sounds;
-
     }
 
     public BufferedImage getSprite() {
@@ -122,10 +119,6 @@ public class Terrestre_pesado extends Inimigo implements Desenhavel {
         }
     }
     
-    public void tocaSom(int ref) {
-        Sons.get(ref).tocaUmaVez();
-    }
-
     @Override
     public void paintComponent(Graphics g) {
         update();

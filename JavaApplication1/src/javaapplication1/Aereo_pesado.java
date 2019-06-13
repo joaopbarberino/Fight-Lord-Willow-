@@ -14,7 +14,6 @@ import javaapplication1.Som;
 public class Aereo_pesado extends Inimigo implements Desenhavel {
 
     private final BufferedImage SPRITE;
-    private final ArrayList<Som> Sons;
     private final int qtd_colunas = 20;
     private final int VEL_MOVIMENTO = 100;
 
@@ -32,13 +31,12 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
 //Gold: +25 
 //Exp: +35 
 
-    public Aereo_pesado(BufferedImage sprite, ArrayList<Integer> caminho,ArrayList<Som> sounds) {
+    public Aereo_pesado(BufferedImage sprite, ArrayList<Integer> caminho) {
         // Valores de vida, ataque, defesa, velocidade de movimento, gold, xp 
         // e tipo, respectivamente
         //coloquei null no ultimo parametro que seria o da img só pra parar de dar erro.
-        super(65, 6, 6, 25, 35, "aereo", caminho);
+        super(65, 6, 6, 25, 35, "aereo", caminho, 3);
         this.SPRITE = sprite;
-        this.Sons = sounds;
     }
 
     public BufferedImage getSprite() {
@@ -106,10 +104,6 @@ public class Aereo_pesado extends Inimigo implements Desenhavel {
         if (troca_animação == true) {
             conta_sprite++;
         }
-    }
-
-    public void tocaSom(int ref) {
-        Sons.get(ref).tocaUmaVez();
     }
 
     @Override

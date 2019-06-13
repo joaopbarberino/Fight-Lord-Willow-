@@ -72,6 +72,8 @@ public class JavaApplication1  {
         //som[6] magic
         //som[7] gameOver
         //som[8] destructionCastle
+        //som[9] hammering
+        //som[10] ambientSound
         
         sonsList.add(new Som("sons/sfx/baseDMG.wav"));
         sonsList.add(new Som("sons/sfx/mageATK.wav"));
@@ -82,6 +84,8 @@ public class JavaApplication1  {
         sonsList.add(new Som("sons/sfx/magic.wav"));
         sonsList.add(new Som("sons/sfx/gameOver.wav"));
         sonsList.add(new Som("sons/sfx/destructionCastle.wav"));
+        sonsList.add(new Som("sons/sfx/hammering.wav"));
+        sonsList.add(new Som("sons/music/ambientSound.wav"));
 
         Window screen = new Window(sprites, layer, sonsList);
         screen.run();

@@ -23,10 +23,11 @@ public abstract class Inimigo extends JPanel {
     private boolean andando = true;
     private boolean chegou_no_destino = false;
     private String tipo;
+    private final int SOM;
 
     public static BufferedImage terrestre_pesado;
 
-    public Inimigo(int vida, int ataque, int defesa, int gold, int xp, String tipo, ArrayList caminho) {
+    public Inimigo(int vida, int ataque, int defesa, int gold, int xp, String tipo, ArrayList caminho, int som) {
         this.vida = vida;
         this.ataque = ataque;
         this.defesa = defesa;
@@ -34,6 +35,7 @@ public abstract class Inimigo extends JPanel {
         this.xp = xp;
         this.tipo = tipo;
         this.setCaminho(caminho);
+        this.SOM = som;
     }
 
     // Retorna a vida atual do inimigo
@@ -124,6 +126,10 @@ public abstract class Inimigo extends JPanel {
 
     public int getProxPos() {
         return this.caminho.get(this.qtd_passos);
+    }
+    
+    public int getSom(){
+        return this.SOM;
     }
 
 }

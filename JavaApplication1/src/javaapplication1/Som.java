@@ -29,6 +29,7 @@ public class Som extends JApplet {
     public void pararSom() {
         song.stop();
     }
+    
     public void tocaUmaVez() {
         song.play();
     }

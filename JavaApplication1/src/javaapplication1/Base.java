@@ -25,7 +25,7 @@ public class Base implements Desenhavel {
     private int x, y;
     private boolean morreu;
 
-    public Base(int x, int y, int vida, int xp, int gold, int nivel, BufferedImage sprite, ArrayList<BufferedImage> sprites,ArrayList<Som> sound) {
+    public Base(int x, int y, int vida, int xp, int gold, int nivel, BufferedImage sprite, ArrayList<BufferedImage> sprites, ArrayList<Som> sound) {
         this.vida_maxima = vida;
         this.vida_atual = vida;
         this.xp = xp;
@@ -56,7 +56,7 @@ public class Base implements Desenhavel {
 
     public void perdeVida(int valor) {
         this.vida_atual -= valor;
-        tocaSom(0);
+        Sons.get(0).tocaUmaVez();
     }
 
     public int getXp() {
@@ -80,6 +80,8 @@ public class Base implements Desenhavel {
     }
 
     public boolean isMorto() {
+        Sons.get(8).tocaUmaVez();
+        Sons.get(7).tocaUmaVez();
         return morreu;
     }
 
@@ -116,6 +118,7 @@ public class Base implements Desenhavel {
             }
             this.nivel++;
             this.SPRITE = this.sprites.get(11);
+            Sons.get(9).tocaUmaVez();
         }
         if (this.xp >= 1000 && this.nivel == 1) {
             setVidaMaxima(this.vida_maxima += 30);
@@ -125,11 +128,8 @@ public class Base implements Desenhavel {
             }
             this.nivel++;
             this.SPRITE = this.sprites.get(12);
+            Sons.get(9).tocaUmaVez();
         }
-    }
-
-    public void tocaSom(int ref) {
-        Sons.get(ref).tocaUmaVez();
     }
 
     @Override

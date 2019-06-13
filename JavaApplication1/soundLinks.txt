@@ -16,3 +16,7 @@ gameOver
 https://freesound.org/people/dersuperanton/sounds/433644/
 castleDestruction
 https://freesound.org/people/qubodup/sounds/442676/
+hammering
+https://freesound.org/people/InspectorJ/sounds/406048/
+ambientSound
+https://www.youtube.com/watch?v=eZ_r1H9vHkI

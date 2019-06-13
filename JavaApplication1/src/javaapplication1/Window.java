@@ -1,19 +1,46 @@
-/*********************************************************************/
-/** Centro Universitario Senac ***************************************/
-/** Tecnologia em Jogos Digitais - 1o semestre de 2019 ***************/
-/** Professor: <Bruno Sanches> ***************************************/
-/** Projeto Integrador III - Projeto Final ***************************/
-/** Arquivo: <Fight, Lord Willow!> ***********************************/
-/*********************************************************************/
-/**Nome 1: <Pedro Henrique Lacerda Aredes> ***************************/
-/**Nome 2: <Joao Pedro Barberino> ************************************/
-/**Nome 3: <Emerson Marques Ferreira> ********************************/
-/**Data de entrega: <12/06/2019> **/
-/*********************************************************************/
+/**
+ * ******************************************************************
+ */
+/**
+ * Centro Universitario Senac **************************************
+ */
+/**
+ * Tecnologia em Jogos Digitais - 1o semestre de 2019 **************
+ */
+/**
+ * Professor: <Bruno Sanches> **************************************
+ */
+/**
+ * Projeto Integrador III - Projeto Final **************************
+ */
+/**
+ * Arquivo: <Fight, Lord Willow!> **********************************
+ */
+/**
+ * ******************************************************************
+ */
+/**
+ * Nome 1: <Pedro Henrique Lacerda Aredes> **************************
+ */
+/**
+ * Nome 2: <Joao Pedro Barberino> ***********************************
+ */
+/**
+ * Nome 3: <Emerson Marques Ferreira> *******************************
+ */
+/**
+ * Data de entrega: <13/06/2019> ************************************
+ */
+/**
+ * ******************************************************************
+ */
 //********************************************************************/
-//*********************** Referencias*********************************/
-//***********Auxilio colegas classe(into the dwarfness)***************/
-/*********************************************************************/
+//************************Referencias*********************************/
+//*******************Auxilio colegas classe***************************/
+//****Into The Dwarfness: github.com/waffliors/Into-The-Dwarfness*****/
+/**
+ * ******************************************************************
+ */
 package javaapplication1;
 
 import Estrutura.*;
@@ -86,6 +113,8 @@ public class Window extends JFrame implements KeyListener {
     }
 
     public void run() throws InterruptedException, IOException {
+        //sons.get(10).tocaLoop();
+
         long excess = 0;
         long noDelays = 0;
 
@@ -94,7 +123,7 @@ public class Window extends JFrame implements KeyListener {
 
         // Instanciar o mapa da fase
         caminho = Mapa_exec(caminho);
-        
+
         Base jogador = new Base(710, 25, 10, 0, 170, 0, sprites.get(8), sprites, sons);
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
@@ -109,13 +138,7 @@ public class Window extends JFrame implements KeyListener {
 
         no_torre = construiveis.get(0);
         while (gameLoop) {
-            //if (!comecou_round) {
-            // ----------------------- TO DO ----------------------------
-            // -> Checa se o jogador nao vai melhorar alguma torre (deixa pro final)
-            // ----------------------- TO DO ----------------------------
 
-            // Checa se o jogador nao vai construir
-            //System.out.println("Torre 1: " + torre_1 + " Torre 2: " + torre_2);
             if (clickX != 0 && clickY != 0) {
                 for (int i = 0; i < construiveis.size(); i++) {
                     no_torre = construiveis.get(i);
@@ -130,7 +153,7 @@ public class Window extends JFrame implements KeyListener {
                                 torre_terrestre.setCasasNoAlcance();
                                 torre_terrestre.getCasasNoAlcance();
                                 lista_torres_terrestres.add(torre_terrestre);
-                                torre_terrestre.tocaSom(6);
+                                sons.get(6).tocaUmaVez();
                                 desenhaveis.add(torre_terrestre);
                             } else {
                                 torre_terrestre = null;
@@ -143,7 +166,7 @@ public class Window extends JFrame implements KeyListener {
                                 torre_aerea.setCasasNoAlcance();
                                 torre_aerea.getCasasNoAlcance();
                                 lista_torres_aereas.add(torre_aerea);
-                                torre_aerea.tocaSom(6);
+                                sons.get(6).tocaUmaVez();
                                 desenhaveis.add(torre_aerea);
                             } else {
                                 torre_aerea = null;
@@ -158,14 +181,13 @@ public class Window extends JFrame implements KeyListener {
                 clickX = -1;
                 clickY = -1;
             }
-            //}
 
             // Segura a wave por algum tempo para o jogador pensar
             // ----------------------- TO DO ----------------------------
             // -> Descobrir a relação desse numero x segundos e por que só
             // segura no primeiro round
             // ----------------------- TO DO ----------------------------
-            if (segura_wave % 1 == 0) {
+            if (segura_wave % 100 == 0) {
                 geraWave();
             } else {
                 this.segura_wave++;
@@ -176,7 +198,26 @@ public class Window extends JFrame implements KeyListener {
             while (excess > DESIRED_UPDATE_TIME) {
                 moverInimigos(jogador);
                 limparListas();
+                if (jogador.isMorto()) {
+                    this.gameLoop = false;
+                }
 
+                for (Inimigo inimigo : inimigos) {
+                    for (Torre_terrestre torre : lista_torres_terrestres) {
+                        if (torre.isNoRange(inimigo)) {
+                            torre.atacar(inimigo);
+                        }
+                    }
+
+                }
+                for (Inimigo inimigo : inimigos) {
+                    for (Torre_aerea torre : lista_torres_aereas) {
+                        if (torre.isNoRange(inimigo)) {
+                            torre.atacar(inimigo);
+                        }
+                    }
+
+                }
                 excess -= DESIRED_UPDATE_TIME;
             }
 
@@ -191,19 +232,13 @@ public class Window extends JFrame implements KeyListener {
             // o jogo começar dnv e trava o jframe (provavelmente loop infinito
             // em algum lugar)
             // ----------------------- TO DO ----------------------------
-            if (jogador.getVidaAtual() <= 0) {
-                jogador.tocaSom(8);
-                jogador.tocaSom(7);
+            if (jogador.isMorto()) {
                 this.gameLoop = false;
             }
 
             for (Inimigo inimigo : inimigos) {
                 for (Torre_terrestre torre : lista_torres_terrestres) {
                     if (torre.isNoRange(inimigo)) {
-                        // ----------------------- TO DO ----------------------------
-                        // -> Arrumar desenho de ataque da torre e animação
-                        // ----------------------- TO DO ----------------------------
-                        torre.tocaSom(1);
                         torre.atacar(inimigo);
                     }
                 }
@@ -212,10 +247,6 @@ public class Window extends JFrame implements KeyListener {
             for (Inimigo inimigo : inimigos) {
                 for (Torre_aerea torre : lista_torres_aereas) {
                     if (torre.isNoRange(inimigo)) {
-                        // ----------------------- TO DO ----------------------------
-                        // -> Arrumar desenho de ataque da torre e animação
-                        // ----------------------- TO DO ----------------------------
-                        //torre.tocaSom(1);
                         torre.atacar(inimigo);
                     }
                 }
@@ -273,7 +304,6 @@ public class Window extends JFrame implements KeyListener {
             }
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
-                inimigo.tocaSom(4);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
             }
@@ -286,7 +316,6 @@ public class Window extends JFrame implements KeyListener {
             }
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
-                inimigo.tocaSom(2);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
             }
@@ -299,7 +328,6 @@ public class Window extends JFrame implements KeyListener {
             }
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
-                inimigo.tocaSom(5);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
             }
@@ -312,7 +340,6 @@ public class Window extends JFrame implements KeyListener {
             }
             if (inimigo.isMorto()) {
                 desenhaveis.remove(inimigo);
-                inimigo.tocaSom(3);
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
             }
@@ -366,10 +393,10 @@ public class Window extends JFrame implements KeyListener {
         switch (round) {
             case 1:
                 if (setou) {
-                    this.qtds[0] = 5;
-                    this.qtds[1] = 0;
-                    this.qtds[2] = 0;
-                    this.qtds[3] = 0;
+                    this.qtds[0] = 1;
+                    this.qtds[1] = 1;
+                    this.qtds[2] = 1;
+                    this.qtds[3] = 1;
                     this.setou = false;
                 }
                 break;
@@ -445,7 +472,7 @@ public class Window extends JFrame implements KeyListener {
         // Adiciona na sua respectiva lista
         if (pula_geracao % 10 == 0) {
             if (qtds[0] > 0) {
-                Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4), caminho, sons);
+                Terrestre_leve inimigo = new Terrestre_leve(sprites.get(4), caminho);
                 this.lista_terrestres_leves.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
@@ -453,7 +480,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[1] > 0) {
-                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho, sprites.get(1), sons);
+                Terrestre_pesado inimigo = new Terrestre_pesado(sprites.get(0), caminho, sprites.get(1));
                 this.lista_terrestres_pesados.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
@@ -461,7 +488,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[2] > 0) {
-                Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho, sons);
+                Aereo_leve inimigo = new Aereo_leve(sprites.get(2), caminho);
                 this.lista_aereos_leves.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
@@ -469,7 +496,7 @@ public class Window extends JFrame implements KeyListener {
 
             }
             if (qtds[3] > 0) {
-                Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho, sons);
+                Aereo_pesado inimigo = new Aereo_pesado(sprites.get(6), caminho);
                 this.lista_aereos_pesados.add(inimigo);
                 this.inimigos.add(inimigo);
                 this.desenhaveis.add(inimigo);
@@ -648,7 +675,6 @@ public class Window extends JFrame implements KeyListener {
                 lista_torres_aereas.clear();;
                 construiveis.clear();
                 try {
-                    //repaint();
                     this.run();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
