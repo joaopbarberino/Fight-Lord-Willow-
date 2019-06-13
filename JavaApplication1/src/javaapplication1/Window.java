@@ -20,17 +20,22 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mapa.No;
 
 public class Window extends JFrame implements KeyListener {
 
+    // ----------------------- TO DO ----------------------------
+    //-> tirar oq ainda resta de HARDCODED
+    // ----------------------- TO DO ----------------------------
     private Tile_layer MAP;
     public ArrayList<BufferedImage> sprites;
     private final ArrayList<Som> sons;
     private ArrayList<Integer> caminho = new ArrayList();
     private Mapa mapa = null;
-    private boolean gameLoop = true;
-    public boolean pronto_para_jogar = true;
+    private boolean gameLoop = false;
+    public boolean pronto_para_jogar = false;
     private int round = 1, wave = 1;
     public ArrayList<Desenhavel> desenhaveis = new ArrayList();
     public ArrayList<Desenhavel> torres_desenhaveis = new ArrayList();
@@ -81,7 +86,7 @@ public class Window extends JFrame implements KeyListener {
         // Instanciar o mapa da fase
         caminho = Mapa_exec(caminho);
 
-        Base jogador = new Base(710, 25, 10, 0, 160, 0, sprites.get(8), sprites, sons);
+        Base jogador = new Base(710, 25, 10, 0, 500, 0, sprites.get(8), sprites, sons);
         desenhaveis.add(jogador);
         System.out.println(jogador.getGold());
 
@@ -94,8 +99,7 @@ public class Window extends JFrame implements KeyListener {
         this.createBufferStrategy(2);
 
         no_torre = construiveis.get(0);
-        sons.get(10).tocaLoop();
-        while (gameLoop) {
+        while (!gameLoop) {
             if (clickX != 0 && clickY != 0) {
                 for (int i = 0; i < construiveis.size(); i++) {
                     no_torre = construiveis.get(i);
@@ -139,6 +143,10 @@ public class Window extends JFrame implements KeyListener {
                 clickY = -1;
             }
 
+            // Segura a wave por algum tempo para o jogador pensar
+            // ----------------------- TO DO ----------------------------
+            // -> Descobrir a relação desse numero x segundos
+            // ----------------------- TO DO ----------------------------
             if (segura_wave % 100 == 0) {
                 geraWave();
             } else {
@@ -180,6 +188,11 @@ public class Window extends JFrame implements KeyListener {
 
                 limparListas();
 
+                // ----------------------- TO DO ----------------------------
+                // -> Descobrir pq o replay (ta no key pressed/released) não faz
+                // o jogo começar dnv e trava o jframe (provavelmente loop infinito
+                // em algum lugar)
+                // ----------------------- TO DO ----------------------------
                 if (jogador.isMorto()) {
                     sons.get(8).tocaUmaVez();
                     sons.get(7).tocaUmaVez();
@@ -249,12 +262,10 @@ public class Window extends JFrame implements KeyListener {
         for (Terrestre_leve inimigo : lista_terrestres_leves) {
             if (inimigo.animouMorte()) {
                 desenhaveis.remove(inimigo);
-                jogador.perdeVida(inimigo.getAtaque());
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
-                if(jogador.getVidaAtual()<=0){
-                    gameLoop = false;
-                }
+            } else if (inimigo.chegouNoDestino()) {
+                jogador.perdeVida(inimigo.getAtaque());
             } else if (!inimigo.isMorto()) {
                 inimigo.andar();
             }
@@ -263,12 +274,10 @@ public class Window extends JFrame implements KeyListener {
         for (Terrestre_pesado inimigo : lista_terrestres_pesados) {
             if (inimigo.animouMorte()) {
                 desenhaveis.remove(inimigo);
-                jogador.perdeVida(inimigo.getAtaque());
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
-                if(jogador.getVidaAtual()<=0){
-                    gameLoop = false;
-                }
+            } else if (inimigo.chegouNoDestino()) {
+                jogador.perdeVida(inimigo.getAtaque());
             } else if (!inimigo.isMorto()) {
                 inimigo.andar();
             }
@@ -277,26 +286,23 @@ public class Window extends JFrame implements KeyListener {
         for (Aereo_leve inimigo : lista_aereos_leves) {
             if (inimigo.animouMorte()) {
                 desenhaveis.remove(inimigo);
-                jogador.perdeVida(inimigo.getAtaque());
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
-                if(jogador.getVidaAtual()<=0){
-                    gameLoop = false;
-                }
+            } else if (inimigo.chegouNoDestino()) {
+                jogador.perdeVida(inimigo.getAtaque());
             } else if (!inimigo.isMorto()) {
                 inimigo.andar();
             }
         }
 
         for (Aereo_pesado inimigo : lista_aereos_pesados) {
+
             if (inimigo.animouMorte()) {
                 desenhaveis.remove(inimigo);
-                jogador.perdeVida(inimigo.getAtaque());
                 jogador.ganhaXp(inimigo.getXp());
                 jogador.ganhaGold(inimigo.getGold());
-                if(jogador.getVidaAtual()<=0){
-                    gameLoop = false;
-                }
+            } else if (inimigo.chegouNoDestino()) {
+                jogador.perdeVida(inimigo.getAtaque());
             } else if (!inimigo.isMorto()) {
                 inimigo.andar();
             }
@@ -318,9 +324,6 @@ public class Window extends JFrame implements KeyListener {
         lista_torres_terrestres.clear();
         lista_torres_aereas.clear();
         construiveis.clear();
-        Base jogador = new Base(710, 25, 10, 0, 160, 0, sprites.get(8), sprites, sons);
-        desenhaveis.add(jogador);
-
     }
 
     public void limparListas() {
@@ -368,8 +371,8 @@ public class Window extends JFrame implements KeyListener {
         switch (round) {
             case 1:
                 if (setou) {
-                    this.qtds[0] = 5;
-                    this.qtds[1] = 0;
+                    this.qtds[0] = 0;
+                    this.qtds[1] = 1;
                     this.qtds[2] = 0;
                     this.qtds[3] = 0;
                     this.setou = false;
