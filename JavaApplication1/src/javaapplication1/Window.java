@@ -1,7 +1,6 @@
 //********************************************************************/
-//************************Referencias*********************************/
-//*******************Auxilio colegas classe***************************/
-//****Into The Dwarfness: github.com/waffliors/Into-The-Dwarfness*****/
+//*********************** Referencias*********************************/
+//***********Auxilio colegas classe(into the dwarfness)***************/
 /**
  * ******************************************************************
  */
@@ -36,6 +35,7 @@ public class Window extends JFrame implements KeyListener {
     private ArrayList<Integer> caminho = new ArrayList();
     private Mapa mapa = null;
     private boolean gameLoop = true;
+    //public boolean pronto_para_jogar = false;
     private int round = 1, wave = 1;
     public ArrayList<Desenhavel> desenhaveis = new ArrayList();
     public ArrayList<Desenhavel> torres_desenhaveis = new ArrayList();
@@ -76,7 +76,6 @@ public class Window extends JFrame implements KeyListener {
     }
 
     public void run() throws InterruptedException, IOException {
-        //sons.get(10).tocaLoop();
 
         long excess = 0;
         long noDelays = 0;
@@ -101,65 +100,100 @@ public class Window extends JFrame implements KeyListener {
 
         no_torre = construiveis.get(0);
         while (gameLoop) {
+            //if (pronto_para_jogar) {
+                if (clickX != 0 && clickY != 0) {
+                    for (int i = 0; i < construiveis.size(); i++) {
+                        no_torre = construiveis.get(i);
+                        if (Math.abs(no_torre.getX() - clickX) < 40 && Math.abs(no_torre.getY() - clickY) < 40 && (torre_1 || torre_2)) {
+                            mapa.getMapa().get(no_torre.getId()).setBloqueado(true);
+                            mapa.getMapa().get(no_torre.getId()).setConstruivel(false);
 
-            if (clickX != 0 && clickY != 0) {
-                for (int i = 0; i < construiveis.size(); i++) {
-                    no_torre = construiveis.get(i);
-                    if (Math.abs(no_torre.getX() - clickX) < 40 && Math.abs(no_torre.getY() - clickY) < 40 && (torre_1 || torre_2)) {
-                        mapa.getMapa().get(no_torre.getId()).setBloqueado(true);
-                        mapa.getMapa().get(no_torre.getId()).setConstruivel(false);
-
-                        if (torre_1) {
-                            Torre_terrestre torre_terrestre = new Torre_terrestre(no_torre.getId(), sprites, sons);
-                            if (jogador.getGold() >= torre_terrestre.getPreco()) {
-                                jogador.reduzGold(torre_terrestre.getPreco());
-                                torre_terrestre.setCasasNoAlcance();
-                                torre_terrestre.getCasasNoAlcance();
-                                lista_torres_terrestres.add(torre_terrestre);
-                                sons.get(6).tocaUmaVez();
-                                desenhaveis.add(torre_terrestre);
-                            } else {
-                                torre_terrestre = null;
-                                System.out.println("n tem dinheiro pra construir torre 1");
+                            if (torre_1) {
+                                Torre_terrestre torre_terrestre = new Torre_terrestre(no_torre.getId(), sprites, sons);
+                                if (jogador.getGold() >= torre_terrestre.getPreco()) {
+                                    jogador.reduzGold(torre_terrestre.getPreco());
+                                    torre_terrestre.setCasasNoAlcance();
+                                    torre_terrestre.getCasasNoAlcance();
+                                    lista_torres_terrestres.add(torre_terrestre);
+                                    sons.get(6).tocaUmaVez();
+                                    desenhaveis.add(torre_terrestre);
+                                } else {
+                                    torre_terrestre = null;
+                                    System.out.println("n tem dinheiro pra construir torre 1");
+                                }
+                            } else if (torre_2) {
+                                Torre_aerea torre_aerea = new Torre_aerea(no_torre.getId(), sprites, sons);
+                                if (jogador.getGold() >= torre_aerea.getPreco()) {
+                                    jogador.reduzGold(torre_aerea.getPreco());
+                                    torre_aerea.setCasasNoAlcance();
+                                    torre_aerea.getCasasNoAlcance();
+                                    lista_torres_aereas.add(torre_aerea);
+                                    sons.get(6).tocaUmaVez();
+                                    desenhaveis.add(torre_aerea);
+                                } else {
+                                    torre_aerea = null;
+                                    System.out.println("n tem dinheiro pra construir torre 2");
+                                }
                             }
-                        } else if (torre_2) {
-                            Torre_aerea torre_aerea = new Torre_aerea(no_torre.getId(), sprites, sons);
-                            if (jogador.getGold() >= torre_aerea.getPreco()) {
-                                jogador.reduzGold(torre_aerea.getPreco());
-                                torre_aerea.setCasasNoAlcance();
-                                torre_aerea.getCasasNoAlcance();
-                                lista_torres_aereas.add(torre_aerea);
-                                sons.get(6).tocaUmaVez();
-                                desenhaveis.add(torre_aerea);
-                            } else {
-                                torre_aerea = null;
-                                System.out.println("n tem dinheiro pra construir torre 2");
+                            torre_1 = false;
+                            torre_2 = false;
+                            break;
+                        }
+                    }
+                    clickX = -1;
+                    clickY = -1;
+                }
+
+
+                // Segura a wave por algum tempo para o jogador pensar
+                // ----------------------- TO DO ----------------------------
+                // -> Descobrir a relação desse numero x segundos
+                // ----------------------- TO DO ----------------------------
+                if (segura_wave % 100 == 0) {
+                    geraWave();
+                } else {
+                    this.segura_wave++;
+                }
+
+                long beforeTime = System.currentTimeMillis();
+
+                while (excess > DESIRED_UPDATE_TIME) {
+                    moverInimigos(jogador);
+                    limparListas();
+                    if (jogador.isMorto()) {
+                        this.gameLoop = false;
+                    }
+
+                    for (Inimigo inimigo : inimigos) {
+                        for (Torre_terrestre torre : lista_torres_terrestres) {
+                            if (torre.isNoRange(inimigo)) {
+                                torre.atacar(inimigo);
                             }
                         }
-                        torre_1 = false;
-                        torre_2 = false;
-                        break;
+
                     }
+                    for (Inimigo inimigo : inimigos) {
+                        for (Torre_aerea torre : lista_torres_aereas) {
+                            if (torre.isNoRange(inimigo)) {
+                                torre.atacar(inimigo);
+                            }
+                        }
+
+                    }
+                    excess -= DESIRED_UPDATE_TIME;
                 }
-                clickX = -1;
-                clickY = -1;
-            }
 
-            // Segura a wave por algum tempo para o jogador pensar
-            // ----------------------- TO DO ----------------------------
-            // -> Descobrir a relação desse numero x segundos
-            // ----------------------- TO DO ----------------------------
-            if (segura_wave % 100 == 0) {
-                geraWave();
-            } else {
-                this.segura_wave++;
-            }
-
-            long beforeTime = System.currentTimeMillis();
-
-            while (excess > DESIRED_UPDATE_TIME) {
+                // ----------------------- TO DO ----------------------------
+                // -> Arrumar animação de morte do inimigo
+                // ----------------------- TO DO ----------------------------
                 moverInimigos(jogador);
                 limparListas();
+
+                // ----------------------- TO DO ----------------------------
+                // -> Descobrir pq o replay (ta no key pressed/released) não faz
+                // o jogo começar dnv e trava o jframe (provavelmente loop infinito
+                // em algum lugar)
+                // ----------------------- TO DO ----------------------------
                 if (jogador.isMorto()) {
                     sons.get(8).tocaUmaVez();
                     sons.get(7).tocaUmaVez();
@@ -216,46 +250,49 @@ public class Window extends JFrame implements KeyListener {
 
             }
 
-            // Caso todos os inimigos estejam mortos, round acaba
-            if (comecou_round) {
-                if (lista_aereos_leves.isEmpty()
-                        && lista_aereos_pesados.isEmpty()
-                        && lista_terrestres_leves.isEmpty()
-                        && lista_terrestres_pesados.isEmpty()) {
-                    jogador.upgrade();
-                    this.setou = true;
-                    this.pula_geracao = 0;
-                    if (round < 7) {
-                        this.round++;
-                        System.out.println("round: " + round);
+                // Caso todos os inimigos estejam mortos, round acaba
+                if (comecou_round) {
+                    if (lista_aereos_leves.isEmpty()
+                            && lista_aereos_pesados.isEmpty()
+                            && lista_terrestres_leves.isEmpty()
+                            && lista_terrestres_pesados.isEmpty()) {
+                        jogador.upgrade();
+                        this.setou = true;
+                        this.pula_geracao = 0;
+                        if (round < 7) {
+                            this.round++;
+                            System.out.println("round: " + round);
+                        }
+                        this.wave++;
+                        System.out.println("wave: " + wave);
+                        this.comecou_round = false;
+                        this.segura_wave = 1;
                     }
-                    this.wave++;
-                    System.out.println("wave: " + wave);
-                    this.comecou_round = false;
-                    this.segura_wave = 1;
                 }
-            }
 
-            repaint();
+                repaint();
 
-            excess -= DESIRED_UPDATE_TIME;
+                excess -= DESIRED_UPDATE_TIME;
 
-            long afterTime = System.currentTimeMillis();
-            long sleepTime = afterTime - beforeTime;
+                long afterTime = System.currentTimeMillis();
+                long sleepTime = afterTime - beforeTime;
 
-            if (sleepTime < DESIRED_UPDATE_TIME) {
-                Thread.sleep(DESIRED_UPDATE_TIME - sleepTime);
-                noDelays = 0;
+                if (sleepTime < DESIRED_UPDATE_TIME) {
+                    Thread.sleep(DESIRED_UPDATE_TIME - sleepTime);
+                    noDelays = 0;
 
-            } else {
-                excess += sleepTime - DESIRED_UPDATE_TIME;
+                } else {
+                    excess += sleepTime - DESIRED_UPDATE_TIME;
 
-                if (++noDelays == NO_DELAYS_PER_YIELD) {
+                    if (++noDelays == NO_DELAYS_PER_YIELD) {
 
-                    Thread.yield();
+                        Thread.yield();
+                    }
                 }
-            }
 
+            //} else {
+                //repaint();
+            //}
         }
     }
 
@@ -570,32 +607,35 @@ public class Window extends JFrame implements KeyListener {
 
     @Override
     public void paint(Graphics g) {
-
-        BufferStrategy strategy = this.getBufferStrategy();
-        if (strategy == null) {
-            return;
-        }
-        do {
+        //if (!pronto_para_jogar) {
+            g.drawImage(this.sprites.get(16), 0, 0, null);
+        //} else {
+            BufferStrategy strategy = this.getBufferStrategy();
+            if (strategy == null) {
+                return;
+            }
             do {
-                Graphics graphics = strategy.getDrawGraphics();
-                // Clear the previous frame
-                graphics.clearRect(0, 0, 800, 800);
-                // For each drawable object in list, paint
+                do {
+                    Graphics graphics = strategy.getDrawGraphics();
+                    // Clear the previous frame
+                    graphics.clearRect(0, 0, 800, 800);
+                    // For each drawable object in list, paint
 
-                this.MAP.paintComponent(graphics);
-                for (Desenhavel objeto : desenhaveis) {
-                    objeto.paintComponent(graphics);
-                }
+                    this.MAP.paintComponent(graphics);
+                    for (Desenhavel objeto : desenhaveis) {
+                        objeto.paintComponent(graphics);
+                    }
 
-                graphics.dispose();
+                    graphics.dispose();
 
-            } while (strategy.contentsRestored());
-            strategy.show();
-        } while (strategy.contentsLost());
-        g.setFont(new Font("Serif", Font.BOLD, 12));
-        g.drawString("" + 90, 480, 744);
-        g.drawString("" + 90, 480, 780);
-        g.drawString("" + this.wave, 380, 744);
+                } while (strategy.contentsRestored());
+                strategy.show();
+            } while (strategy.contentsLost());
+            g.setFont(new Font("Serif", Font.BOLD, 12));
+            g.drawString("" + 90, 480, 744);
+            g.drawString("" + 90, 480, 780);
+            g.drawString("" + this.wave, 380, 744);
+        //}
     }
 
     @Override
@@ -604,6 +644,9 @@ public class Window extends JFrame implements KeyListener {
             // mostra tipo da torre e onde pode consturir 
         }
         if (e.getKeyChar() == '2') {
+            // mostra tipo da torre e onde pode consturir 
+        }
+        if (e.getKeyChar() == '3') {
             // mostra tipo da torre e onde pode consturir 
         }
         if (e.getKeyChar() == 'r') {
@@ -622,6 +665,10 @@ public class Window extends JFrame implements KeyListener {
             // constroe torre aerea
             torre_1 = false;
             torre_2 = true;
+        }
+        if (e.getKeyChar() == '3') {
+            System.out.println("apertei 3");
+            //pronto_para_jogar = true;
         }
 
         if (e.getKeyChar() == 'r') {
