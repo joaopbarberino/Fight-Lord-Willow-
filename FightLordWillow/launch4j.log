@@ -1,0 +1,23 @@
+
+
+Version:	3.12
+CmdLine:	C:\Users\mathe\Documents\Projects\Waffliors\Fight-Lord-Willow-\FightLordWillow\FightLordWillow.exe --l4j-debug
+WOW64:		yes
+Working dir:	C:\Users\mathe\Documents\Projects\Waffliors\Fight-Lord-Willow-\FightLordWillow\.
+Java min ver:	1.008.000_000
+Java max ver:	
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+32-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8
+Ignore:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8.0_181
+Check launcher:	C:\Program Files\Java\jdk1.8.0_181\bin\javaw.exe (OK)
+Match:		1.008.000_181
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Runtime used:	1.008.000_181 (64-bit)
+Launcher:	C:\Program Files\Java\jdk1.8.0_181\bin\javaw.exe
+Launcher args:	-jar "C:\Users\mathe\Documents\Projects\Waffliors\Fight-Lord-Willow-\FightLordWillow\FightLordWillow.exe"
+Args length:	105/32768 chars
+Exit code:	0
