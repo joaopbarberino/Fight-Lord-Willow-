@@ -11,7 +11,7 @@ Aperte '1' ou '2' no seu teclado para escolher uma Torre de Mago.
 
   A Torre de Mago será escolhida assim que você apertar o botão, você pode mudar sua escolha a qualquer momento antes de construir a torre.
  
-Após escolher sua Torre, apenas clique em um espaço disponível(os marrons, perto do caminho dos monstros). A Torre será construída e irá lutar por você automaticamente.
+Após escolher sua Torre, apenas clique em um espaço disponível (os marrons, perto do caminho dos monstros). A Torre será construída e irá lutar por você automaticamente.
 Escolha cuidadosamente! Você não poderá trocar a Torre de lugar.
 
 Você pode pausar o jogo apertando espaço e lá poderá ler essas instruções novamente.
