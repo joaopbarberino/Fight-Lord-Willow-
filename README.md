@@ -1,4 +1,4 @@
-# Fight-Lord-Willow-
+# Fight, Lord Willow!
 Tower defense 2D em Java para o Projeto Integrador do 3º Semestre de Jogos Digitais no Senac - SP, Santo Amaro.
 2D Java Tower Defense game, made as a Semester Project of our 3º period of the Applied Sciences in Digital Games course of Senac - São Paulo, Santo Amaro. 
 
