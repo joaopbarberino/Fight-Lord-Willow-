@@ -19,7 +19,7 @@ Você pode pausar o jogo apertando espaço e lá poderá ler essas instruções 
 Isso é tudo! Faça sua estratégia e defenda seu castelo!
 
 # How to play
-You're Lord Willow and is being attacked by your enemies, but don't worry, you have powerfull mages to help you to defend your castle.
+You're Lord Willow and you're being attacked by your enemies, but don't worry, you have powerfull mages to help you to defend your castle.
 
 Press '1' or '2' in your keyboard to choose a Mage Tower.
   - 1: Blue Mage, is capable to attack only land monsters.
